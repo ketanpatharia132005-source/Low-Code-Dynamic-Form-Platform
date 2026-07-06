@@ -1,6 +1,14 @@
+import { useDroppable } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
+import SortableField from "./SortableField";
+
 function renderField(field) {
   switch (field.type) {
-    case "Text":
+    case "text":
       return (
         <input
           type="text"
@@ -8,7 +16,7 @@ function renderField(field) {
         />
       );
 
-    case "Textarea":
+    case "textarea":
       return (
         <textarea
           placeholder={field.placeholder}
@@ -16,7 +24,7 @@ function renderField(field) {
         />
       );
 
-    case "Email":
+    case "email":
       return (
         <input
           type="email"
@@ -24,7 +32,7 @@ function renderField(field) {
         />
       );
 
-    case "Password":
+    case "password":
       return (
         <input
           type="password"
@@ -32,7 +40,7 @@ function renderField(field) {
         />
       );
 
-    case "Number":
+    case "number":
       return (
         <input
           type="number"
@@ -40,22 +48,16 @@ function renderField(field) {
         />
       );
 
-    case "Date":
-      return (
-        <input type="date" />
-      );
+    case "date":
+      return <input type="date" />;
 
-    case "Checkbox":
-      return (
-        <input type="checkbox" />
-      );
+    case "checkbox":
+      return <input type="checkbox" />;
 
-    case "Radio":
-      return (
-        <input type="radio" />
-      );
+    case "radio":
+      return <input type="radio" />;
 
-    case "Dropdown":
+    case "dropdown":
       return (
         <select>
           <option>Select...</option>
@@ -72,33 +74,44 @@ function renderField(field) {
   }
 }
 
-function Canvas({ fields,
-                  selectedFieldId,
-                  setSelectedFieldId
-                  
-              }) {
+function Canvas({
+  fields,
+  selectedFieldId,
+  setSelectedFieldId,
+}) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: "canvas-drop-zone",
+  });
+
   return (
-    <div className="canvas">
+    <div
+      ref={setNodeRef}
+      className="canvas"
+      style={{
+        border: isOver
+          ? "2px dashed #1976d2"
+          : "2px dashed transparent",
+      }}
+    >
       <h2>Form Canvas</h2>
 
       {fields.length === 0 ? (
-        <p>No fields added yet.</p>
+        <p>Drag a field here or click a field type.</p>
       ) : (
-        fields.map((field) => (
-          <div
-               key={field.id}
-               className={
-                    selectedFieldId === field.id
-                        ? "canvas-field selected"
-                        : "canvas-field"
-    }
-    onClick={() => setSelectedFieldId(field.id)}
->
-            <label>{field.label}</label>
-
-            {renderField(field)}
-          </div>
-        ))
+        <SortableContext
+          items={fields.map((field) => field.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {fields.map((field) => (
+            <SortableField
+              key={field.id}
+              field={field}
+              renderField={renderField}
+              selectedFieldId={selectedFieldId}
+              setSelectedFieldId={setSelectedFieldId}
+            />
+          ))}
+        </SortableContext>
       )}
     </div>
   );
