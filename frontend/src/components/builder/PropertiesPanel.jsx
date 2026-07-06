@@ -55,6 +55,23 @@ function PropertiesPanel({
         />
       </div>
 
+      <div className="property-group">
+        <label>
+          <input
+            type="checkbox"
+            checked={selectedField.required}
+            onChange={(e) =>
+              updateField(
+                selectedField.id,
+                "required",
+                e.target.checked
+              )
+            }
+          />
+          {" "}Required
+        </label>
+      </div>
+
       <button
         className="delete-btn"
         onClick={() => deleteField(selectedField.id)}

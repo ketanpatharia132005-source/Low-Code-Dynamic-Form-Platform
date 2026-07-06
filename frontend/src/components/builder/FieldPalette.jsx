@@ -6,12 +6,40 @@ const fieldTypes = [
     label: "Text Field",
   },
   {
+    type: "number",
+    label: "Number Field",
+  },
+  {
     type: "email",
     label: "Email Field",
   },
   {
+    type: "password",
+    label: "Password Field",
+  },
+  {
+    type: "date",
+    label: "Date Field",
+  },
+  {
+    type: "tel",
+    label: "Phone Field",
+  },
+  {
     type: "textarea",
     label: "Text Area",
+  },
+  {
+    type: "checkbox",
+    label: "Checkbox",
+  },
+  {
+    type: "select",
+    label: "Dropdown",
+  },
+  {
+    type: "radio",
+    label: "Radio Group",
   },
 ];
 

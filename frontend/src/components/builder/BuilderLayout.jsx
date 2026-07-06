@@ -27,27 +27,49 @@ function BuilderLayout() {
     })
   );
 
+  // ✅ Create field with proper defaults
   const addField = (type) => {
+    const fieldDefaults = {
+      text: { label: "Text Field", placeholder: "Enter text" },
+      number: { label: "Number Field", placeholder: "Enter number" },
+      email: { label: "Email Field", placeholder: "Enter email" },
+      password: { label: "Password Field", placeholder: "Enter password" },
+      date: { label: "Date Field", placeholder: "" },
+      tel: { label: "Phone Field", placeholder: "Enter phone number" },
+      textarea: { label: "Text Area", placeholder: "Enter text" },
+      checkbox: { label: "Checkbox", placeholder: "" },
+      select: { label: "Dropdown", placeholder: "" },
+      radio: { label: "Radio Group", placeholder: "" },
+    };
+
+    const config = fieldDefaults[type] || {
+      label: "Field",
+      placeholder: "",
+    };
+
     const newField = {
       id: Date.now().toString(),
       type,
-      label: `${type} Field`,
-      placeholder: `Enter ${type}`,
+      label: config.label,
+      placeholder: config.placeholder,
+
+      // ✅ configuration system start
+      required: false,
     };
 
     setFields((prev) => [...prev, newField]);
   };
 
+  // ✅ Update any field property (label, placeholder, required, etc.)
   const updateField = (id, key, value) => {
     setFields((prevFields) =>
       prevFields.map((field) =>
-        field.id === id
-          ? { ...field, [key]: value }
-          : field
+        field.id === id ? { ...field, [key]: value } : field
       )
     );
   };
 
+  // ✅ Delete field
   const deleteField = (id) => {
     setFields((prevFields) =>
       prevFields.filter((field) => field.id !== id)
@@ -58,12 +80,13 @@ function BuilderLayout() {
     }
   };
 
+  // ✅ Drag & Drop handler
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
     if (!over) return;
 
-    // Palette -> Canvas
+    // Palette → Canvas
     if (active.data.current?.fromPalette) {
       if (over.id === "canvas-drop-zone") {
         addField(active.data.current.fieldType);
@@ -71,7 +94,7 @@ function BuilderLayout() {
       return;
     }
 
-    // Canvas -> Canvas
+    // Canvas reorder
     if (active.id === over.id) return;
 
     setFields((items) => {
@@ -94,14 +117,17 @@ function BuilderLayout() {
       onDragEnd={handleDragEnd}
     >
       <div className="builder-container">
+        {/* Left: Field Palette */}
         <FieldPalette addField={addField} />
 
+        {/* Center: Canvas */}
         <Canvas
           fields={fields}
           selectedFieldId={selectedFieldId}
           setSelectedFieldId={setSelectedFieldId}
         />
 
+        {/* Right: Properties Panel */}
         <PropertiesPanel
           selectedField={
             fields.find(

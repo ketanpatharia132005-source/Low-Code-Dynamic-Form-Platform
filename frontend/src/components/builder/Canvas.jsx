@@ -51,13 +51,42 @@ function renderField(field) {
     case "date":
       return <input type="date" />;
 
+    case "tel":
+      return (
+         <input
+           type="tel"
+           placeholder={field.placeholder}
+      />
+  );
+      
+
     case "checkbox":
       return <input type="checkbox" />;
 
     case "radio":
-      return <input type="radio" />;
+  return (
+    <div>
+      <label>
+        <input
+          type="radio"
+          name={`radio-${field.id}`}
+        />
+        Option 1
+      </label>
 
-    case "dropdown":
+      <br />
+
+      <label>
+        <input
+          type="radio"
+          name={`radio-${field.id}`}
+        />
+        Option 2
+      </label>
+    </div>
+  );
+
+    case "select":
       return (
         <select>
           <option>Select...</option>

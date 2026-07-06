@@ -35,7 +35,10 @@ function SortableField({
       }
       onClick={() => setSelectedFieldId(field.id)}
     >
-      <label>{field.label}</label>
+      <label>
+        {field.label}
+        {field.required && <span style={{color: "red"}}>*</span>}     
+      </label>
 
       {renderField(field)}
     </div>
