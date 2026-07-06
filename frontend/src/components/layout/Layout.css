@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout {
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+
+.header {
+  height: 60px;
+  background: #1976d2;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 25px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header nav {
+  display: flex;
+  gap: 20px;
+}
+
+.header a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.main-content {
+  padding: 25px;
+}
+.canvas-field {
+  margin-bottom: 20px;
+}
+
+.canvas-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.canvas-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
