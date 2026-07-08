@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from app.base import Base
@@ -11,4 +11,19 @@ class Form(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
 
-    fields = relationship("Field", back_populates="form", cascade="all, delete-orphan")
+    owner_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False
+    )
+
+    owner = relationship(
+        "User",
+        back_populates="forms"
+    )
+
+    fields = relationship(
+        "Field",
+        back_populates="form",
+        cascade="all, delete-orphan"
+    )

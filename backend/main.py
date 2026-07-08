@@ -8,6 +8,8 @@ from app.routers import field_types
 from app.models.form import Form
 from app.models.field import Field
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import forms
+
 
 app = FastAPI(
     title="Low-Code Dynamic Form Platform",
@@ -28,6 +30,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(user.router)
 
 app.include_router(field_types.router)
+app.include_router(forms.router)
 
 @app.get("/")
 def root():

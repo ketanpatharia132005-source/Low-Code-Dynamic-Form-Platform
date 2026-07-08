@@ -107,6 +107,7 @@ function Canvas({
   fields,
   selectedFieldId,
   setSelectedFieldId,
+  updateFieldValue,
 }) {
   const { setNodeRef, isOver } = useDroppable({
     id: "canvas-drop-zone",
@@ -138,6 +139,7 @@ function Canvas({
               renderField={renderField}
               selectedFieldId={selectedFieldId}
               setSelectedFieldId={setSelectedFieldId}
+              updateFieldValue={updateFieldValue}
             />
           ))}
         </SortableContext>

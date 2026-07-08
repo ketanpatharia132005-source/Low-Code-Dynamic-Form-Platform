@@ -60,5 +60,19 @@ class FieldTypeResponse(BaseModel):
         "file",
         "rating",
     ]
-    label: str
-    config: dict
+
+class FieldUpdate(BaseModel):
+    type: Optional[
+        Literal[
+            "text",
+            "number",
+            "email",
+            "dropdown",
+            "checkbox",
+            "date",
+            "file",
+            "rating",
+        ]
+    ] = None
+    label: Optional[str] = None
+    config: Optional[dict] = None

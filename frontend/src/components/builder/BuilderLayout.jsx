@@ -14,10 +14,13 @@ import "./Builder.css";
 import FieldPalette from "./FieldPalette";
 import Canvas from "./Canvas";
 import PropertiesPanel from "./PropertiesPanel";
+import PreviewForm from "./PreviewForm";
 
 function BuilderLayout() {
   const [fields, setFields] = useState([]);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
+  const [previewMode, setPreviewMode] = useState(false);
+
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -55,6 +58,7 @@ function BuilderLayout() {
 
       // ✅ configuration system start
       required: false,
+      value: "",
     };
 
     setFields((prev) => [...prev, newField]);
@@ -68,6 +72,16 @@ function BuilderLayout() {
       )
     );
   };
+
+  const updateFieldValue = (id, value) => {
+  setFields((prevFields) =>
+    prevFields.map((field) =>
+      field.id === id
+        ? { ...field, value }
+        : field
+    )
+  );
+};
 
   // ✅ Delete field
   const deleteField = (id) => {
@@ -111,35 +125,49 @@ function BuilderLayout() {
   };
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
+  <DndContext
+    sensors={sensors}
+    collisionDetection={closestCenter}
+    onDragEnd={handleDragEnd}
+  >
+    <button
+      onClick={() => setPreviewMode(!previewMode)}
+      style={{
+        margin: "10px",
+        padding: "8px 16px",
+        cursor: "pointer",
+      }}
     >
-      <div className="builder-container">
-        {/* Left: Field Palette */}
-        <FieldPalette addField={addField} />
+      {previewMode ? "Back to Builder" : "Preview Form"}
+    </button>
 
-        {/* Center: Canvas */}
+    {previewMode ? (
+       <PreviewForm fields={fields} />
+     ) : (
+       <div className="builder-container">
+         <FieldPalette addField={addField} />
+
         <Canvas
-          fields={fields}
-          selectedFieldId={selectedFieldId}
-          setSelectedFieldId={setSelectedFieldId}
+           fields={fields}
+           selectedFieldId={selectedFieldId}
+           setSelectedFieldId={setSelectedFieldId}
+           updateFieldValue={updateFieldValue}
         />
 
-        {/* Right: Properties Panel */}
         <PropertiesPanel
-          selectedField={
-            fields.find(
-              (field) => field.id === selectedFieldId
+           selectedField={
+             fields.find(
+               (field) => field.id === selectedFieldId
             )
           }
           updateField={updateField}
           deleteField={deleteField}
-        />
-      </div>
-    </DndContext>
-  );
+      />
+    </div>
+     )}
+  </DndContext>
+);
+  
 }
 
 export default BuilderLayout;
