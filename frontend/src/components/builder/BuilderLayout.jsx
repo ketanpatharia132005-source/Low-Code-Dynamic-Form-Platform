@@ -18,6 +18,8 @@ import PropertiesPanel from "./PropertiesPanel";
 import PreviewForm from "./PreviewForm";
 import ConfirmationModal from "./ConfirmationModal";
 
+import ShareLinkWidget from './ShareLinkWidget';
+
 function BuilderLayout({ formId }) {
   const [form, setForm] = useState(null);
   const [fieldTypes, setFieldTypes] = useState([]);
@@ -302,6 +304,9 @@ function BuilderLayout({ formId }) {
     return <p style={{ padding: 20 }}>Loading form...</p>;
   }
 
+  console.log("DEBUG - Form Object:", form);
+console.log("DEBUG - Is Published?", form?.status?.toLowerCase() === "published");
+
   return (
     <DndContext
       sensors={sensors}
@@ -309,9 +314,10 @@ function BuilderLayout({ formId }) {
       onDragEnd={handleDragEnd}
     >
      <div className="builder-toolbar">
-  <div>
+  {/* Restructured for proper flow */}
+  <div className="builder-header-info">
     <h1>{form?.title || "Untitled Form"}</h1>
-    {form?.description && <p>{form.description}</p>}
+    {form?.description && <p className="builder-description">{form.description}</p>}
     <span className={`status-badge status-${form?.status || "draft"}`}>
       {form?.status || "draft"}
     </span>
@@ -331,13 +337,18 @@ function BuilderLayout({ formId }) {
     </button>
 
     {form?.status === "published" && (
-  <button type="button" onClick={editAsNewDraft}>
-    Edit as New Draft
-  </button>
-)}
+      <button type="button" onClick={editAsNewDraft}>
+        Edit as New Draft
+      </button>
+    )}
+    
+    <ShareLinkWidget 
+      formId={form.id} 
+      isPublished={true} 
+      versionNumber={form.version} 
+    />
   </div>
-</div>  
-
+</div>
       {saveError && <p className="builder-error">{saveError}</p>}
 
 <div className="version-history">
@@ -373,33 +384,38 @@ function BuilderLayout({ formId }) {
   
 
       {previewMode ? (
-        <PreviewForm fields={fields} />
-      ) : (
-        <div className="builder-container">
-          <FieldPalette
-            fieldTypes={fieldTypes}
-            loading={loadingFieldTypes}
-            addField={addField}
-            disabled= {!isDraft}
-          />
+  <PreviewForm fields={fields} />
+) : (
+  <div className="builder-layout-wrapper">
+    <div className="builder-column palette-column">
+      <FieldPalette
+        fieldTypes={fieldTypes}
+        loading={loadingFieldTypes}
+        addField={addField}
+        disabled={!isDraft}
+      />
+    </div>
 
-          <Canvas
-            fields={fields}
-            selectedFieldId={selectedFieldId}
-            setSelectedFieldId={setSelectedFieldId}
-          />
+    <div className="builder-column canvas-column">
+      <Canvas
+        fields={fields}
+        selectedFieldId={selectedFieldId}
+        setSelectedFieldId={setSelectedFieldId}
+      />
+    </div>
 
-          <PropertiesPanel
-            selectedField={fields.find((field) => field.id === selectedFieldId)}
-            updateField={updateField}
-            updateFieldConfig={updateFieldConfig}
-            deleteField={deleteField}
-            saveField={saveField}
-            disabled={!isDraft}
-          />
-        </div>
-      )}
-
+    <div className="builder-column properties-column">
+      <PropertiesPanel
+        selectedField={fields.find((field) => field.id === selectedFieldId)}
+        updateField={updateField}
+        updateFieldConfig={updateFieldConfig}
+        deleteField={deleteField}
+        saveField={saveField}
+        disabled={!isDraft}
+      />
+    </div>
+  </div>
+)}
       <ConfirmationModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}

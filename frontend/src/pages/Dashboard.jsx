@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import api from "../api/api";
 import Layout from "../components/layout/Layout";
-import "../components/builder/Builder.css"; // Only use our clean design token stylesheet
+import "../components/builder/Builder.css";
 
 function Dashboard() {
   const [forms, setForms] = useState([]);
@@ -17,163 +16,96 @@ function Dashboard() {
 
   useEffect(() => {
     let cancelled = false;
-
-    api
-      .get("/forms/")
-      .then((res) => {
+    api.get("/forms/").then((res) => {
         if (!cancelled) setForms(res.data);
-      })
-      .catch((err) => {
+      }).catch((err) => {
         console.error("Failed to load forms", err);
         if (!cancelled) setError("Could not load your forms.");
-      })
-      .finally(() => {
+      }).finally(() => {
         if (!cancelled) setLoading(false);
       });
-
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   const createForm = async (event) => {
     event.preventDefault();
     const cleanTitle = title.trim();
-
-    if (!cleanTitle) {
-      setError("Enter a form title before creating a form.");
-      return;
-    }
-
+    if (!cleanTitle) { setError("Enter a form title."); return; }
     setCreating(true);
-    setError("");
-
     try {
-      const res = await api.post("/forms/", {
-        title: cleanTitle,
-        description: description.trim(),
-      });
+      const res = await api.post("/forms/", { title: cleanTitle, description: description.trim() });
       navigate(`/builder/${res.data.id}`);
     } catch (err) {
-      console.error("Failed to create form", err);
-      setError("Could not create the form. Check that the backend is running.");
+      setError("Could not create form.");
     } finally {
       setCreating(false);
     }
   };
 
   const deleteForm = async (form) => {
-    if (!window.confirm(`Delete "${form.title}" and all of its fields?`)) {
-      return;
-    }
-
-    setError("");
-
+    if (!window.confirm(`Delete "${form.title}"?`)) return;
     try {
       await api.delete(`/forms/${form.id}`);
       setForms((prev) => prev.filter((item) => item.id !== form.id));
     } catch (err) {
-      console.error("Failed to delete form", err);
-      setError("Could not delete the form. Please try again.");
+      alert("Failed to delete.");
     }
   };
 
-  const totalFormsCount = forms.length;
-  const totalFieldsCount = forms.reduce((sum, f) => sum + (f.fields?.length || 0), 0);
-
   return (
     <Layout>
-      <div className="dashboard-container" style={{ padding: "32px 40px" }}>
+      <div className="dashboard-container">
         
-        {/* Modern Clean Header Row */}
-        <header className="dashboard-header" style={{ marginBottom: "24px" }}>
-          <div>
-            <h1 style={{ fontSize: "1.85rem", color: "var(--text-main)", fontWeight: "700" }}>Dashboard</h1>
-            <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", marginTop: "4px" }}>
-              Smart Form Builder with Dynamic Logic
-            </p>
-          </div>
+        {/* Header */}
+        <header className="dashboard-header">
+          <h1>Dashboard</h1>
+          <p className="text-muted">Smart Form Builder with Dynamic Logic</p>
         </header>
 
-        {/* Floating Metrics Overview Grid */}
-        <section className="metrics-grid" style={{ marginBottom: "32px" }}>
+        {/* Metrics */}
+        <section className="metrics-grid">
           <div className="metric-card">
             <div className="metric-title">🟣 Total Templates</div>
-            <div className="metric-value">{totalFormsCount}</div>
+            <div className="metric-value">{forms.length}</div>
           </div>
           <div className="metric-card">
             <div className="metric-title">🟢 Active Components</div>
-            <div className="metric-value">{totalFieldsCount}</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-title">⚙️ Workspace Status</div>
-            <div className="metric-value" style={{ fontSize: "1.1rem", color: "var(--status-pub-text)", fontWeight: "600", display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
-              <span style={{ display: "inline-block", width: "8px", height: "8px", backgroundColor: "var(--status-pub-text)", borderRadius: "50%" }}></span> 
-              Connected Natively
-            </div>
+            <div className="metric-value">{forms.reduce((sum, f) => sum + (f.fields?.length || 0), 0)}</div>
           </div>
         </section>
 
-        {/* Spacious Top-to-Bottom Layout Stack */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+        {/* Main Content Layout */}
+        <div className="dashboard-content-stack">
           
-          {/* 1. Full-Width Main Templates Table Card */}
+          {/* Active Templates Table */}
           <div className="main-content-card">
-            <div style={{ padding: "24px 24px 16px 24px", borderBottom: "1px solid var(--border-color)" }}>
-              <h2 style={{ fontSize: "1.15rem", fontWeight: "700", color: "var(--text-main)", margin: "0" }}>Your Active Templates</h2>
+            <div className="card-header">
+              <h2>Your Active Templates</h2>
             </div>
-
-            {loading && <p style={{ padding: "24px", color: "var(--text-muted)" }}>Querying native records database...</p>}
-
-            {!loading && forms.length === 0 && (
-              <p style={{ padding: "40px", textAlign: "center", color: "var(--text-light)" }}>
-                No active forms found in your workspace. Use the panel below to build one.
-              </p>
-            )}
-
-            {forms.length > 0 && (
-              <table className="modern-table" style={{ width: "100%", tableLayout: "auto" }}>
+            {loading ? <p style={{padding: "20px"}}>Loading...</p> : (
+              <table className="modern-table">
                 <thead>
                   <tr>
-                    <th style={{ textAlign: "left", width: "40%" }}>Template Identifier</th>
-                    <th style={{ textAlign: "left", width: "25%" }}>Structural Volume</th>
-                    <th style={{ textAlign: "left", width: "15%" }}>Status Badge</th>
-                    <th style={{ textAlign: "right", width: "20%" }}>Actions</th>
+                    <th>Template</th>
+                    <th>Components</th>
+                    <th>Status</th>
+                    <th style={{textAlign: "right"}}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {forms.map((form) => (
                     <tr key={form.id}>
-                      <td style={{ textAlign: "left" }}>
-                        <div style={{ fontWeight: "600", color: "var(--text-main)", fontSize: "0.95rem" }}>{form.title}</div>
-                        <div style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginTop: "4px" }}>{form.description || "No metadata description provided."}</div>
+                      <td>
+                        <div className="table-title">{form.title}</div>
+                        <div className="table-desc">{form.description || "No description"}</div>
                       </td>
-                      <td style={{ textAlign: "left", color: "var(--text-muted)", fontWeight: "500" }}>
-                        {form.fields?.length || 0} modular components
-                      </td>
-                      <td style={{ textAlign: "left" }}>
-                        <span className={`status-pill ${form.fields?.length > 0 ? "published" : "draft"}`}>
-                          {form.fields?.length > 0 ? "Active" : "Draft"}
-                        </span>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <div style={{ display: "flex", gap: "16px", justifyContent: "flex-end", alignItems: "center" }}>
-                          <button 
-                            type="button" 
-                            className="btn-primary" 
-                            style={{ padding: "8px 16px", fontSize: "0.85rem", borderRadius: "6px" }}
-                            onClick={() => navigate(`/builder/${form.id}`)}
-                          >
-                            Open Canvas
-                          </button>
-                          <button
-                            type="button"
-                            style={{ background: "none", border: "none", color: "#ef4444", fontWeight: "600", fontSize: "0.85rem", cursor: "pointer" }}
-                            onClick={() => deleteForm(form)}
-                          >
-                            Remove
-                          </button>
-                        </div>
+                      <td>{form.fields?.length || 0}</td>
+                      <td><span className={`status-pill ${form.fields?.length > 0 ? "published" : "draft"}`}>
+                        {form.fields?.length > 0 ? "Active" : "Draft"}
+                      </span></td>
+                      <td style={{textAlign: "right"}}>
+                        <button className="btn-primary" onClick={() => navigate(`/builder/${form.id}`)}>Open Canvas</button>
+                        <button className="btn-danger" onClick={() => deleteForm(form)} style={{marginLeft: "10px"}}>Remove</button>
                       </td>
                     </tr>
                   ))}
@@ -182,42 +114,23 @@ function Dashboard() {
             )}
           </div>
 
-          {/* 2. Full-Width Inline Creator Form Card */}
-          <div className="main-content-card" style={{ padding: "28px" }}>
-            <h2 style={{ fontSize: "1.15rem", fontWeight: "700", color: "var(--text-main)", margin: "0 0 20px 0" }}>Create New Form</h2>
-            
-            <form onSubmit={createForm} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div>
-                <label className="form-label" style={{ marginBottom: "6px" }}>Form Title</label>
-                <input
-                  className="form-input"
-                  type="text"
-                  style={{ width: "100%", background: "#ffffff", color: "var(--text-main)", border: "1px solid var(--border-color)" }}
-                  placeholder="e.g., Client Onboarding Form"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
+          {/* Create New Form Section - Styled as a Card */}
+          <div className="main-content-card create-form-section">
+            <div className="card-header">
+              <h2>Create New Form</h2>
+            </div>
+            <form onSubmit={createForm} className="create-form-body">
+              <div className="form-group">
+                <label>Form Title</label>
+                <input className="form-input" type="text" placeholder="e.g., Client Onboarding Form" value={title} onChange={(e) => setTitle(e.target.value)} />
               </div>
-
-              <div>
-                <label className="form-label" style={{ marginBottom: "6px" }}>Description</label>
-                <textarea
-                  className="form-textarea"
-                  style={{ width: "100%", minHeight: "80px", resize: "none", background: "#ffffff", color: "var(--text-main)", border: "1px solid var(--border-color)" }}
-                  placeholder="Describe the target audience or use-case..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+              <div className="form-group">
+                <label>Description</label>
+                <textarea className="form-textarea" placeholder="Describe the target audience..." value={description} onChange={(e) => setDescription(e.target.value)} />
               </div>
-
-              {error && (
-                <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "0" }}>
-                  ⚠️ {error}
-                </p>
-              )}
-
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn-primary" type="submit" style={{ minWidth: "160px" }} disabled={creating}>
+              {error && <p className="error-text">⚠️ {error}</p>}
+              <div className="form-actions">
+                <button className="btn-primary" type="submit" disabled={creating}>
                   {creating ? "Processing..." : "Create Form Space"}
                 </button>
               </div>

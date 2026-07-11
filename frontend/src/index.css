@@ -109,3 +109,69 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* src/index.css */
+
+/* Fix text visibility and background */
+body {
+    background-color: #f3f4f6; /* Soft light grey background */
+    color: #1f2937;            /* Dark grey text for readability */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    color: #111827; /* Darker heading color */
+}
+
+/* Base style for form containers to make them look nice */
+.form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+/* Professional input style */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: white;
+    color: #333;
+    box-sizing: border-box; /* Ensures padding doesn't break layout */
+}
+
+/* Add to index.css */
+
+/* Consistent button style */
+.primary-button {
+    background-color: #7c3aed; /* A nice purple that matches your Open Canvas buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.primary-button:hover {
+    background-color: #6d28d9;
+}
+
+/* Style the textarea to match inputs */
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-family: inherit;
+    min-height: 100px;
+}

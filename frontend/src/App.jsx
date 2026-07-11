@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
 import FormBuilder from "./pages/FormBuilder";
+import PublicFormView from "./pages/PublicFormView";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/builder" element={<FormBuilder />} />
          <Route path="/builder/:formId" element={<FormBuilder />} />
+         <Route path="/f/:token" element={<PublicFormView />} />
       </Routes>
     </BrowserRouter>
   );

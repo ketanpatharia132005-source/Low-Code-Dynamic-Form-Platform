@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 
 from app.database import SessionLocal
 from app.dependencies import get_current_user
@@ -12,6 +13,9 @@ from app.models.field import Field
 from app.schemas.form import FieldCreate, FieldUpdate
 from app.schemas.form import FieldReorderItem
 from app.models.form_version import FormVersion
+
+from app.models.form import FormShareLink
+from app.schemas.form import LinkGenerationResponse, PublicFormResponse
     
 router = APIRouter(
     prefix="/forms",
@@ -532,5 +536,88 @@ def get_form(
             status_code=404,
             detail="Form not found"
         )
+
+    return form
+
+@router.post("/{form_id}/generate-link", response_model=LinkGenerationResponse)
+def generate_shareable_link(
+    form_id: int, 
+    db: Session = Depends(get_db), 
+    current_user = Depends(get_current_user) # Adjust if your auth dependency is named differently
+):
+    
+    form = db.query(Form).filter(Form.id == form_id, Form.owner_id == current_user.id).first()
+    if not form:
+        raise HTTPException(status_code=404, detail="Form not found")
+
+   
+    published_version = db.query(FormVersion).filter(
+        FormVersion.form_id == form_id, 
+        FormVersion.status == "published"
+    ).order_by(FormVersion.version_number.desc()).first()
+
+    if not published_version:
+        raise HTTPException(status_code=400, detail="Form must be published first.")
+
+    
+    existing_link = db.query(FormShareLink).filter(
+        FormShareLink.form_version_id == published_version.id
+    ).first()
+
+    if existing_link:
+        token = existing_link.link_token
+    else:
+        
+        new_link = FormShareLink(form_id=form_id, form_version_id=published_version.id)
+        db.add(new_link)
+        db.commit()
+        db.refresh(new_link)
+        token = new_link.link_token
+
+    return {
+        "link_token": token,
+        "form_version_id": published_version.id,
+        "url": f"http://localhost:5173/f/{token}" # Adjust the port if your React app runs on a different one
+    }
+
+
+@router.get("/public/{link_token}", response_model=PublicFormResponse)
+def get_public_form(link_token: str, db: Session = Depends(get_db)):
+    
+    share_link = db.query(FormShareLink).filter(FormShareLink.link_token == link_token).first()
+    if not share_link:
+        raise HTTPException(status_code=404, detail="Link not found.")
+
+    
+    form = db.query(Form).filter(Form.id == share_link.form_id).first()
+    form_version = db.query(FormVersion).filter(FormVersion.id == share_link.form_version_id).first()
+    
+
+    fields = db.query(Field).filter(
+        Field.form_version_id == share_link.form_version_id
+    ).order_by(Field.order).all()
+
+    return {
+        "form": {"id": form.id, "title": form.title, "description": form.description},
+        "fields": [field.__dict__ for field in fields], 
+        "version": form_version.version_number
+    }
+
+@router.get("/share/{token}", response_model=FormResponse)
+def get_form_by_token(token: str, db: Session = Depends(get_db)):
+    
+    share_link = db.query(FormShareLink).filter(FormShareLink.link_token == token).first()
+    
+    if not share_link:
+        raise HTTPException(status_code=404, detail="Form link not found")
+
+    
+    form = db.query(Form).options(
+        joinedload(Form.fields)
+    ).filter(Form.id == share_link.form_id).first()
+    
+    if not form:
+        raise HTTPException(status_code=404, detail="Form not found")
+
 
     return form

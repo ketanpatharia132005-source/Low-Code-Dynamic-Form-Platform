@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
 from pydantic import BaseModel
 
@@ -69,3 +69,13 @@ class FieldReorderItem(BaseModel):
 
     class Config:
         from_attributes = True
+
+class LinkGenerationResponse(BaseModel):
+    link_token: str
+    form_version_id: int
+    url: str
+
+class PublicFormResponse(BaseModel):
+    form: Dict[str, Any]
+    fields: List[Dict[str, Any]]
+    version: int

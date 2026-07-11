@@ -68,22 +68,18 @@ body {
 }
 
 .builder-container {
-  display: grid;
-  grid-template-columns: 250px 1fr 300px;
-  gap: 20px;
-
-  height: calc(100vh - 110px);
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 150px); /* This makes it exactly fit your screen height minus the header/toolbar */
+    overflow: hidden; /* Prevents the whole page from scrolling */
+    gap: 20px;
+    padding: 20px;
 }
 
-.field-palette,
-.canvas,
-.properties-panel {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+/* Ensure your Canvas, Palette, and Properties divs have these classes or styles */
+.field-palette { flex: 1; }
+.builder-canvas { flex: 2; } /* Canvas is usually wider */
+.properties-panel { flex: 1; }
 
 .canvas {
   overflow-y: auto;
@@ -533,3 +529,68 @@ body {
 }
 .btn-primary:hover { background-color: var(--primary-hover); }
 .btn-primary:active { transform: scale(0.98); }
+
+/* Container for the toolbar */
+.builder-toolbar {
+    display: flex;
+    justify-content: space-between; /* Pushes buttons to the right, info to the left */
+    align-items: flex-start;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    gap: 20px; /* Space between the text info and the buttons */
+    flex-wrap: wrap; /* Allows wrapping if screen is small */
+}
+
+/* Container for Title, Description, and Status */
+.builder-header-info {
+    display: flex;
+    flex-direction: column; /* Stacks everything vertically */
+    gap: 8px; /* GUARANTEES space between elements */
+    max-width: 60%;
+}
+
+.builder-header-info h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    color: #111827;
+}
+
+.builder-description {
+    margin: 0;
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Container for Buttons */
+.builder-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Buttons won't squish */
+    align-items: center;
+}
+
+/* 1. Force the wrapper to fill the space beneath the header/history */
+.builder-layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 350px); /* Adjust '350px' based on your header/history height */
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden; /* Prevents the whole page from getting taller */
+}
+
+/* 2. Style the columns to be scrollable */
+.builder-column {
+  background: white;
+  border-radius: 8px;
+  overflow-y: auto; /* Adds scrollbar only inside this column */
+  height: 100%;     /* Fills the builder wrapper height */
+  border: 1px solid #e5e7eb;
+}
+
+/* 3. Assign widths to columns */
+.palette-column { flex: 1; min-width: 200px; }
+.canvas-column { flex: 2; min-width: 400px; }
+.properties-column { flex: 1; min-width: 250px; }
