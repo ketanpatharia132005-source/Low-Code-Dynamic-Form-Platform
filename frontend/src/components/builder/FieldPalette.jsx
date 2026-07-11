@@ -1,88 +1,59 @@
 import { useDraggable } from "@dnd-kit/core";
 
-const fieldTypes = [
-  {
-    type: "text",
-    label: "Text Field",
-  },
-  {
-    type: "number",
-    label: "Number Field",
-  },
-  {
-    type: "email",
-    label: "Email Field",
-  },
-  {
-    type: "password",
-    label: "Password Field",
-  },
-  {
-    type: "date",
-    label: "Date Field",
-  },
-  {
-    type: "tel",
-    label: "Phone Field",
-  },
-  {
-    type: "textarea",
-    label: "Text Area",
-  },
-  {
-    type: "checkbox",
-    label: "Checkbox",
-  },
-  {
-    type: "select",
-    label: "Dropdown",
-  },
-  {
-    type: "radio",
-    label: "Radio Group",
-  },
-];
-
-function DraggablePaletteItem({ field, addField }) {
+function DraggablePaletteItem({ fieldType, addField, disabled }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `palette-${field.type}`,
+    id: `palette-${fieldType.type}`,
     data: {
       fromPalette: true,
-      fieldType: field.type,
+      fieldType: fieldType.type,
     },
   });
 
   const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
+    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
     : undefined;
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="field-item"
-      onClick={() => addField(field.type)}
+      className={disabled ? "field-item disabled" : "field-item"}
+      onClick={() => {
+        if (!disabled) addField(fieldType.type);
+      }}
       {...listeners}
       {...attributes}
     >
-      {field.label}
+      {fieldType.label}
     </div>
   );
 }
 
-function FieldPalette({ addField }) {
+function FieldPalette({ fieldTypes, loading, addField, disabled }) {
   return (
     <div className="field-palette">
       <h3>Field Palette</h3>
 
+      {loading && <p>Loading field types...</p>}
+      {!loading && fieldTypes.length === 0 && (
+        <p className="field-hint">
+          Could not load field types. Is the backend running?
+        </p>
+      )}
+
+      {disabled && (
+  <p className="field-hint">
+    Published or archived forms cannot be edited.
+  </p>
+)}
+
       <div className="field-list">
-        {fieldTypes.map((field) => (
+        {fieldTypes.map((fieldType) => (
           <DraggablePaletteItem
-            key={field.type}
-            field={field}
+            key={fieldType.type}
+            fieldType={fieldType}
             addField={addField}
+            disabled={disabled}
           />
         ))}
       </div>

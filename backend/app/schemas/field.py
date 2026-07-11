@@ -60,6 +60,8 @@ class FieldTypeResponse(BaseModel):
         "file",
         "rating",
     ]
+    label: str
+    config: dict
 
 class FieldUpdate(BaseModel):
     type: Optional[

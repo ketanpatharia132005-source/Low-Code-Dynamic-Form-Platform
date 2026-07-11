@@ -9,7 +9,7 @@ function Header() {
 
       <nav>
         <Link to="/dashboard">Dashboard</Link>
-        <Link to="/builder">Form Builder</Link>
+        <Link to="/dashboard">Forms</Link>
       </nav>
     </header>
   );

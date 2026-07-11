@@ -1,0 +1,124 @@
+.dashboard-page {
+  text-align: left;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 8px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.create-form-panel,
+.forms-panel {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.create-form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create-form-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.create-form-panel input,
+.create-form-panel textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font: inherit;
+  padding: 10px;
+}
+
+.create-form-panel textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.create-form-panel button,
+.form-row button {
+  border: 0;
+  border-radius: 6px;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.form-row .danger-button {
+  background: #dc2626;
+}
+
+.form-row .danger-button:hover {
+  background: #b91c1c;
+}
+
+.create-form-panel button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.dashboard-error {
+  color: #b91c1c;
+}
+
+.forms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.form-row {
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.form-row h3 {
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.form-row p {
+  margin: 0 0 6px;
+}
+
+.form-row span,
+.empty-state {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

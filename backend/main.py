@@ -7,6 +7,7 @@ from app.models.user import User
 from app.routers import field_types
 from app.models.form import Form
 from app.models.field import Field
+from app.models.form_version import FormVersion
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import forms
 

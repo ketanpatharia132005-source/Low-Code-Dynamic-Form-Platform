@@ -7,13 +7,7 @@ function SortableField({
   selectedFieldId,
   setSelectedFieldId,
 }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: field.id,
   });
 
@@ -29,15 +23,13 @@ function SortableField({
       {...attributes}
       {...listeners}
       className={
-        selectedFieldId === field.id
-          ? "canvas-field selected"
-          : "canvas-field"
+        selectedFieldId === field.id ? "canvas-field selected" : "canvas-field"
       }
       onClick={() => setSelectedFieldId(field.id)}
     >
       <label>
         {field.label}
-        {field.required && <span style={{color: "red"}}>*</span>}     
+        {field.config?.required && <span style={{ color: "red" }}>*</span>}
       </label>
 
       {renderField(field)}

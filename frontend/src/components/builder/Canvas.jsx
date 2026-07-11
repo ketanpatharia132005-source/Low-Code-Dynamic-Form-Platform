@@ -4,123 +4,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
+import { renderField } from "./FieldRenderer";
 import SortableField from "./SortableField";
 
-function renderField(field) {
-  switch (field.type) {
-    case "text":
-      return (
-        <input
-          type="text"
-          placeholder={field.placeholder}
-        />
-      );
-
-    case "textarea":
-      return (
-        <textarea
-          placeholder={field.placeholder}
-          rows="4"
-        />
-      );
-
-    case "email":
-      return (
-        <input
-          type="email"
-          placeholder={field.placeholder}
-        />
-      );
-
-    case "password":
-      return (
-        <input
-          type="password"
-          placeholder={field.placeholder}
-        />
-      );
-
-    case "number":
-      return (
-        <input
-          type="number"
-          placeholder={field.placeholder}
-        />
-      );
-
-    case "date":
-      return <input type="date" />;
-
-    case "tel":
-      return (
-         <input
-           type="tel"
-           placeholder={field.placeholder}
-      />
-  );
-      
-
-    case "checkbox":
-      return <input type="checkbox" />;
-
-    case "radio":
-  return (
-    <div>
-      <label>
-        <input
-          type="radio"
-          name={`radio-${field.id}`}
-        />
-        Option 1
-      </label>
-
-      <br />
-
-      <label>
-        <input
-          type="radio"
-          name={`radio-${field.id}`}
-        />
-        Option 2
-      </label>
-    </div>
-  );
-
-    case "select":
-      return (
-        <select>
-          <option>Select...</option>
-        </select>
-      );
-
-    default:
-      return (
-        <input
-          type="text"
-          placeholder={field.placeholder}
-        />
-      );
-  }
-}
-
-function Canvas({
-  fields,
-  selectedFieldId,
-  setSelectedFieldId,
-  updateFieldValue,
-}) {
-  const { setNodeRef, isOver } = useDroppable({
-    id: "canvas-drop-zone",
-  });
+function Canvas({ fields, selectedFieldId, setSelectedFieldId }) {
+  const { setNodeRef, isOver } = useDroppable({ id: "canvas-drop-zone" });
 
   return (
     <div
       ref={setNodeRef}
       className="canvas"
       style={{
-        border: isOver
-          ? "2px dashed #1976d2"
-          : "2px dashed transparent",
+        border: isOver ? "2px dashed #1976d2" : "2px dashed transparent",
       }}
     >
       <h2>Form Canvas</h2>
@@ -139,7 +34,6 @@ function Canvas({
               renderField={renderField}
               selectedFieldId={selectedFieldId}
               setSelectedFieldId={setSelectedFieldId}
-              updateFieldValue={updateFieldValue}
             />
           ))}
         </SortableContext>

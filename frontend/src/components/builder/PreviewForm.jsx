@@ -1,113 +1,71 @@
+function renderPreviewField(field) {
+  const { field_type, config = {} } = field;
+
+  switch (field_type) {
+    case "text":
+      return <input type="text" placeholder={config.placeholder || ""} disabled />;
+
+    case "number":
+      return <input type="number" disabled />;
+
+    case "email":
+      return <input type="email" placeholder={config.placeholder || ""} disabled />;
+
+    case "date":
+      return <input type="date" disabled />;
+
+    case "dropdown":
+      return (
+        <select disabled>
+          <option value="">Select...</option>
+          {(config.options || []).map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      );
+
+    case "checkbox":
+      return (
+        <div className="checkbox-group">
+          {(config.options || []).map((opt) => (
+            <label key={opt} className="checkbox-option">
+              <input type="checkbox" disabled /> {opt}
+            </label>
+          ))}
+        </div>
+      );
+
+    case "file":
+      return <input type="file" disabled />;
+
+    case "rating":
+      return (
+        <div className="rating-field">
+          {Array.from({ length: config.scale || 5 }, (_, i) => (
+            <span key={i} className="rating-star">
+              *
+            </span>
+          ))}
+        </div>
+      );
+
+    default:
+      return <input type="text" disabled />;
+  }
+}
+
 function PreviewForm({ fields }) {
-  const renderPreviewField = (field) => {
-    switch (field.type) {
-      case "text":
-        return (
-          <input
-            type="text"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-
-      case "email":
-        return (
-          <input
-            type="email"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-
-      case "password":
-        return (
-          <input
-            type="password"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-
-      case "number":
-        return (
-          <input
-            type="number"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-
-      case "date":
-        return <input type="date" disabled />;
-
-      case "tel":
-        return (
-          <input
-            type="tel"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-
-      case "textarea":
-        return (
-          <textarea
-            placeholder={field.placeholder}
-            rows="4"
-            disabled
-          />
-        );
-
-      case "checkbox":
-        return <input type="checkbox" disabled />;
-
-      case "radio":
-        return (
-          <div>
-            <label>
-              <input type="radio" disabled />
-              Option 1
-            </label>
-            <br />
-            <label>
-              <input type="radio" disabled />
-              Option 2
-            </label>
-          </div>
-        );
-
-      case "select":
-        return (
-          <select disabled>
-            <option>Select...</option>
-          </select>
-        );
-
-      default:
-        return (
-          <input
-            type="text"
-            placeholder={field.placeholder}
-            disabled
-          />
-        );
-    }
-  };
-
   return (
     <div className="preview-container">
       <h2>Form Preview</h2>
 
       {fields.map((field) => (
-        <div
-          key={field.id}
-          className="canvas-field"
-        >
+        <div key={field.id} className="canvas-field">
           <label>
             {field.label}
-            {field.required && (
-              <span style={{ color: "red" }}> *</span>
-            )}
+            {field.config?.required && <span style={{ color: "red" }}> *</span>}
           </label>
 
           {renderPreviewField(field)}
