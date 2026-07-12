@@ -1,0 +1,653 @@
+{
+  "forms": [
+    {
+      "id": 1,
+      "title": "Customer Feedback & Satisfaction Survey",
+      "description": "Gathering critical customer ratings and suggestions to improve our platform services.",
+      "is_active": true,
+      "created_at": "2026-07-05T00:00:00Z",
+      "updated_at": "2026-07-05T00:00:00Z",
+      "versions": [
+        {
+          "id": 101,
+          "form_id": 1,
+          "version_number": 1,
+          "is_published": true,
+          "created_at": "2026-07-05T00:00:00Z",
+          "fields": [
+            {
+              "id": 1001,
+              "form_version_id": 101,
+              "name": "fullname",
+              "label": "Full Name",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "Enter your full name",
+              "order": 0,
+              "options": []
+            },
+            {
+              "id": 1002,
+              "form_version_id": 101,
+              "name": "email",
+              "label": "Email Address",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "you@example.com",
+              "order": 1,
+              "options": []
+            },
+            {
+              "id": 1003,
+              "form_version_id": 101,
+              "name": "rating",
+              "label": "Overall Rating",
+              "field_type": "select",
+              "is_required": true,
+              "placeholder": "Select a rating",
+              "order": 2,
+              "options": [
+                {
+                  "id": 5001,
+                  "field_id": 1003,
+                  "label": "⭐⭐⭐⭐⭐ Outstanding",
+                  "value": "5",
+                  "order": 0
+                },
+                {
+                  "id": 5002,
+                  "field_id": 1003,
+                  "label": "⭐⭐⭐⭐ Very Good",
+                  "value": "4",
+                  "order": 1
+                },
+                {
+                  "id": 5003,
+                  "field_id": 1003,
+                  "label": "⭐⭐⭐ Satisfactory",
+                  "value": "3",
+                  "order": 2
+                },
+                {
+                  "id": 5004,
+                  "field_id": 1003,
+                  "label": "⭐⭐ Needs Improvement",
+                  "value": "2",
+                  "order": 3
+                },
+                {
+                  "id": 5005,
+                  "field_id": 1003,
+                  "label": "⭐ Poor",
+                  "value": "1",
+                  "order": 4
+                }
+              ]
+            },
+            {
+              "id": 1004,
+              "form_version_id": 101,
+              "name": "comments",
+              "label": "Detailed Comments & Suggestions",
+              "field_type": "textarea",
+              "is_required": false,
+              "placeholder": "What can we do to make your experience better?",
+              "order": 3,
+              "options": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tech Summit 2026 Registration",
+      "description": "Register your ticket and select sessions for the upcoming Cloud and AI Developers Summit.",
+      "is_active": true,
+      "created_at": "2026-07-05T00:00:00Z",
+      "updated_at": "2026-07-05T00:00:00Z",
+      "versions": [
+        {
+          "id": 102,
+          "form_id": 2,
+          "version_number": 1,
+          "is_published": true,
+          "created_at": "2026-07-05T00:00:00Z",
+          "fields": [
+            {
+              "id": 1005,
+              "form_version_id": 102,
+              "name": "attendee_name",
+              "label": "Attendee Name",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "First and last name",
+              "order": 0,
+              "options": []
+            },
+            {
+              "id": 1006,
+              "form_version_id": 102,
+              "name": "tshirt_size",
+              "label": "T-Shirt Size",
+              "field_type": "radio",
+              "is_required": true,
+              "placeholder": null,
+              "order": 1,
+              "options": [
+                {
+                  "id": 5006,
+                  "field_id": 1006,
+                  "label": "Small (S)",
+                  "value": "S",
+                  "order": 0
+                },
+                {
+                  "id": 5007,
+                  "field_id": 1006,
+                  "label": "Medium (M)",
+                  "value": "M",
+                  "order": 1
+                },
+                {
+                  "id": 5008,
+                  "field_id": 1006,
+                  "label": "Large (L)",
+                  "value": "L",
+                  "order": 2
+                },
+                {
+                  "id": 5009,
+                  "field_id": 1006,
+                  "label": "Extra Large (XL)",
+                  "value": "XL",
+                  "order": 3
+                }
+              ]
+            },
+            {
+              "id": 1007,
+              "form_version_id": 102,
+              "name": "experience_years",
+              "label": "Years of Development Experience",
+              "field_type": "number",
+              "is_required": false,
+              "placeholder": "e.g., 3",
+              "order": 2,
+              "options": []
+            },
+            {
+              "id": 1008,
+              "form_version_id": 102,
+              "name": "dietary_req",
+              "label": "Dietary Requirements",
+              "field_type": "select",
+              "is_required": false,
+              "placeholder": "Select preference",
+              "order": 3,
+              "options": [
+                {
+                  "id": 5010,
+                  "field_id": 1008,
+                  "label": "None (Standard Meal)",
+                  "value": "none",
+                  "order": 0
+                },
+                {
+                  "id": 5011,
+                  "field_id": 1008,
+                  "label": "Vegetarian",
+                  "value": "vegetarian",
+                  "order": 1
+                },
+                {
+                  "id": 5012,
+                  "field_id": 1008,
+                  "label": "Vegan",
+                  "value": "vegan",
+                  "order": 2
+                },
+                {
+                  "id": 5013,
+                  "field_id": 1008,
+                  "label": "Gluten-Free",
+                  "value": "gluten_free",
+                  "order": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Untitled Premium Survey",
+      "description": "Tell us about your preferences to configure your workflow workspace.",
+      "is_active": true,
+      "category": "General",
+      "tags": [],
+      "created_at": "2026-07-07T09:14:06.321Z",
+      "updated_at": "2026-07-07T09:14:06.321Z",
+      "versions": [
+        {
+          "id": 1783415646321,
+          "form_id": 3,
+          "version_number": 1,
+          "is_published": true,
+          "created_at": "2026-07-07T09:14:06.321Z",
+          "fields": [
+            {
+              "id": 1783415646321,
+              "form_version_id": 1783415646321,
+              "name": "fullname",
+              "label": "Full Name",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "e.g. Jane Doe",
+              "validation_rules": {
+                "description": "Please enter your first and last name",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 0,
+              "options": []
+            },
+            {
+              "id": 1783415646322,
+              "form_version_id": 1783415646321,
+              "name": "email",
+              "label": "Work Email",
+              "field_type": "email",
+              "is_required": true,
+              "placeholder": "e.g. jane@company.com",
+              "validation_rules": {
+                "description": "We will send your analytics workflow credentials here",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 1,
+              "options": []
+            },
+            {
+              "id": 1783415646323,
+              "form_version_id": 1783415646321,
+              "name": "untitled_textarea3",
+              "label": "Untitled Textarea",
+              "field_type": "textarea",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 2,
+              "options": []
+            },
+            {
+              "id": 1783415646324,
+              "form_version_id": 1783415646321,
+              "name": "untitled_email4",
+              "label": "Untitled Email",
+              "field_type": "email",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 3,
+              "options": []
+            },
+            {
+              "id": 1783415646325,
+              "form_version_id": 1783415646321,
+              "name": "untitled_number5",
+              "label": "Untitled Number",
+              "field_type": "number",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 4,
+              "options": []
+            },
+            {
+              "id": 1783415646326,
+              "form_version_id": 1783415646321,
+              "name": "untitled_rating6",
+              "label": "Untitled Rating",
+              "field_type": "rating",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 5,
+              "options": []
+            },
+            {
+              "id": 1783415646327,
+              "form_version_id": 1783415646321,
+              "name": "untitled_radio7",
+              "label": "Untitled Radio",
+              "field_type": "radio",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 6,
+              "options": [
+                {
+                  "id": 1783415646427,
+                  "field_id": 1783415646327,
+                  "label": "Option A",
+                  "value": "option_a",
+                  "order": 0
+                },
+                {
+                  "id": 1783415646428,
+                  "field_id": 1783415646327,
+                  "label": "Option B",
+                  "value": "option_b",
+                  "order": 1
+                }
+              ]
+            },
+            {
+              "id": 1783415646328,
+              "form_version_id": 1783415646321,
+              "name": "untitled_checkbox8",
+              "label": "Untitled Checkbox",
+              "field_type": "checkbox",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 7,
+              "options": [
+                {
+                  "id": 1783415646428,
+                  "field_id": 1783415646328,
+                  "label": "Option A",
+                  "value": "option_a",
+                  "order": 0
+                },
+                {
+                  "id": 1783415646429,
+                  "field_id": 1783415646328,
+                  "label": "Option B",
+                  "value": "option_b",
+                  "order": 1
+                }
+              ]
+            },
+            {
+              "id": 1783415646329,
+              "form_version_id": 1783415646321,
+              "name": "untitled_select9",
+              "label": "Untitled Select",
+              "field_type": "select",
+              "is_required": false,
+              "placeholder": "Choose an option...",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 8,
+              "options": [
+                {
+                  "id": 1783415646429,
+                  "field_id": 1783415646329,
+                  "label": "Option A",
+                  "value": "option_a",
+                  "order": 0
+                },
+                {
+                  "id": 1783415646430,
+                  "field_id": 1783415646329,
+                  "label": "Option B",
+                  "value": "option_b",
+                  "order": 1
+                }
+              ]
+            },
+            {
+              "id": 1783415646330,
+              "form_version_id": 1783415646321,
+              "name": "untitled_file10",
+              "label": "Untitled File",
+              "field_type": "file",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 9,
+              "options": []
+            },
+            {
+              "id": 1783415646331,
+              "form_version_id": 1783415646321,
+              "name": "untitled_heading11",
+              "label": "Untitled Heading",
+              "field_type": "heading",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 10,
+              "options": []
+            },
+            {
+              "id": 1783415646332,
+              "form_version_id": 1783415646321,
+              "name": "untitled_paragraph12",
+              "label": "Untitled Paragraph",
+              "field_type": "paragraph",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 11,
+              "options": []
+            },
+            {
+              "id": 1783415646333,
+              "form_version_id": 1783415646321,
+              "name": "untitled_divider13",
+              "label": "Untitled Divider",
+              "field_type": "divider",
+              "is_required": false,
+              "placeholder": "",
+              "validation_rules": {
+                "description": "",
+                "default_value": "",
+                "conditional_rules": []
+              },
+              "order": 12,
+              "options": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "EPA Environmental Assessment & Compliance Form",
+      "description": "Intake assessment form for Environmental Protection Agency facility safety, chemical emissions reporting, and regulatory safety audits.",
+      "is_active": true,
+      "category": "Regulatory Compliance (EPA)",
+      "tags": ["epa", "compliance", "regulatory", "audit"],
+      "created_at": "2026-07-07T10:15:00.000Z",
+      "updated_at": "2026-07-07T10:15:00.000Z",
+      "versions": [
+        {
+          "id": 104,
+          "form_id": 4,
+          "version_number": 1,
+          "is_published": true,
+          "created_at": "2026-07-07T10:15:00.000Z",
+          "fields": [
+            {
+              "id": 1014,
+              "form_version_id": 104,
+              "name": "facility_name",
+              "label": "Industrial Facility Name",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "e.g. Springfield Power Plant",
+              "order": 0,
+              "options": []
+            },
+            {
+              "id": 1015,
+              "form_version_id": 104,
+              "name": "facility_id",
+              "label": "EPA Registry ID (FRS)",
+              "field_type": "text",
+              "is_required": true,
+              "placeholder": "12-digit registry code",
+              "order": 1,
+              "options": []
+            },
+            {
+              "id": 1016,
+              "form_version_id": 104,
+              "name": "compliance_status",
+              "label": "Current Regulatory Compliance Status",
+              "field_type": "radio",
+              "is_required": true,
+              "placeholder": "",
+              "order": 2,
+              "options": [
+                {
+                  "id": 5020,
+                  "field_id": 1016,
+                  "label": "Fully Compliant (No infractions)",
+                  "value": "compliant",
+                  "order": 0
+                },
+                {
+                  "id": 5021,
+                  "field_id": 1016,
+                  "label": "Non-Compliant (Requires corrective plan)",
+                  "value": "non_compliant",
+                  "order": 1
+                },
+                {
+                  "id": 5022,
+                  "field_id": 1016,
+                  "label": "Under Review / Grace Period",
+                  "value": "under_review",
+                  "order": 2
+                }
+              ]
+            },
+            {
+              "id": 1017,
+              "form_version_id": 104,
+              "name": "emissions_co2",
+              "label": "Monthly Carbon Dioxide (CO2) Emissions (Metric Tons)",
+              "field_type": "number",
+              "is_required": true,
+              "placeholder": "e.g. 1420",
+              "order": 3,
+              "options": []
+            },
+            {
+              "id": 1018,
+              "form_version_id": 104,
+              "name": "waste_classification",
+              "label": "Primary Waste Classification",
+              "field_type": "select",
+              "is_required": true,
+              "placeholder": "Select waste stream",
+              "order": 4,
+              "options": [
+                {
+                  "id": 5023,
+                  "field_id": 1018,
+                  "label": "RCRA Hazardous Waste (Class I)",
+                  "value": "hazardous",
+                  "order": 0
+                },
+                {
+                  "id": 5024,
+                  "field_id": 1018,
+                  "label": "Industrial Solid Waste",
+                  "value": "solid",
+                  "order": 1
+                },
+                {
+                  "id": 5025,
+                  "field_id": 1018,
+                  "label": "Municipal / Recyclable Streams",
+                  "value": "municipal",
+                  "order": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "submissions": [
+    {
+      "id": 2001,
+      "form_version_id": 101,
+      "submitted_data": {
+        "fullname": "Sarah Jenkins",
+        "email": "sarah.j@example.com",
+        "rating": "5",
+        "comments": "The visual editor and drag and drop is remarkably smooth and simple! I love the versioning features."
+      },
+      "created_at": "2026-07-05T01:30:00Z"
+    },
+    {
+      "id": 2002,
+      "form_version_id": 101,
+      "submitted_data": {
+        "fullname": "Alex Rivera",
+        "email": "alex.rivera@example.com",
+        "rating": "4",
+        "comments": "Works great. Suggest adding conditional logic triggers."
+      },
+      "created_at": "2026-07-05T02:15:00Z"
+    },
+    {
+      "id": 2003,
+      "form_version_id": 102,
+      "submitted_data": {
+        "attendee_name": "Marcus Vance",
+        "tshirt_size": "M",
+        "experience_years": 5,
+        "dietary_req": "vegan"
+      },
+      "created_at": "2026-07-05T03:00:00Z"
+    }
+  ]
+}
