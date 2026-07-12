@@ -1,0 +1,6 @@
+{
+  "name": "Low-Code Dynamic Form Workflow Platform",
+  "description": "A powerful low-code platform for building dynamic forms, managing multi-version workflows, and collecting submission data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
