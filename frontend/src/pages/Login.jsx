@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import {
+  FiLock,
+  FiMail,
+  FiLayers,
+  FiBarChart2,
+  FiGitBranch,
+  FiCheckCircle,
+} from "react-icons/fi";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,10 +21,9 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log("Login button clicked");
-
     try {
       const formData = new URLSearchParams();
+
       formData.append("username", email);
       formData.append("password", password);
 
@@ -28,41 +36,134 @@ function Login() {
       localStorage.setItem("token", response.data.access_token);
 
       setMessage("Login Successful!");
+
       navigate("/dashboard");
-      console.log(response.data);
     } catch (error) {
-      setMessage("Invalid email or password");
-      console.error(error);
+      setMessage(error.response?.data?.detail || "Login failed");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login-page">
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="login-card">
 
-        <br /><br />
+        <div className="login-header">
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <div className="logo-box">
+            <FiLayers size={28} />
+          </div>
 
-        <br /><br />
+          <h1>Dynamic Form Platform</h1>
 
-        <button type="submit">Login</button>
-      </form>
+          <p>
+            Low-Code Dynamic Form Builder
+          </p>
 
-      <p>{message}</p>
+        </div>
+
+        <div className="login-body">
+
+          <div className="welcome">
+
+            <h2>Welcome Back</h2>
+
+            <p>
+              Sign in to continue to your workspace.
+            </p>
+
+          </div>
+
+          <form onSubmit={handleLogin}>
+
+            <div className="input-group">
+
+              <label>Email Address</label>
+
+              <div className="input-box">
+
+                <FiMail />
+
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
+              </div>
+
+            </div>
+
+            <div className="input-group">
+
+              <label>Password</label>
+
+              <div className="input-box">
+
+                <FiLock />
+
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+              </div>
+
+            </div>
+
+            {message && (
+              <div
+                className={`login-message ${
+                  message === "Login Successful!"
+                    ? "success"
+                    : "error"
+                }`}
+              >
+                {message}
+              </div>
+            )}
+
+            <button type="submit" className="login-btn">
+              Sign In
+            </button>
+
+          </form>
+
+        </div>
+
+        <div className="login-footer">
+
+          <div className="feature">
+
+            <FiCheckCircle />
+
+            Drag & Drop Builder
+
+          </div>
+
+          <div className="feature">
+
+            <FiGitBranch />
+
+            Conditional Logic
+
+          </div>
+
+          <div className="feature">
+
+            <FiBarChart2 />
+
+            Analytics Dashboard
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
   );
 }

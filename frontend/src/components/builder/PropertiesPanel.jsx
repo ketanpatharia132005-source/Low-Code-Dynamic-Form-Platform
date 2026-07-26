@@ -47,14 +47,19 @@ function PropertiesPanel({
   disabled,
 }) {
   if (!selectedField) {
-    return (
-      <div className="properties-panel">
-        <h2>Properties</h2>
-        <p>Select a field to view its properties.</p>
-      </div>
-    );
-  }
+  return (
+    <div className="properties-panel empty-properties">
+      <div className="empty-properties-icon">⚙️</div>
 
+      <h3>No Field Selected</h3>
+
+      <p>
+        Click any field on the canvas to edit its properties
+        and validation settings.
+      </p>
+    </div>
+  );
+}
   const { field_type, config = {} } = selectedField;
   const setConfig = (key, value) => updateFieldConfig(selectedField.id, key, value);
 
@@ -70,10 +75,12 @@ function PropertiesPanel({
 
   return (
     <div className="properties-panel">
-      <h2>Properties</h2>
+       
+       
 
       {readOnlyMessage && <p className="field-hint">{readOnlyMessage}</p>}
 
+      <h3 className="section-title">Basic</h3>
       <div className="property-group">
         <label>Field Type</label>
         <input type="text" value={field_type} readOnly />
@@ -88,6 +95,8 @@ function PropertiesPanel({
           onChange={(e) => updateField(selectedField.id, "label", e.target.value)}
         />
       </div>
+
+      <h3 className="section-title">Configuration</h3>
 
       {(field_type === "text" || field_type === "email") && (
         <div className="property-group">
@@ -143,6 +152,9 @@ function PropertiesPanel({
               }
             />
           </div>
+
+          <h3 className="section-title">Validation</h3>
+
           <div className="property-group">
             <label>
               <input
@@ -238,19 +250,31 @@ function PropertiesPanel({
         </label>
       </div>
 
-      {selectedField.dirty && <p className="unsaved-indicator">Unsaved changes</p>}
+      <h3 className="section-title">Actions</h3>
 
+      {selectedField.dirty && (
+        <p className="unsaved-indicator">
+           ⚠️ You have unsaved changes
+        </p>
+      )}
       <button
-        className="save-btn"
-        onClick={() => saveField(selectedField.id)}
-        disabled={disabled || !selectedField.dirty}
+  className={`save-btn ${!selectedField.dirty ? "saved" : ""}`}
+  type="button"
+  disabled={disabled}
+  onClick={() => saveField(selectedField.id)}
+>
+  {selectedField.dirty ? "💾 Save Changes" : "✅ Saved"}
+</button>
+      <button
+         className="delete-btn"
+         type="button"
+         disabled={disabled}
+         onClick={confirmDelete}
       >
-        Save
+         🗑 Delete Field
       </button>
 
-      <button className="delete-btn" onClick={confirmDelete} disabled= {disabled}>
-        Delete Field
-      </button>
+      
     </div>
   );
 }

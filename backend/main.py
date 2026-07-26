@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI
 from app.database import engine
 from app.base import Base
@@ -12,10 +13,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import forms
 
 
+
+
 app = FastAPI(
     title="Low-Code Dynamic Form Platform",
     version="1.0.0"
 )
+@app.get("/canary-test-12345")
+def canary():
+    return {"proof": "this file is really running"}
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,6 +36,7 @@ app.include_router(user.router)
 
 app.include_router(field_types.router)
 app.include_router(forms.router)
+
 
 @app.get("/")
 def root():

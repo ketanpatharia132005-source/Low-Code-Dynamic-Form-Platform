@@ -5,7 +5,9 @@ import Dashboard from "./pages/Dashboard";
 
 import FormBuilder from "./pages/FormBuilder";
 import PublicFormView from "./pages/PublicFormView";
-
+import FormResponses from "./pages/FormResponses";
+import Analytics from "./pages/Analytics";
+import SubmissionSuccess from "./pages/SubmissionSuccess";
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +16,15 @@ function App() {
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/builder" element={<FormBuilder />} />
          <Route path="/builder/:formId" element={<FormBuilder />} />
+         <Route path="/responses/:formId" element={<FormResponses />} />
+         <Route path="/analytics" element={<Analytics />} />
+         <Route path="/submission-success"
+                element={<SubmissionSuccess />}
+          />
+
+
          <Route path="/f/:token" element={<PublicFormView />} />
+         
       </Routes>
     </BrowserRouter>
   );

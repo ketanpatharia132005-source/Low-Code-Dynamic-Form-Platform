@@ -26,7 +26,7 @@ SECRET_KEY = "your_super_secret_key_change_this"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/users/login"
+    tokenUrl="/api/v1/users/login"
 )
 
 

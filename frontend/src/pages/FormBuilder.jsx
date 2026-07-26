@@ -2,6 +2,8 @@ import { Link, useParams } from "react-router-dom";
 
 import Layout from "../components/layout/Layout";
 import BuilderLayout from "../components/builder/BuilderLayout";
+import RuleBuilder from "../components/builder/RuleBuilder";
+
 
 function FormBuilder() {
   const { formId } = useParams();

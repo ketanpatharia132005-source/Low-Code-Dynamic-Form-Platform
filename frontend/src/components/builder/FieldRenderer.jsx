@@ -1,17 +1,21 @@
 import React from "react";
-
-export function renderField(field) {
+import axios from "axios";
+export function renderField(
+  field,
+  value = "",
+  onChange = () => {},
+  showLabel = true,
+  error = null,
+  setFieldErrors = () => {}
+) {
   if (!field) return null;
 
-  // 1. DEBUG LOG: Open your browser inspect console (F12) to see exactly what keys your backend is sending!
-  console.log("[DEBUG FieldRenderer] Received field payload:", field);
+ 
 
-  // 2. SMART MAPPING: Extract values checking both camelCase and snake_case properties
   const fieldType = field.field_type || field.type || "text";
   const labelText = field.label || field.field_label || field.title || "";
-  const isRequired = field.required || field.is_required || false;
+  
 
-  // 3. CONFIG EXTRACTOR: Handle raw JSON objects or stringified SQLite text columns cleanly
   let parsedConfig = {};
   if (field.config) {
     if (typeof field.config === "string") {
@@ -24,8 +28,11 @@ export function renderField(field) {
       parsedConfig = field.config;
     }
   }
+  const isRequired =
+  field.required === true ||
+  field.is_required === true ||
+  parsedConfig.required === true;
 
-  // 4. PROPERTY RESOLUTION: Scan all common data spots for placeholders and options
   const placeholderText = parsedConfig.placeholder || field.placeholder || field.placeholder_text || "";
   
   let rawOptions = parsedConfig.options || field.options || field.field_options || [];
@@ -47,7 +54,6 @@ export function renderField(field) {
     }
   }
 
-  // 5. INPUT COMPONENT SWITCHBOARD
   const renderInputElements = () => {
     switch (fieldType) {
       case "text":
@@ -55,9 +61,14 @@ export function renderField(field) {
           <input 
             type="text" 
             className="form-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
             placeholder={placeholderText || "Enter text..."} 
             maxLength={parsedConfig.max_length || undefined} 
             required={isRequired}
+            style={{
+              border: error ? "1px solid #dc2626" : undefined,
+            }}
           />
         );
       case "number":
@@ -65,6 +76,8 @@ export function renderField(field) {
           <input 
             type="number" 
             className="form-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
             placeholder={placeholderText || "Enter number..."}
             min={parsedConfig.min ?? undefined} 
             max={parsedConfig.max ?? undefined} 
@@ -77,8 +90,13 @@ export function renderField(field) {
           <input 
             type="email" 
             className="form-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
             placeholder={placeholderText || "Enter email address..."} 
             required={isRequired}
+            style={{
+              border: error ? "1px solid #dc2626" : undefined,
+            }}
           />
         );
       case "date":
@@ -86,6 +104,8 @@ export function renderField(field) {
           <input 
             type="date" 
             className="form-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
             min={parsedConfig.min_date || undefined} 
             max={parsedConfig.max_date || undefined} 
             required={isRequired}
@@ -93,63 +113,246 @@ export function renderField(field) {
         );
       case "dropdown":
         return (
-          <select className="form-select" required={isRequired} defaultValue="">
+          <select 
+            className="form-select" 
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            required={isRequired}
+          >
             <option value="" disabled>Select...</option>
-            {optionsArray.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
+            {optionsArray.map((opt) => {
+              const optionValue =
+                typeof opt === "object" ? opt.value || opt.label : opt;
+
+              const optionLabel =
+                typeof opt === "object" ? opt.label : opt;
+
+            return (
+              <option key={optionValue} value={optionValue}>
+                {optionLabel}
               </option>
-            ))}
+            );
+         })}
           </select>
         );
       case "checkbox":
+        // Checkboxes handle array tracking patterns
+        const currentChecked = Array.isArray(value) ? value : [];
+        const handleCheckboxChange = (optValue) => {
+          if (currentChecked.includes(optValue)) {
+            onChange(currentChecked.filter(item => item !== optValue));
+          } else {
+            onChange([...currentChecked, optValue]);
+          }
+        };
         return (
-          <div className="checkbox-group" style={{ display: "flex", flexDirection: "column", gap: "6px", marginTop: "4px" }}>
-            {optionsArray.map((opt) => (
-              <label key={opt} className="checkbox-option" style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-                <input type="checkbox" name={`checkbox-${field.id}`} value={opt} required={isRequired} />
-                <span style={{ color: "var(--text-main)", fontSize: "0.95rem" }}>{opt}</span>
-              </label>
-            ))}
+          <div className="checkbox-group" style={{ display: "flex", flexDirection: "column", gap: "6px", marginTop: "4px",
+            border: error? "1px solid #dc2626" : "1px solid transparent",
+            borderRadius: "6px",
+            padding: "8px",
+           }}>
+            {optionsArray.map((opt) => {
+  const optionValue =
+    typeof opt === "object" ? opt.value || opt.label : opt;
+
+  const optionLabel =
+    typeof opt === "object" ? opt.label : opt;
+
+  return (
+    <label
+      key={optionValue}
+      className="checkbox-option"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        cursor: "pointer",
+      }}
+    >
+      <input
+        type="checkbox"
+        checked={currentChecked.includes(optionValue)}
+        onChange={() => handleCheckboxChange(optionValue)}
+      />
+
+      <span
+        style={{
+          color: error? "#dc2626" : "var(--text-main)",
+          fontSize: "0.95rem",
+        }}
+      >
+        {optionLabel}
+      </span>
+    </label>
+  );
+})}
           </div>
         );
       case "file":
         return (
-          <input 
-            type="file" 
-            className="form-input"
-            accept={Array.isArray(parsedConfig.allowed_types) ? parsedConfig.allowed_types.join(",") : parsedConfig.allowed_types || undefined} 
+         <input
+           type="file"
+           className="form-input"
+           accept={
+             Array.isArray(parsedConfig.allowed_types) &&
+             parsedConfig.allowed_types.length > 0
+                ? parsedConfig.allowed_types.join(",")
+                : undefined
+            }
+            onChange={async (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+
+        // Validate file type
+              if (
+                Array.isArray(parsedConfig.allowed_types) &&
+                parsedConfig.allowed_types.length > 0
+              ) {
+                const extension = "." + file.name.split(".").pop().toLowerCase();
+
+                const allowed = parsedConfig.allowed_types.map((type) =>
+                  type.toLowerCase()
+                );
+
+                if (!allowed.includes(extension)) {
+                  setFieldErrors((prev) => ({
+                    ...prev,
+                    [String(field.id)]: {
+                      message: `Invalid file type. Allowed: ${allowed.join(",")}`, 
+                    },
+                  }));
+                  
+                  e.target.value = "";
+                  return;
+                }
+              }
+
+              setFieldErrors((prev) => {
+                const updated = { ...prev };
+                delete updated[String(field.id)];
+                return updated;
+              });
+
+              // Validate file size
+              const maxSizeMB = parsedConfig.max_size_mb || 10;
+
+              if (file.size > maxSizeMB * 1024 * 1024) {
+                setFieldErrors((prev) => ({
+                  ...prev,
+                  [String(field.id)]: {
+                    message: `File size must not exceed ${maxSizeMB} MB.`,
+                  },
+                }));
+                e.target.value = "";
+                return;
+             }
+
+             setFieldErrors((prev) => {
+              const updated = {...prev};
+              delete updated[String(field.id)];
+              return updated;
+             });
+
+             try {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const response = await axios.post(
+                  "http://localhost:8001/api/v1/files/upload",
+                  formData,
+                  {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                  }
+                );
+
+                console.log("Upload response:", response.data);
+
+                // Store only the returned file_key
+                onChange(response.data.file_key);
+
+                } catch (error) {
+                  console.error("File upload failed:", error);
+
+                  setFieldErrors((prev) => ({
+                    ...prev,
+                    [String(field.id)]: {
+                      message: "File upload failed. Please try again.",
+                    },
+                  }));
+
+                  e.target.value = "";
+                }
+              }}
             required={isRequired}
           />
-        );
+      );
+    
       case "rating":
         return (
           <div className="rating-field" style={{ display: "flex", gap: "6px", fontSize: "1.35rem", color: "#eab308", marginTop: "4px" }}>
-            {Array.from({ length: parsedConfig.scale || 5 }, (_, i) => (
-              <span key={i} className="rating-star">★</span>
-            ))}
+            {Array.from({ length: parsedConfig.scale || 5 }, (_, i) => {
+              const starRating = i + 1;
+              return (
+                <span 
+                  key={i} 
+                  className="rating-star" 
+                  style={{ cursor: 'pointer', color: starRating <= value ? '#eab308' : '#cbd5e1' }}
+                  onClick={() => onChange(starRating)}
+                >
+                  ★
+                </span>
+              );
+            })}
           </div>
         );
+      case "textarea":
+  return (
+    <textarea
+      className="form-input"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholderText || "Enter your response..."}
+      rows={parsedConfig.rows || 4}
+      maxLength={parsedConfig.max_length || undefined}
+      required={isRequired}
+    />
+  );
+        
       default:
-        return <input type="text" className="form-input" />;
+        return <input type="text" className="form-input" value={value} onChange={(e) => onChange(e.target.value)} />;
     }
   };
 
   return (
     <div className="form-field-wrapper" style={{ marginBottom: "24px", textAlign: "left" }}>
-      {/* Explicitly rendering labels above the inputs */}
-      <label className="form-label" style={{ display: "block", fontWeight: "600", marginBottom: "8px", color: "var(--text-main)" }}>
-        {labelText || "Untitled Question"} 
-        {isRequired && <span style={{ color: "#ef4444", marginLeft: "2px" }}>*</span>}
-      </label>
-      
+      {showLabel && (
+  <label
+    className="form-label"
+    style={{
+      display: "block",
+      fontWeight: "600",
+      marginBottom: "8px",
+      color: "var(--text-main)",
+    }}
+  >
+    {labelText || "Untitled Question"}
+
+    {isRequired && (
+      <span style={{ color: "#ef4444", marginLeft: "2px" }}>
+        *
+      </span>
+    )}
+  </label>
+)}
       {renderInputElements()}
     </div>
   );
 }
 
-const FieldRenderer = ({ field }) => {
-  return renderField(field);
+const FieldRenderer = ({ field, value, onChange, error, setFieldErrors, }) => {
+  return renderField(field, value, onChange, true, error, setFieldErrors);
 };
 
 export default FieldRenderer;

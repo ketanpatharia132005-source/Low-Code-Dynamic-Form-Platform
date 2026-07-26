@@ -2,11 +2,20 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import joinedload
 
+from app.services.validation import validate_submission
+from app.models.form_version import FormVersion
+import uuid
+
 from app.database import SessionLocal
 from app.dependencies import get_current_user
 from app.models.user import User
 from app.models.form import Form
-from app.schemas.form import FormCreate, FormResponse, FormVersionResponse
+from app.schemas.form import (
+    FormCreate,
+    FormResponse,
+    FormVersionResponse,
+    SubmissionResponse,
+)
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.models.field import Field
@@ -16,6 +25,9 @@ from app.models.form_version import FormVersion
 
 from app.models.form import FormShareLink
 from app.schemas.form import LinkGenerationResponse, PublicFormResponse
+from app.models.submission import Submission
+from sqlalchemy import func
+from app.models.file_storage import FileStorage
     
 router = APIRouter(
     prefix="/forms",
@@ -287,6 +299,113 @@ def get_form_versions(
 
     return versions
 
+@router.get(
+    "/{form_id}/submissions",
+    response_model=list[SubmissionResponse],
+)
+def get_form_submissions(
+    form_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # Verify ownership of the form
+    form = (
+        db.query(Form)
+        .filter(
+            Form.id == form_id,
+            Form.owner_id == current_user.id,
+        )
+        .first()
+    )
+
+    if not form:
+        raise HTTPException(
+            status_code=404,
+            detail="Form not found",
+        )
+
+    # Get all versions of this form
+    version_ids = [
+        version.id
+        for version in (
+            db.query(FormVersion.id)
+            .filter(FormVersion.form_id == form_id)
+            .all()
+        )
+    ]
+
+    if not version_ids:
+        return []
+
+    submissions = (
+        db.query(Submission)
+        .filter(Submission.form_version_id.in_(version_ids))
+        .order_by(Submission.created_at.desc())
+        .all()
+    )
+
+    # Build lookup from published snapshots
+    version_lookup = {
+        version.id: version
+        for version in db.query(FormVersion)
+        .filter(FormVersion.id.in_(version_ids))
+        .all()
+    }
+
+    response = []
+
+    for submission in submissions:
+
+        version = version_lookup.get(submission.form_version_id)
+
+        field_labels = {}
+
+        if version and version.snapshot:
+            for field in version.snapshot.get("fields", []):
+                field_labels[str(field["id"])] = field["label"]
+
+        enriched = []
+
+        for item in submission.submitted_data:
+            field_id = str(item.get("field_id"))
+
+            value = item.get("value")
+
+            display_name = None
+            if isinstance(value, str):
+                file_record=(
+                    db.query(FileStorage)
+                    .filter(FileStorage.file_key == value)
+                    .first()
+                )
+
+                if file_record:
+                    display_name= file_record.original_name
+
+            enriched.append(
+                {
+                    "field_id": field_id,
+                    "field_label": field_labels.get(
+                        field_id,
+                        f"Field {field_id}",
+                    ),
+                    "value": item.get("value"),
+                    "display_name": display_name,
+                }
+            )
+
+        response.append(
+            SubmissionResponse(
+                id=submission.id,
+                form_version_id=submission.form_version_id,
+                created_at=submission.created_at,
+                submitted_data=enriched,
+            )
+        )
+
+    return response
+
+
 @router.post("/{form_id}/new-draft")
 def edit_as_new_draft(
     form_id: int,
@@ -489,6 +608,70 @@ def get_forms(
 
     return forms
 
+@router.get("/dashboard/stats")
+def get_dashboard_stats(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # Total forms owned by the current user
+    total_forms = (
+        db.query(Form)
+        .filter(Form.owner_id == current_user.id)
+        .count()
+    )
+
+    # Published forms
+    published_forms = (
+        db.query(Form)
+        .filter(
+            Form.owner_id == current_user.id,
+            Form.status == "published",
+        )
+        .count()
+    )
+
+    # All form IDs owned by current user
+    form_ids = [
+        form.id
+        for form in db.query(Form.id)
+        .filter(Form.owner_id == current_user.id)
+        .all()
+    ]
+
+    total_responses = 0
+
+    if form_ids:
+        version_ids = [
+            version.id
+            for version in db.query(FormVersion.id)
+            .filter(FormVersion.form_id.in_(form_ids))
+            .all()
+        ]
+
+        if version_ids:
+            total_responses = (
+                db.query(Submission)
+                .filter(
+                    Submission.form_version_id.in_(version_ids)
+                )
+                .count()
+            )
+
+    completion_rate = 0
+
+    if total_forms:
+        completion_rate = round(
+            (published_forms / total_forms) * 100,
+            2,
+        )
+
+    return {
+        "total_forms": total_forms,
+        "published_forms": published_forms,
+        "total_responses": total_responses,
+        "completion_rate": completion_rate,
+    }
+
 
 @router.delete("/{form_id}", status_code=204)
 def delete_form(
@@ -621,3 +804,186 @@ def get_form_by_token(token: str, db: Session = Depends(get_db)):
 
 
     return form
+
+@router.post("/share/{token}/submit")
+def submit_public_form(
+    token: str,
+    payload: dict,
+    db: Session = Depends(get_db),
+):
+    # Find the share link
+    share_link = (
+        db.query(FormShareLink)
+        .filter(FormShareLink.link_token == token)
+        .first()
+    )
+
+    if not share_link:
+        raise HTTPException(
+            status_code=404,
+            detail="Form link not found",
+        )
+
+    # Get the published form version
+    version = (
+        db.query(FormVersion)
+        .filter(FormVersion.id == share_link.form_version_id)
+        .first()
+    )
+
+    if not version:
+        raise HTTPException(
+            status_code=404,
+            detail="Published form version not found",
+        )
+
+    snapshot = version.snapshot or {}
+    fields = snapshot.get("fields", [])
+
+    # Convert frontend responses list into the format expected by validate_submission
+    responses = payload.get("responses", [])
+
+    submitted_data = {}
+    for item in responses:
+        submitted_data[str(item.get("field_id"))] = item.get("value")
+
+    # Run backend validation
+    errors = validate_submission(fields, submitted_data)
+
+    if errors:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "message": "Validation failed",
+                "errors": errors,
+            },
+        )
+
+    # Save original response format
+    submission = Submission(
+        response_id=f"resp_{uuid.uuid4().hex[:10]}",
+        form_version_id=share_link.form_version_id,
+        submitted_data=responses,
+    )
+
+    db.add(submission)
+    db.commit()
+    db.refresh(submission)
+
+    return {
+        "success": True,
+        "message": "Thank you! Your response has been recorded.",
+        "submission_id": submission.id,
+        "response_id": submission.response_id,
+        "submitted_at": submission.created_at.isoformat(),
+        "form_version_id": submission.form_version_id,
+        "summary": {
+            "fields_submitted": len(responses),
+            "files_uploaded": sum(
+                1
+                for item in responses
+                if isinstance(item.get("value"), str)
+                and "." in item.get("value")
+            ),
+        },
+    }
+
+@router.get("/analytics/details")
+def get_analytics_details(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # -----------------------------
+    # All Forms
+    # -----------------------------
+    forms = (
+        db.query(Form)
+        .filter(Form.owner_id == current_user.id)
+        .order_by(Form.created_at.desc())
+        .all()
+    )
+
+    all_forms = []
+
+    for form in forms:
+        response_count = (
+            db.query(Submission)
+            .join(
+                FormVersion,
+                Submission.form_version_id == FormVersion.id
+            )
+            .filter(FormVersion.form_id == form.id)
+            .count()
+        )
+
+        all_forms.append(
+            {
+                "id": form.id,
+                "title": form.title,
+                "description": form.description,
+                "status": form.status,
+                "created_at": form.created_at,
+                "responses": response_count,
+            }
+        )
+
+    # -----------------------------
+    # Published Forms
+    # -----------------------------
+    published_forms = [
+        form for form in all_forms
+        if form["status"] == "published"
+    ]
+
+    # -----------------------------
+    # Response Summary
+    # -----------------------------
+    response_summary = [
+        {
+            "id": form["id"],
+            "title": form["title"],
+            "responses": form["responses"],
+        }
+        for form in all_forms
+    ]
+
+    # -----------------------------
+    # Completion Stats
+    # -----------------------------
+    total_forms = len(all_forms)
+    published_count = len(published_forms)
+
+    draft_count = len(
+        [
+            form
+            for form in all_forms
+            if form["status"] == "draft"
+        ]
+    )
+
+    archived_count = len(
+        [
+            form
+            for form in all_forms
+            if form["status"] == "archived"
+        ]
+    )
+
+    completion_rate = (
+        round((published_count / total_forms) * 100, 2)
+        if total_forms
+        else 0
+    )
+
+    return {
+        "all_forms": all_forms,
+        "published_forms": published_forms,
+        "responses": response_summary,
+        "completion": {
+            "total_forms": total_forms,
+            "published_forms": published_count,
+            "draft_forms": draft_count,
+            "archived_forms": archived_count,
+            "completion_rate": completion_rate,
+        },
+    }

@@ -29,3 +29,9 @@ class FormVersion(Base):
         "Form",
         back_populates="versions"
     )
+
+    submissions = relationship(
+    "Submission",
+    back_populates="form_version",
+    cascade="all, delete-orphan",
+)

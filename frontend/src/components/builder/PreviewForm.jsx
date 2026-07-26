@@ -1,74 +1,133 @@
-function renderPreviewField(field) {
-  const { field_type, config = {} } = field;
+import React, { useState } from "react";
 
-  switch (field_type) {
-    case "text":
-      return <input type="text" placeholder={config.placeholder || ""} disabled />;
+// This keeps your existing rendering logic, but adds the visibility filter
+function PreviewForm({ fields = [], rules = [] }) {
+  const [formValues, setFormValues] = useState({});
 
-    case "number":
-      return <input type="number" disabled />;
+  // LOG: See what data is actually arriving in the component
+  console.log("PreviewForm Data - Fields:", fields);
+  console.log("PreviewForm Data - Rules:", rules);
 
-    case "email":
-      return <input type="email" placeholder={config.placeholder || ""} disabled />;
+  const isVisible = (field) => {
+    // 1. Safety check: If no rules, show everything
+    if (!rules || rules.length === 0) return true;
 
-    case "date":
-      return <input type="date" disabled />;
+    // 2. Find rule for this field
+    const fieldId = String(field.id);
+    const relevantRule = rules.find(r => String(r.target_field_id) === fieldId);
 
-    case "dropdown":
-      return (
-        <select disabled>
-          <option value="">Select...</option>
-          {(config.options || []).map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-      );
+    // 3. If no rule for this field, show it
+    if (!relevantRule) return true;
 
-    case "checkbox":
-      return (
-        <div className="checkbox-group">
-          {(config.options || []).map((opt) => (
-            <label key={opt} className="checkbox-option">
-              <input type="checkbox" disabled /> {opt}
-            </label>
-          ))}
-        </div>
-      );
+    // 4. Get the value the user selected for the trigger
+    const triggerVal = formValues[relevantRule.trigger_field_id];
+    
+    // 5. Logic check
+    if (relevantRule.operator === "equals" && String(triggerVal) === String(relevantRule.comparison_value)) {
+        return relevantRule.action === "show";
+    }
+    
+    // If we get here, the rule is not met
+    return relevantRule.action === "hide";
+  };
 
-    case "file":
-      return <input type="file" disabled />;
+  const handleInputChange = (fieldId, value) => {
+    setFormValues(prev => ({ ...prev, [fieldId]: value }));
+  };
 
-    case "rating":
-      return (
-        <div className="rating-field">
-          {Array.from({ length: config.scale || 5 }, (_, i) => (
-            <span key={i} className="rating-star">
-              *
-            </span>
-          ))}
-        </div>
-      );
-
-    default:
-      return <input type="text" disabled />;
-  }
-}
-
-function PreviewForm({ fields }) {
   return (
     <div className="preview-container">
       <h2>Form Preview</h2>
-
-      {fields.map((field) => (
-        <div key={field.id} className="canvas-field">
+      {fields.filter(isVisible).map((field) => (
+        <div key={field.id} className="preview-field">
           <label>
             {field.label}
             {field.config?.required && <span style={{ color: "red" }}> *</span>}
           </label>
+          
+          {/* Use standard HTML input - no "disabled" attribute so you can test it */}
+          {field.field_type === "text" && (
+  <input
+    type="text"
+    placeholder={field.config?.placeholder || ""}
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  />
+)}
 
-          {renderPreviewField(field)}
+{field.field_type === "email" && (
+  <input
+    type="email"
+    placeholder={field.config?.placeholder || ""}
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  />
+)}
+
+{field.field_type === "number" && (
+  <input
+    type="number"
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  />
+)}
+
+{field.field_type === "textarea" && (
+  <textarea
+    placeholder={field.config?.placeholder || ""}
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  />
+)}
+
+{field.field_type === "date" && (
+  <input
+    type="date"
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  />
+)}
+
+{field.field_type === "dropdown" && (
+  <select
+    value={formValues[field.id] || ""}
+    onChange={(e) => handleInputChange(field.id, e.target.value)}
+  >
+    <option value="">Select...</option>
+
+    {(field.config?.options || []).map((opt, index) => (
+      <option key={index} value={opt}>
+        {opt}
+      </option>
+    ))}
+  </select>
+)}
+
+{field.field_type === "checkbox" && (
+  <div className="preview-checkbox-group">
+    {(field.config?.options || []).map((opt, index) => (
+      <label key={index}>
+        <input
+          type="checkbox"
+          checked={(formValues[field.id] || []).includes(opt)}
+          onChange={(e) => {
+            const current = formValues[field.id] || [];
+
+            if (e.target.checked) {
+              handleInputChange(field.id, [...current, opt]);
+            } else {
+              handleInputChange(
+                field.id,
+                current.filter((x) => x !== opt)
+              );
+            }
+          }}
+        />
+        {opt}
+      </label>
+    ))}
+  </div>
+)}
         </div>
       ))}
     </div>

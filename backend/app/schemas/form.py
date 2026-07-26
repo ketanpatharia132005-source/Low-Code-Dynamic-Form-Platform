@@ -4,10 +4,24 @@ from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
 
+# =========================
+# FORM SCHEMAS
+# =========================
+
 class FormCreate(BaseModel):
     title: str
     description: Optional[str] = None
 
+
+class FormUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    status: Optional[str] = None
+
+
+# =========================
+# FIELD SCHEMAS
+# =========================
 
 class FieldCreate(BaseModel):
     label: str
@@ -35,22 +49,35 @@ class FieldResponse(BaseModel):
         from_attributes = True
 
 
+# =========================
+# FORM VERSION SCHEMAS
+# =========================
+
+class FormVersionCreate(BaseModel):
+    snapshot: dict
+    status: Optional[str] = "draft"
+
+
 class FormVersionResponse(BaseModel):
     id: int
     form_id: int
     version_number: int
     snapshot: dict
     status: str
-    published_at: datetime
+    published_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
 
 
+# =========================
+# FORM RESPONSE SCHEMAS
+# =========================
+
 class FormResponse(BaseModel):
     id: int
     title: str
-    description: Optional[str]
+    description: Optional[str] = None
     owner_id: int
     status: str
     fields: List[FieldResponse] = []
@@ -63,6 +90,10 @@ class FormDetailResponse(FormResponse):
     versions: List[FormVersionResponse] = []
 
 
+# =========================
+# FIELD REORDER
+# =========================
+
 class FieldReorderItem(BaseModel):
     field_id: int
     display_order: int
@@ -70,12 +101,42 @@ class FieldReorderItem(BaseModel):
     class Config:
         from_attributes = True
 
+
+# =========================
+# LINK GENERATION
+# =========================
+
 class LinkGenerationResponse(BaseModel):
     link_token: str
     form_version_id: int
     url: str
 
+
+# =========================
+# PUBLIC FORM
+# =========================
+
 class PublicFormResponse(BaseModel):
     form: Dict[str, Any]
     fields: List[Dict[str, Any]]
     version: int
+
+class SubmissionCreate(BaseModel):
+    submitted_data: Dict[str, Any]
+
+class SubmissionDataItem(BaseModel):
+    field_id: str
+    field_label: str
+    value: Any
+    display_name: Optional[str] = None
+
+
+class SubmissionResponse(BaseModel):
+    id: int
+    response_id: str
+    form_version_id: int
+    submitted_data: List[SubmissionDataItem]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
