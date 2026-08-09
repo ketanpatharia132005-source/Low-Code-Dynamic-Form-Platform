@@ -1,0 +1,148 @@
+.audit-page{
+    padding:30px;
+}
+
+.audit-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    padding:24px;
+}
+
+.audit-header{
+    margin-bottom:24px;
+}
+
+.audit-header h2{
+    margin:0;
+    color:#1e293b;
+}
+
+.audit-header p{
+    margin-top:8px;
+    color:#64748b;
+}
+
+.audit-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.audit-table th{
+    background:#f8fafc;
+    color:#1e293b !important;
+    padding:14px;
+    text-align:left;
+    border-bottom:2px solid #e2e8f0;
+    font-weight:700;
+}
+
+.audit-table td{
+    padding:14px;
+    border-bottom:1px solid #e5e7eb;
+    vertical-align:top;
+    color:#334155 !important;
+}
+
+.audit-table tr:hover{
+    background:#f8fafc;
+}
+
+.audit-action{
+    display:inline-block;
+    padding:5px 10px;
+    background:#dbeafe;
+    color:#1d4ed8;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.audit-details{
+    margin:0;
+    white-space:pre-wrap;
+    font-size:12px;
+    background:#f8fafc;
+    color:#1e293b !important;
+    padding:10px;
+    border-radius:8px;
+    max-width:300px;
+    overflow:auto;
+}
+
+.audit-loading,
+.audit-empty{
+    text-align:center;
+    padding:50px;
+    color:#64748b;
+}
+/* ===========================
+   Dark Theme - Audit Logs
+=========================== */
+
+html[data-theme="dark"] .audit-page {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .audit-card {
+  background: #111827;
+  border: 1px solid #334155;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .audit-header h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .audit-header p {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .audit-table {
+  background: #111827;
+}
+
+html[data-theme="dark"] .audit-table th {
+  background: #1e293b;
+  color: #cbd5e1 !important;
+  border-bottom-color: #334155;
+}
+
+html[data-theme="dark"] .audit-table td {
+  background: #111827;
+  color: #e2e8f0 !important;
+  border-bottom-color: #334155;
+}
+
+html[data-theme="dark"] .audit-table tr:hover {
+  background: #1e293b;
+}
+
+html[data-theme="dark"] .audit-table tr:hover td {
+  background: #1e293b;
+}
+
+html[data-theme="dark"] .audit-action {
+  background: #172554;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .audit-details {
+  background: #1e293b;
+  color: #cbd5e1 !important;
+  border: 1px solid #334155;
+}
+
+html[data-theme="dark"] .audit-details strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .audit-loading,
+html[data-theme="dark"] .audit-empty {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .audit-empty {
+  background: #111827;
+  border-color: #334155;
+}

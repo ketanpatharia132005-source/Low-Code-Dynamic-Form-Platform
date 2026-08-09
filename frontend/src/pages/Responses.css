@@ -1,0 +1,348 @@
+.responses-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.responses-page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.responses-page-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.responses-page-search {
+  margin-bottom: 24px;
+}
+.responses-page-count {
+  min-width: 180px;
+  padding: 18px 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.responses-page-count span {
+  display: block;
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.responses-page-count strong {
+  display: block;
+  color: #0f172a;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.responses-search-box {
+  width: 100%;
+  max-width: 420px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.responses-search-box svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.responses-search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.responses-search-box input::placeholder {
+  color: #94a3b8;
+}
+
+.responses-page-section {
+  width: 100%;
+}
+
+.responses-page-table {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.responses-page-table-header,
+.responses-page-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.responses-page-table-header {
+  min-height: 48px;
+  padding: 0 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.responses-page-table-row {
+  min-height: 72px;
+  padding: 0 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.responses-page-table-row:last-child {
+  border-bottom: none;
+}
+
+.responses-form-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.responses-form-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.responses-form-name > div:last-child {
+  min-width: 0;
+}
+
+.responses-form-name strong {
+  display: block;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.responses-form-name span {
+  display: block;
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.responses-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.responses-status.published {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.responses-status.draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.responses-status.archived {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.responses-count-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.responses-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.responses-view-btn:hover {
+  background: #dbeafe;
+}
+
+.responses-page-empty {
+  width: 100%;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.responses-page-empty h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.responses-page-empty p {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .responses-page-table {
+    overflow-x: auto;
+  }
+
+  .responses-page-table-header,
+  .responses-page-table-row {
+    min-width: 760px;
+  }
+}
+/* ===========================
+   Dark Theme - Responses
+=========================== */
+
+html[data-theme="dark"] .responses-page-header h1 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-page-header p {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .responses-page-table {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .responses-page-table-header {
+  background: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+html[data-theme="dark"] .responses-page-table-row {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .responses-form-name strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-form-name span {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .responses-form-icon {
+  background: #172554;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .responses-count-value {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-page-count {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .responses-page-count span {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .responses-page-count strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-page-empty {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .responses-page-empty h3 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-page-empty p {
+  color: #94a3b8;
+}
+/* ===========================
+   Dark Theme - Search & Buttons
+=========================== */
+
+html[data-theme="dark"] .responses-search-box {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .responses-search-box svg {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .responses-search-box input {
+  background: transparent;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .responses-search-box input::placeholder {
+  color: #64748b;
+}
+
+html[data-theme="dark"] .responses-view-btn {
+  background: #172554;
+  border-color: #1d4ed8;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .responses-view-btn:hover {
+  background: #1e3a8a;
+}

@@ -71,3 +71,50 @@ export const getPublicForm = (shareToken) =>
 
 export const getFormSubmissions = (formId) =>
   api.get(`/submissions/form/${formId}`);
+
+export const getFormAnalytics = (formId) =>
+  api.get(`/forms/${formId}/analytics`);
+
+// ===============================
+// Export Responses APIs
+// ===============================
+
+export const exportResponsesCSV = (formId) =>
+  api.get(`/forms/${formId}/export`,{
+    params: {
+      format:"csv",
+    },
+    responseType: "blob",
+  });
+
+export const exportResponsesJSON = (formId) =>
+  api.get(`/forms/${formId}/export`, {
+    params: {
+      format: "json",
+    },
+    responseType: "blob",
+  });
+
+  // ===============================
+// Response Browser APIs (Day 16)
+// ===============================
+
+export const browseResponses = (formId, params) =>
+  api.get(`/submissions/form/${formId}/responses`, {
+    params,
+  });
+
+export const getResponseDetail = (formId, responseId) =>
+  api.get(`/submissions/form/${formId}/responses/${responseId}`);
+
+export const bulkDeleteResponses = (formId, responseIds) =>
+  api.delete(`/submissions/form/${formId}/responses/bulk`, {
+    data: {
+      response_ids: responseIds,
+    },
+  });
+
+export const browseAllResponses = (params) =>
+  api.get("/submissions/responses/all", {
+    params,
+  });

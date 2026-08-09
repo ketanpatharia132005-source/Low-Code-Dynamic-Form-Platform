@@ -29,3 +29,32 @@ def get_current_user(
         )
 
     return user
+
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    email = verify_token(token)
+
+    print("Email from token:", email)
+
+    if email is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token"
+        )
+
+    user = db.query(User).filter(
+        User.email == email
+    ).first()
+
+    print("Current User ID:", user.id)
+    print("Current User Email:", user.email)
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found"
+        )
+
+    return user

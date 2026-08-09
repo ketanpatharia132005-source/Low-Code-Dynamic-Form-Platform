@@ -1,0 +1,261 @@
+{
+ "landing":{   
+    "navbar": {
+      "features": "Features",
+      "workflow": "How It Works",
+      "pricing": "Product Editions",
+      "faq": "FAQ",
+      "login": "Login",
+      "getStarted": "Get Started"
+    },
+ 
+     "hero": {
+      "badge": "✨ Trusted Low-Code Platform for Modern Teams",
+      "title": "Build Powerful Forms",
+      "titleHighlight": "10x Faster with FormCraft",
+      "description": "Design professional forms in minutes using drag-and-drop, conditional logic, analytics, version history, multilingual support, and secure collaboration—all from one modern platform.",
+      "getStarted": "Get Started Free",
+      "liveDemo": "Live Demo",
+      "noCoding": "No Coding",
+      "conditionalLogic": "Conditional Logic",
+      "enterpriseSecurity": "Enterprise Security",
+      "fieldTypes": "Field Types",
+      "uptime": "Uptime",
+      "responsive": "Responsive",
+      "previewTitle": "Customer Feedback Form",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "department": "Department",
+      "sales": "Sales",
+      "satisfaction": "Satisfaction",
+      "submit": "Submit Form"
+    }
+
+    ,
+    "features": {
+    "badge": "Everything You Need",
+    "title": "Powerful Features Built for",
+    "titleHighlight": "Modern Teams",
+    "description": "FormCraft combines simplicity with enterprise-grade capabilities, allowing you to build, publish, and analyze forms faster than ever.",
+
+    "cards": {
+      "dragDrop": {
+        "title": "Drag & Drop Builder",
+        "description": "Create beautiful forms visually with an intuitive drag-and-drop interface. No coding required."
+      },
+      "conditional": {
+        "title": "Conditional Logic",
+        "description": "Build intelligent forms that dynamically show or hide fields based on user responses."
+      },
+      "multilingual": {
+        "title": "Multilingual Support",
+        "description": "Design forms in multiple languages and provide a localized experience for every user."
+      },
+      "analytics": {
+        "title": "Real-Time Analytics",
+        "description": "Track submissions, completion rates, and user engagement from a powerful dashboard."
+       },
+      "version": {
+        "title": "Version History",
+        "description": "Never lose your work. Restore previous versions and manage changes with confidence."
+      },
+      "security": {
+        "title": "Secure Form Sharing",
+        "description": "Publish forms using secure public links with authentication and protected access."
+      }
+    }
+   }
+
+   ,
+    "workflow": {
+      "badge": "Simple Workflow",
+      "title": "Build Forms in",
+      "titleHighlight": "Three Easy Steps",
+      "description": "From creating your first form to analyzing responses, FormCraft streamlines the entire workflow.",
+
+    "steps": {
+      "create": {
+        "title": "Create Your Form",
+        "description": "Design professional forms using the drag-and-drop builder with custom fields, validation, and conditional logic."
+      },
+      "publish": {
+        "title": "Publish & Share",
+        "description": "Publish your form instantly and share it securely using a unique public link with your audience."
+      },
+      "analyze": {
+        "title": "Analyze Responses",
+        "description": "Monitor submissions, export responses, and gain actionable insights through your analytics dashboard."
+      }
+    }
+   }
+
+   ,
+   "useCases": {
+      "badge": "Use Cases",
+      "title": "One Platform.",
+      "titleHighlight": "Endless Possibilities.",
+      "description": "Whether you're managing a classroom, running a business, organizing events, or collecting customer feedback, FormCraft adapts to your workflow.",
+
+      "categories": {
+        "education": {
+          "title": "Education",
+          "items": [
+            "Student Admissions",
+            "Course Feedback",
+            "Online Quizzes",
+            "Event Registrations"
+          ]
+        },
+
+        "hr": {
+          "title": "Human Resources",
+          "items": [
+            "Employee Onboarding",
+            "Leave Requests",
+            "Performance Reviews",
+            "Internal Surveys"
+          ]
+        },
+
+        "business": {
+          "title": "Business",
+          "items": [
+            "Lead Capture",
+            "Customer Feedback",
+            "Market Research",
+            "Contact Forms"
+          ]
+        },
+
+        "it": {
+          "title": "IT & Development",
+          "items": [
+            "Bug Reports",
+            "Feature Requests",
+            "Support Tickets",
+            "Release Feedback"
+          ]
+        },
+
+        "healthcare": {
+          "title": "Healthcare",
+          "items": [
+            "Patient Registration",
+            "Appointment Requests",
+            "Medical Feedback",
+            "Health Surveys"
+          ]
+        },
+
+        "events": {
+          "title": "Events",
+          "items": [
+            "RSVP Forms",
+            "Conference Registration",
+            "Attendance Tracking",
+            "Volunteer Sign-up"
+          ]
+        }
+      }
+    }
+    ,
+    "pricing": {
+      "badge": "Product Editions",
+      "title": "Built to",
+      "titleHighlight": "Grow With You",
+      "description": "FormCraft is evolving step by step. Here's the roadmap of capabilities planned for the platform.",
+
+      "mostRequested": "Most Requested",
+      "learnMore": "Learn More",
+
+      "plans": {
+        "starter": {
+          "title": "Starter",
+          "badge": "Current",
+          "features": [
+            "Drag & Drop Builder",
+            "Basic Form Management",
+            "Public Form Sharing",
+            "Response Collection",
+            "Secure Authentication"
+          ]
+        },
+
+        "professional": {
+          "title": "Professional",
+          "badge": "Coming Soon",
+          "features": [
+            "Everything in Starter",
+            "Conditional Logic",
+            "Analytics Dashboard",
+            "Version History",
+            "Multilingual Support",
+            "Export Responses"
+          ]
+        },
+
+        "enterprise": {
+          "title": "Enterprise",
+          "badge": "Future Vision",
+          "features": [
+            "Everything in Professional",
+            "Team Collaboration",
+            "Advanced Security",
+            "Workflow Automation",
+            "Custom Integrations",
+            "Priority Support"
+          ]
+        }
+      }
+    }
+    ,
+    "cta": {
+      "badge": "Ready to build?",
+      "title": "Create Powerful Forms in Minutes",
+      "titlePrefix": "with",
+      "description": "Design beautiful forms, automate workflows, collect responses, and gain valuable insights—all from one modern platform.",
+      "getStarted": "Get Started Free",
+      "login": "Login"
+      
+    }
+    ,
+    "footer": {
+      "description": "A modern low-code platform for building powerful dynamic forms with drag-and-drop, analytics, conditional logic, version history, and multilingual support.",
+      "product": "Product",
+      "resources": "Resources",
+      "platform": "Platform",
+      "copyright": "Built for the Infosys Springboard Internship.",
+      "scrollTop": "Scroll to top"
+    }
+    ,
+    "faq": {
+      "badge": "FAQ",
+      "title": "Frequently Asked",
+      "titleHighlight": "Questions",
+      "description": "Everything you need to know about {{appName}}.",
+
+      "questions": {
+        "q1": {
+          "question": "What is FormCraft?",
+          "answer": "FormCraft is a modern low-code platform that enables you to build dynamic forms using drag-and-drop, conditional logic, analytics, and multilingual support."
+        },
+        "q2": {
+          "question": "Do I need coding experience?",
+          "answer": "No. FormCraft is designed so anyone can create professional forms without writing code."
+        },
+        "q3": {
+          "question": "Can I share my forms publicly?",
+          "answer": "Yes. You can publish forms and securely share them using unique public links."
+        },
+        "q4": {
+          "question": "Does FormCraft support multiple languages?",
+          "answer": "Yes. Multilingual support is part of the platform roadmap and will allow forms to be used in different languages."
+        },
+        "q5": {
+          "question": "Can I export responses?",
+          "answer": "Yes. FormCraft supports exporting responses and provides analytics to help you understand collected data."
+        }
+      }
+    }
+  }
+}

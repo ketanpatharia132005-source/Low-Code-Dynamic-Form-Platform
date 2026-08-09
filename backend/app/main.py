@@ -9,6 +9,11 @@ from app.routers import rule
 import app.models
 from app.models.file_storage import FileStorage
 from app.routers import files
+from app.routers import export
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+from app.routers import retention_policy
+from app.routers import audit
 
 print("\n=== Registered Tables ===")
 print(Base.metadata.tables.keys())
@@ -29,6 +34,15 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
+)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+UPLOAD_DIR = BASE_DIR / "uploads"
+
+app.mount(
+    "/uploads",
+    StaticFiles(directory=UPLOAD_DIR),
+    name="uploads",
 )
 
 
@@ -58,10 +72,7 @@ def health_check():
 
 
 # Mount application routers
-app.include_router(
-    form.router,
-    prefix=settings.API_V1_STR,
-)
+
 
 app.include_router(
     forms.router,
@@ -92,6 +103,16 @@ app.include_router(
     prefix=settings.API_V1_STR,
 )
 
+app.include_router(
+    export.router,
+    prefix=settings.API_V1_STR,
+)
+
+app.include_router(
+    retention_policy.router,
+    prefix=settings.API_V1_STR,
+)
+
 
 
 if __name__ == "__main__":
@@ -103,3 +124,8 @@ if __name__ == "__main__":
         port=8000,
         reload=True,
     )
+
+app.include_router(
+    audit.router,
+    prefix=settings.API_V1_STR,
+)

@@ -232,3 +232,136 @@ class FormService:
         db.refresh(db_submission)
 
         return db_submission
+
+    @staticmethod
+    def get_form_analytics(db: Session, form_id: int):
+        # Get all published versions of the form
+        version_ids = (
+            db.query(FormVersion.id)
+            .filter(FormVersion.form_id == form_id)
+            .all()
+        )
+
+        version_ids = [v.id for v in version_ids]
+
+        if not version_ids:
+            return {
+                "total_submissions": 0,
+                "completed_forms": 0,
+                "incomplete_forms": 0,
+                "completion_rate": 0.0,
+                "average_completion_time": 0,
+            }
+
+        total_submissions = (
+            db.query(Submission)
+            .filter(Submission.form_version_id.in_(version_ids))
+            .count()
+        )
+
+        completed_forms = total_submissions
+
+        incomplete_forms = 0
+
+        completion_rate = (
+            (completed_forms / total_submissions) * 100
+            if total_submissions > 0
+            else 0.0
+        )
+
+        average_completion_time = 0
+
+        # ----------------------------------------
+        # Per-field distribution analytics
+        # ----------------------------------------
+
+        field_distributions = []
+
+        versions = (
+            db.query(FormVersion)
+            .filter(FormVersion.form_id == form_id)
+            .all()
+        )
+
+        for version in versions:
+
+            snapshot = version.snapshot or {}
+
+            fields = snapshot.get("fields", [])
+
+            submissions = (
+                db.query(Submission)
+                .filter(
+                    Submission.form_version_id == version.id
+                )
+                .all()
+            )
+
+            for field in fields:
+
+                if field["field_type"] not in [
+                    "dropdown",
+                    "rating",
+                ]:
+                    continue
+
+                counts = {}
+
+                total = 0
+
+                for submission in submissions:
+
+                    submitted = submission.submitted_data or []
+
+                    value = None
+
+                    for response in submitted:
+
+                       if str(response["field_id"]) == str(field["id"]):
+                          value = response["value"]
+                          break
+
+                    if value is None:
+                         continue
+
+                    if isinstance(value,list):
+                        for item in value:
+                            counts[item] = counts.get(item,0) + 1
+
+
+                    else:
+
+                      counts[value] = counts.get(value, 0) + 1
+
+                      total += 1
+
+                distribution = []
+
+                for label, count in counts.items():
+
+                    distribution.append({
+                        "label": str(label),
+                        "count": count,
+                        "percentage": round(
+                            (count / total) * 100 if total else 0,
+                            2,
+                        ),
+                    })
+
+                field_distributions.append({
+                    "field_id": field["id"],
+                    "field_label": field["label"],
+                    "field_type": field["field_type"],
+                    "distribution": distribution,
+                })
+
+        return {
+            "total_submissions": total_submissions,
+            "completed_forms": completed_forms,
+            "incomplete_forms": incomplete_forms,
+            "completion_rate": round(completion_rate, 2),
+            "average_completion_time": average_completion_time,
+            "field_distributions": field_distributions,
+        }
+
+    

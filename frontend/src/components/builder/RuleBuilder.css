@@ -114,12 +114,12 @@
   margin: 0;
 }
 
-.rules-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 200px;
-  overflow-y: auto;
+.rules-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    overflow:visible;
+    max-height:none;
 }
 
 .rule-item-card {
@@ -386,4 +386,390 @@
     background:#dc2626;
 
     color:white;
+}
+.rule-flow-card{
+    position:relative;
+
+    padding:18px;
+
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+
+    background:#fff;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:10px;
+}
+
+.flow-box{
+    width:320px;
+    min-height:65px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    padding:12px 16px;
+
+    border-radius:12px;
+
+    border:1px solid #dbeafe;
+}
+
+.flow-title{
+    font-size:11px;
+    color:#64748b;
+    font-weight:600;
+    margin-bottom:4px;
+}
+.flow-box strong{
+    color:#111827;
+    font-size:15px;
+    font-weight:600;
+}
+
+.flow-arrow{
+    font-size:18px;
+    color:#6366f1;
+    font-weight:bold;
+}
+
+.trigger{
+    background:#eef4ff;
+}
+
+.condition{
+    background:#fff7cc;
+}
+
+.value{
+    background:#eafcff;
+}
+
+.action{
+    background:#dcfce7;
+}
+
+.target{
+    background:#f3e8ff;
+}
+
+.btn-delete-rule{
+    position:absolute;
+    top:12px;
+    right:12px;
+}
+.action.show{
+    background:#dcfce7;
+    border-color:#22c55e;
+}
+
+.action.hide{
+    background:#fee2e2;
+    border-color:#ef4444;
+}
+
+.action.require{
+    background:#fef3c7;
+    border-color:#f59e0b;
+}
+.trigger strong,
+.target strong{
+    color:#2563eb;
+}
+/* =========================================================
+   DARK THEME - CONDITIONAL LOGIC / RULE BUILDER
+========================================================= */
+
+
+/* Main Rule Builder */
+html[data-theme="dark"] .rule-builder-container {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+
+/* Page title */
+html[data-theme="dark"] .rule-page-title,
+html[data-theme="dark"] .rule-builder-header h3 {
+    color: #f8fafc;
+}
+
+
+/* Subtitle */
+html[data-theme="dark"] .subtitle,
+html[data-theme="dark"] .rule-builder-header .subtitle {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   RULE CREATOR
+========================================================= */
+
+html[data-theme="dark"] .rule-creator-form {
+    background: #111827;
+    border-color: #334155;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Labels */
+html[data-theme="dark"] .form-row-group label {
+    color: #94a3b8;
+}
+
+
+/* Inputs / Selects */
+html[data-theme="dark"] .rule-select,
+html[data-theme="dark"] .rule-input {
+    background-color: #0f172a;
+    background: #0f172a;
+
+    color: #f8fafc;
+
+    border-color: #475569;
+}
+
+
+/* Input placeholder */
+html[data-theme="dark"] .rule-input::placeholder {
+    color: #64748b;
+}
+
+
+/* Select options */
+html[data-theme="dark"] .rule-select option {
+    background: #111827;
+    color: #f8fafc;
+}
+
+
+/* Focus */
+html[data-theme="dark"] .rule-select:focus,
+html[data-theme="dark"] .rule-input:focus {
+    border-color: #60a5fa;
+
+    box-shadow:
+        0 0 0 3px rgba(96, 165, 250, 0.15);
+}
+
+
+/* Error */
+html[data-theme="dark"] .rule-error-text {
+    color: #f87171;
+}
+
+
+/* =========================================================
+   SAVE RULE BUTTON
+========================================================= */
+
+html[data-theme="dark"] .save-rule-btn,
+html[data-theme="dark"] .btn-add-rule {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .save-rule-btn:hover:not(:disabled),
+html[data-theme="dark"] .btn-add-rule:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   ACTIVE RULES SECTION
+========================================================= */
+
+html[data-theme="dark"] .rules-list-section h4 {
+    color: #cbd5e1;
+}
+
+
+/* Empty state */
+html[data-theme="dark"] .empty-rules,
+html[data-theme="dark"] .empty-rules-text {
+    background: #0f172a;
+    border-color: #475569;
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   RULE CARDS
+========================================================= */
+
+html[data-theme="dark"] .modern-rule-card,
+html[data-theme="dark"] .rule-item-card,
+html[data-theme="dark"] .rule-flow-card {
+
+    background: #111827;
+    border-color: #334155;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+html[data-theme="dark"] .modern-rule-card:hover {
+
+    background: #151e2e;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.30);
+}
+
+
+/* Rule statement */
+html[data-theme="dark"] .rule-statement {
+    color: #cbd5e1;
+}
+
+
+/* Keywords */
+html[data-theme="dark"] .rule-keyword {
+    color: #fb923c;
+}
+
+html[data-theme="dark"] .rule-operator {
+    color: #38bdf8;
+}
+
+html[data-theme="dark"] .rule-value {
+    color: #c4b5fd;
+}
+
+
+/* =========================================================
+   ACTION BADGE
+========================================================= */
+
+html[data-theme="dark"] .rule-action-badge {
+
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+html[data-theme="dark"] .btn-delete-rule {
+
+    background: #3f1d24;
+    color: #f87171;
+}
+
+html[data-theme="dark"] .btn-delete-rule:hover {
+
+    background: #dc2626;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RULE FLOW
+========================================================= */
+
+html[data-theme="dark"] .flow-box {
+
+    border-color: #334155;
+}
+
+
+html[data-theme="dark"] .flow-title {
+
+    color: #94a3b8;
+}
+
+
+html[data-theme="dark"] .flow-box strong {
+
+    color: #f8fafc;
+}
+
+
+html[data-theme="dark"] .flow-arrow {
+
+    color: #818cf8;
+}
+
+
+/* Trigger */
+html[data-theme="dark"] .trigger {
+
+    background: #172554;
+    border-color: #1e40af;
+}
+
+
+/* Condition */
+html[data-theme="dark"] .condition {
+
+    background: #3b3210;
+    border-color: #665a16;
+}
+
+
+/* Value */
+html[data-theme="dark"] .value {
+
+    background: #083344;
+    border-color: #155e75;
+}
+
+
+/* Action */
+html[data-theme="dark"] .action {
+
+    background: #052e1b;
+    border-color: #166534;
+}
+
+
+/* Target */
+html[data-theme="dark"] .target {
+
+    background: #2e1065;
+    border-color: #6b21a8;
+}
+
+
+/* Trigger / Target text */
+html[data-theme="dark"] .trigger strong,
+html[data-theme="dark"] .target strong {
+
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   ACTION TYPES
+========================================================= */
+
+html[data-theme="dark"] .action.show {
+
+    background: #052e1b;
+    border-color: #22c55e;
+}
+
+
+html[data-theme="dark"] .action.hide {
+
+    background: #3f1010;
+    border-color: #ef4444;
+}
+
+
+html[data-theme="dark"] .action.require {
+
+    background: #422006;
+    border-color: #f59e0b;
 }

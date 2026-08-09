@@ -1,0 +1,69 @@
+{
+  "title": "फ़ॉर्म",
+  "subtitle": "एक ही स्थान से अपने सभी फ़ॉर्म बनाएँ, प्रबंधित करें और प्रकाशित करें।",
+
+  "createForm": "नया फ़ॉर्म",
+
+  "search": {
+    "placeholder": "फ़ॉर्म खोजें..."
+  },
+
+  "stats": {
+    "totalForms": "कुल फ़ॉर्म",
+    "publishedForms": "प्रकाशित",
+    "responses": "प्रतिक्रियाएँ",
+    "completionRate": "पूर्णता"
+  },
+
+  "yourForms": "आपके फ़ॉर्म",
+  "yourFormsSubtitle": "अपने फ़ॉर्म खोलें, संपादित करें और प्रबंधित करें।",
+
+  "table": {
+    "form": "फ़ॉर्म",
+    "status": "स्थिति",
+    "description": "विवरण",
+    "actions": "कार्य"
+  },
+
+  "buttons": {
+    "open": "खोलें",
+    "delete": "हटाएँ",
+    "responses": "प्रतिक्रियाएँ",
+    "duplicate": "डुप्लिकेट",
+    "cancel": "रद्द करें",
+    "creating": "बनाया जा रहा है...",
+    "startBuilding": "निर्माण शुरू करें"
+  },
+
+  "modal": {
+    "title": "नया फ़ॉर्म बनाएँ",
+    "formTitle": "फ़ॉर्म शीर्षक",
+    "formTitlePlaceholder": "फ़ॉर्म का शीर्षक दर्ज करें",
+    "description": "विवरण",
+    "descriptionPlaceholder": "अपने फ़ॉर्म का विवरण लिखें..."
+  },
+
+  "messages": {
+    "loading": "फ़ॉर्म लोड हो रहे हैं...",
+    "empty": "कोई फ़ॉर्म नहीं मिला।",
+    "emptySubtitle": "शुरू करने के लिए अपना पहला फ़ॉर्म बनाएँ।",
+    "noMatch": "कोई मेल खाता फ़ॉर्म नहीं मिला।",
+    "noMatchSubtitle": "कोई दूसरा खोज शब्द आज़माएँ।",
+    "noDescription": "कोई विवरण नहीं"
+  },
+
+  "errors": {
+    "loadForms": "आपके फ़ॉर्म लोड नहीं हो सके।",
+    "enterTitle": "फ़ॉर्म का शीर्षक दर्ज करें।",
+    "createForm": "फ़ॉर्म नहीं बनाया जा सका।",
+    "deleteFailed": "फ़ॉर्म हटाया नहीं जा सका।",
+    "deleteConfirm": "\"{{title}}\" हटाना चाहते हैं?"
+  }
+   ,
+    "status": {
+    "draft": "ड्राफ्ट",
+    "published": "प्रकाशित",
+    "archived": "संग्रहीत"
+
+  }
+}

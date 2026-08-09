@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
-
+import { useNavigate } from "react-router-dom";
 import {
   DndContext,
   closestCenter,
@@ -17,6 +17,8 @@ import {
   Pencil,
   Wand2,
   GitBranch,
+  Clock3,
+
 } from "lucide-react";
 
 import "./Builder.css";
@@ -30,9 +32,11 @@ import ConfirmationModal from "./ConfirmationModal";
 import RuleBuilder from "./RuleBuilder"; // Import your new Day 7 rule UI panel
 
 import ShareLinkWidget from './ShareLinkWidget';
+import FormNavigation from "./FormNavigation";
 
 
 function BuilderLayout({ formId }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState(null);
   const [fieldTypes, setFieldTypes] = useState([]);
   const [loadingFieldTypes, setLoadingFieldTypes] = useState(true);
@@ -362,6 +366,11 @@ function BuilderLayout({ formId }) {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
+       <FormNavigation
+      formId={formId}
+      onRulesClick={() => setActiveTab("logic")}
+    />
+
       <div className="builder-toolbar">
       <div className="builder-toolbar-left">
 
@@ -435,6 +444,15 @@ function BuilderLayout({ formId }) {
 >
   <Eye size={18} />
   {previewMode ? "Back to Editor" : "Preview"}
+</button>
+
+<button
+  type="button"
+  className="secondary-btn builder-btn"
+  onClick={() => navigate(`/forms/${formId}/retention`)}
+>
+  <Clock3 size={18} />
+  Retention Policy
 </button>
 
     <button

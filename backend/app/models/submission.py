@@ -4,6 +4,7 @@ from sqlalchemy import Column, DateTime, ForeignKey, Integer, JSON, String
 from sqlalchemy.orm import relationship
 
 from app.base import Base
+from sqlalchemy import Boolean
 
 
 class Submission(Base):
@@ -30,8 +31,21 @@ class Submission(Base):
         DateTime,
         default=datetime.utcnow,
     )
+    is_archived = Column(
+       Boolean,
+       default=False,
+       nullable=False,
+    )
+
+    archived_at = Column(
+       DateTime,
+       nullable=True,
+    )
+
 
     form_version = relationship(
         "FormVersion",
         back_populates="submissions",
     )
+
+   

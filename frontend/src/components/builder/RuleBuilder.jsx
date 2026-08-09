@@ -269,58 +269,63 @@ const RuleBuilder = ({ formId, fields = [] }) => {
         <h4>Active Form Logic ({rules.length})</h4>
 
         {rules.length === 0 ? (
-          <div className="empty-rules">
-
-  <div className="empty-rule-icon">
-    ⚙️
+  <div className="empty-rules">
+    <p>No conditional rules created yet.</p>
   </div>
+) : (
+  <div className="rules-list">
+    {rules.map((rule) => (
+      <div key={rule.id} className="rule-flow-card">
 
-  <h3>No Conditional Rules Yet</h3>
+        <div className="flow-box trigger">
+          <span className="flow-title">Trigger Field</span>
+          <strong>{getFieldLabel(rule.trigger_field_id)}</strong>
+        </div>
 
-  <p>
-    Create your first rule to make the form dynamic.
-    You can automatically show, hide or require fields.
-  </p>
+        <div className="flow-arrow">↓</div>
 
-</div>
-        ) : (
-          <div className="rules-list">
-            {rules.map((rule) => (
-              <div key={rule.id} className="rule-item-card modern-rule-card">
-                <div className="rule-statement">
-                  <span className="rule-keyword">IF</span>{" "}
-                  <strong>
-                    {getFieldLabel(rule.trigger_field_id)}
-                  </strong>{" "}
-                  <span className="rule-operator">
-                    {rule.operator.replace("_", " ")}
-                  </span>{" "}
-                  {rule.operator !== "is_empty" && (
-                    <span className="rule-value">
-                      "{rule.comparison_value}"
-                    </span>
-                  )}{" "}
-                  <span className="rule-keyword">THEN</span>{" "}
-                  <span className="rule-action-badge">
-                    {rule.action}
-                  </span>{" "}
-                  <strong>
-                    {getFieldLabel(rule.target_field_id)}
-                  </strong>
-                </div>
+        <div className="flow-box condition">
+          <span className="flow-title">Condition</span>
+          <strong>{rule.operator.replaceAll("_", " ")}</strong>
+        </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleDeleteRule(rule.id)}
-                  className="btn-delete-rule"
-                  title="Delete Rule"
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-          </div>
+        {rule.comparison_value && (
+          <>
+            <div className="flow-arrow">↓</div>
+
+            <div className="flow-box value">
+              <span className="flow-title">Value</span>
+              <strong>{rule.comparison_value}</strong>
+            </div>
+          </>
         )}
+
+        <div className="flow-arrow">↓</div>
+
+        <div className={`flow-box action ${rule.action}`}>
+          <span className="flow-title">Action</span>
+          <strong>{rule.action.toUpperCase()}</strong>
+        </div>
+
+        <div className="flow-arrow">↓</div>
+
+        <div className="flow-box target">
+          <span className="flow-title">Target Field</span>
+          <strong>{getFieldLabel(rule.target_field_id)}</strong>
+        </div>
+
+        <button
+          type="button"
+          className="btn-delete-rule"
+          onClick={() => handleDeleteRule(rule.id)}
+        >
+          ×
+        </button>
+
+      </div>
+    ))}
+  </div>
+)}
       </div>
     </div>
   );

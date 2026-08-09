@@ -1,0 +1,616 @@
+/* =====================================================
+   FORM SETTINGS
+   ===================================================== */
+
+.form-settings-page {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* Breadcrumb */
+
+.settings-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+
+  font-size: 13px;
+  color: #64748b;
+}
+
+.settings-breadcrumb button {
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.settings-breadcrumb button:hover {
+  text-decoration: underline;
+}
+
+.settings-breadcrumb strong {
+  color: #111827;
+}
+
+
+/* Header */
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.settings-title-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.settings-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.settings-title-area h1 {
+  margin: 0 0 6px;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.settings-title-area p {
+  margin: 0;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+.settings-title-area p strong {
+  color: #334155;
+}
+
+
+/* Back Button */
+
+.settings-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.settings-back-btn:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+
+/* Cards */
+
+.settings-card {
+  margin-bottom: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 24px;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.settings-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  margin-bottom: 22px;
+}
+
+.settings-card-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.settings-card-icon.danger {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.settings-card-header h2 {
+  margin: 0 0 5px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.settings-card-header p {
+  margin: 0;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* Form Information */
+
+.settings-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 1px;
+
+  background: #e5e7eb;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.settings-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px;
+
+  background: #ffffff;
+}
+
+.settings-info-item > span:first-child {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.settings-info-item strong {
+  color: #111827;
+  font-size: 13px;
+}
+
+
+/* Status */
+
+.settings-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: capitalize;
+}
+
+.settings-status.draft {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.settings-status.published {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.settings-status.archived {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+/* Action Rows */
+
+.settings-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 18px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 11px;
+
+  background: #f8fafc;
+}
+
+.settings-action-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.settings-action-row strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.settings-action-row span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.settings-action-row button {
+  flex-shrink: 0;
+
+  padding: 9px 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.settings-action-row button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+
+/* Danger Zone */
+
+.danger-card {
+  border-color: #fecaca;
+}
+
+.danger-action {
+  background: #dc2626 !important;
+}
+
+.danger-action:hover {
+  background: #b91c1c !important;
+}
+
+
+/* Loading / Error */
+
+.settings-loading,
+.settings-error {
+  padding: 80px 20px;
+
+  text-align: center;
+
+  color: #64748b;
+}
+
+.settings-error h2 {
+  margin-bottom: 16px;
+
+  color: #111827;
+}
+
+.settings-error button {
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+  .form-settings-page {
+    padding: 20px;
+  }
+
+  .settings-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .settings-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-action-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .settings-action-row button {
+    align-self: flex-start;
+  }
+
+}
+/* =========================================================
+   DARK THEME - FORM SETTINGS
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+html[data-theme="dark"] .form-settings-page {
+    color: #e2e8f0;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+html[data-theme="dark"] .settings-breadcrumb {
+    color: #94a3b8;
+}
+
+html[data-theme="dark"] .settings-breadcrumb button {
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .settings-breadcrumb strong {
+    color: #f8fafc;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+html[data-theme="dark"] .settings-title-area h1 {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .settings-title-area p {
+    color: #94a3b8;
+}
+
+html[data-theme="dark"] .settings-title-area p strong {
+    color: #cbd5e1;
+}
+
+
+/* Settings icon */
+html[data-theme="dark"] .settings-icon {
+    background: #172554;
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+html[data-theme="dark"] .settings-back-btn {
+    background: #111827;
+    color: #60a5fa;
+    border-color: #475569;
+}
+
+html[data-theme="dark"] .settings-back-btn:hover {
+    background: #172554;
+    border-color: #3b82f6;
+}
+
+
+/* =========================================================
+   SETTINGS CARDS
+========================================================= */
+
+html[data-theme="dark"] .settings-card {
+    background: #111827;
+    border-color: #334155;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Card headings */
+html[data-theme="dark"] .settings-card-header h2 {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .settings-card-header p {
+    color: #94a3b8;
+}
+
+
+/* Card icons */
+html[data-theme="dark"] .settings-card-icon {
+    background: #172554;
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .settings-card-icon.danger {
+    background: #3f1010;
+    color: #f87171;
+}
+
+
+/* =========================================================
+   FORM INFORMATION GRID
+========================================================= */
+
+html[data-theme="dark"] .settings-info-grid {
+    background: #334155;
+    border-color: #475569;
+}
+
+
+html[data-theme="dark"] .settings-info-item {
+    background: #111827;
+}
+
+
+html[data-theme="dark"] .settings-info-item > span:first-child {
+    color: #94a3b8;
+}
+
+
+html[data-theme="dark"] .settings-info-item strong {
+    color: #f8fafc;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+html[data-theme="dark"] .settings-status.draft {
+    background: #422006;
+    color: #fbbf24;
+}
+
+html[data-theme="dark"] .settings-status.published {
+    background: #052e1b;
+    color: #4ade80;
+}
+
+html[data-theme="dark"] .settings-status.archived {
+    background: #3f1010;
+    color: #f87171;
+}
+
+
+/* =========================================================
+   ACTION ROWS
+========================================================= */
+
+html[data-theme="dark"] .settings-action-row {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+
+html[data-theme="dark"] .settings-action-row strong {
+    color: #f8fafc;
+}
+
+
+html[data-theme="dark"] .settings-action-row span {
+    color: #94a3b8;
+}
+
+
+/* Manage Policy button */
+html[data-theme="dark"] .settings-action-row button {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .settings-action-row button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   DANGER ZONE
+========================================================= */
+
+html[data-theme="dark"] .danger-card {
+    background: #111827;
+    border-color: #7f1d1d;
+}
+
+
+html[data-theme="dark"] .danger-action {
+    background: #dc2626 !important;
+    color: #ffffff;
+}
+
+
+html[data-theme="dark"] .danger-action:hover {
+    background: #b91c1c !important;
+}
+
+
+/* =========================================================
+   LOADING / ERROR
+========================================================= */
+
+html[data-theme="dark"] .settings-loading,
+html[data-theme="dark"] .settings-error {
+    color: #94a3b8;
+}
+
+
+html[data-theme="dark"] .settings-error h2 {
+    color: #f8fafc;
+}
+
+
+/* =========================================================
+   ERROR BUTTON
+========================================================= */
+
+html[data-theme="dark"] .settings-error button {
+    background: #2563eb;
+    color: #ffffff;
+}

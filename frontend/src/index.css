@@ -185,3 +185,137 @@ button:active{
     scrollbar-width:thin;
     scrollbar-color:#cbd5e1 #f3f4f6;
 }
+/* ==========================================================
+   LIGHT / DARK THEME
+========================================================== */
+
+:root{
+
+    --landing-bg:#f8fafc;
+
+    --landing-surface:#ffffff;
+
+    --landing-surface-2:#f1f5f9;
+
+    --landing-text:#111827;
+
+    --landing-text-light:#6b7280;
+
+    --landing-border:#e5e7eb;
+
+    --landing-primary:#4f46e5;
+
+    --landing-hover:#4338ca;
+
+    --landing-shadow:
+    0 12px 30px rgba(15,23,42,.08);
+}
+
+[data-theme="dark"]{
+
+    --landing-bg:#0f172a;
+
+    --landing-surface:#111827;
+
+    --landing-surface-2:#1f2937;
+
+    --landing-text:#f9fafb;
+
+    --landing-text-light:#cbd5e1;
+
+    --landing-border:#374151;
+
+    --landing-primary:#818cf8;
+
+    --landing-hover:#6366f1;
+
+    --landing-shadow:
+    0 12px 30px rgba(0,0,0,.45);
+}
+body{
+
+    transition:
+    background .35s ease,
+    color .35s ease;
+}
+
+section,
+nav,
+footer,
+div,
+button,
+a{
+
+    transition:
+    background .35s ease,
+    color .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease;
+}
+/* ===========================
+   Global Dark Theme Surfaces
+=========================== */
+
+html[data-theme="dark"] .main-content {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .dashboard-container {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .form-card,
+html[data-theme="dark"] .table-container,
+html[data-theme="dark"] .content-card,
+html[data-theme="dark"] .settings-page-card,
+html[data-theme="dark"] .overview-info-card,
+html[data-theme="dark"] .settings-card {
+  background: #111827;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] p {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background: #111827;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #64748b;
+}
+
+html[data-theme="dark"] table {
+  color: #e2e8f0;
+}
+
+html[data-theme="dark"] th {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+html[data-theme="dark"] td {
+  border-color: #334155;
+}
+
+html[data-theme="dark"] tr {
+  border-color: #334155;
+}

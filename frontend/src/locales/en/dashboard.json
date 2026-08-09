@@ -1,0 +1,68 @@
+{
+  "title": "Forms",
+  "subtitle": "Build, manage and publish all your forms from one workspace.",
+
+  "createForm": "New Form",
+
+  "search": {
+    "placeholder": "Search forms..."
+  },
+
+  "stats": {
+    "totalForms": "Total Forms",
+    "publishedForms": "Published",
+    "responses": "Responses",
+    "completion": "Completion Rate"
+  },
+
+  "yourForms": "Your Forms",
+  "yourFormsSubtitle": "Open, edit or manage your existing forms.",
+
+  "table": {
+    "form": "Form",
+    "status": "Status",
+    "description": "Description",
+    "actions": "Actions"
+  },
+
+  "buttons": {
+    "open": "Open",
+    "delete": "Delete",
+    "responses": "Responses",
+    "duplicate": "Duplicate",
+    "cancel": "Cancel",
+    "creating": "Creating...",
+    "startBuilding": "Start Building"
+  },
+
+  "modal": {
+    "title": "Create New Form",
+    "formTitle": "Form Title",
+    "formTitlePlaceholder": "Enter form title",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe your form..."
+  },
+
+  "messages": {
+    "loading": "Loading forms...",
+    "empty": "No forms created.",
+    "emptySubtitle": "Create your first form to get started.",
+    "noMatch": "No matching forms.",
+    "noMatchSubtitle": "Try searching with a different keyword.",
+    "noDescription": "No description"
+  },
+
+  "errors": {
+    "loadForms": "Could not load your forms.",
+    "enterTitle": "Enter a form title.",
+    "createForm": "Could not create form.",
+    "deleteFailed": "Failed to delete.",
+    "deleteConfirm": "Delete \"{{title}}\"?"
+  }
+  ,
+    "status": {
+    "draft": "Draft",
+    "published": "Published",
+    "archived": "Archived"
+  }
+}

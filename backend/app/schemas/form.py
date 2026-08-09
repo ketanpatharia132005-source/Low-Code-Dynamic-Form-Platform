@@ -140,3 +140,29 @@ class SubmissionResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+
+class FieldDistributionItem(BaseModel):
+    label: str
+    count: int
+    percentage: float
+
+
+class FieldDistribution(BaseModel):
+    field_id: int
+    field_label: str
+    field_type: str
+    distribution: List[FieldDistributionItem]
+
+class AnalyticsResponse(BaseModel):
+    total_submissions: int
+    completed_forms: int
+    incomplete_forms: int
+    completion_rate: float
+    average_completion_time: int
+
+    field_distributions: List[FieldDistribution] = []
+
+    class Config:
+        from_attributes = True

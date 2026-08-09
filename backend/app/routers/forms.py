@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import joinedload
-
+from app.services.form_service import FormService
 from app.services.validation import validate_submission
 from app.models.form_version import FormVersion
 import uuid
@@ -15,6 +15,7 @@ from app.schemas.form import (
     FormResponse,
     FormVersionResponse,
     SubmissionResponse,
+    AnalyticsResponse,
 )
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -28,6 +29,7 @@ from app.schemas.form import LinkGenerationResponse, PublicFormResponse
 from app.models.submission import Submission
 from sqlalchemy import func
 from app.models.file_storage import FileStorage
+from app.models.rule import ConditionalRule
     
 router = APIRouter(
     prefix="/forms",
@@ -600,11 +602,15 @@ def get_forms(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+
     forms = (
         db.query(Form)
         .filter(Form.owner_id == current_user.id)
         .all()
     )
+    print("Logged in user:", current_user.id)
+    print("Forms returned:", len(forms))
+    print(forms)
 
     return forms
 
@@ -986,4 +992,107 @@ def get_analytics_details(
             "archived_forms": archived_count,
             "completion_rate": completion_rate,
         },
+    }
+
+@router.get(
+    "/{form_id}/analytics",
+    response_model=AnalyticsResponse,
+)
+def get_form_analytics(
+    form_id: int,
+    db: Session = Depends(get_db),
+):
+    """Get analytics for a form."""
+    return FormService.get_form_analytics(
+        db=db,
+        form_id=form_id,
+    )
+
+@router.post("/{form_id}/duplicate")
+def duplicate_form(
+    form_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # Find original form
+    original_form = (
+        db.query(Form)
+        .filter(
+            Form.id == form_id,
+            Form.owner_id == current_user.id
+        )
+        .first()
+    )
+
+    if not original_form:
+        raise HTTPException(
+            status_code=404,
+            detail="Form not found"
+        )
+
+    # -----------------------------
+    # Create new draft form
+    # -----------------------------
+    new_form = Form(
+        title=f"{original_form.title} (Copy)",
+        description=original_form.description,
+        owner_id=current_user.id,
+        status="draft"
+    )
+
+    db.add(new_form)
+    db.commit()
+    db.refresh(new_form)
+
+    # -----------------------------
+    # Copy Fields
+    # -----------------------------
+    fields = (
+        db.query(Field)
+        .filter(Field.form_id == original_form.id)
+        .order_by(Field.display_order)
+        .all()
+    )
+
+    for field in fields:
+        copied_field = Field(
+            form_id=new_form.id,
+            label=field.label,
+            field_type=field.field_type,
+            config=field.config,
+            display_order=field.display_order,
+        )
+
+        db.add(copied_field)
+
+    db.commit()
+
+    # -----------------------------
+    # Copy Conditional Rules
+    # -----------------------------
+    rules = (
+        db.query(ConditionalRule)
+        .filter(ConditionalRule.form_id == original_form.id)
+        .all()
+    )
+
+    for rule in rules:
+        copied_rule = ConditionalRule(
+            form_id=new_form.id,
+            trigger_field_id=rule.trigger_field_id,
+            operator=rule.operator,
+            comparison_value=rule.comparison_value,
+            target_field_id=rule.target_field_id,
+            action=rule.action,
+        )
+
+        db.add(copied_rule)
+
+    db.commit()
+
+    return {
+        "message": "Form duplicated successfully",
+        "new_form_id": new_form.id,
+        "title": new_form.title,
+        "status": new_form.status,
     }

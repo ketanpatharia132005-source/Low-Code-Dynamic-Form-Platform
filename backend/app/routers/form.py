@@ -9,6 +9,7 @@ from app.schemas.form import (
     FormUpdate,
     FormVersionResponse,
     FormVersionCreate,
+    AnalyticsResponse,
 )
 from app.services.form_service import FormService
 
@@ -116,4 +117,18 @@ def create_new_form_version(
         db=db,
         form_id=form_id,
         version_in=version_in,
+    )
+
+@router.get(
+    "/{form_id}/analytics",
+    response_model=AnalyticsResponse,
+)
+def get_form_analytics(
+    form_id: int,
+    db: Session = Depends(get_db),
+):
+    """Get analytics for a form."""
+    return FormService.get_form_analytics(
+        db=db,
+        form_id=form_id,
     )

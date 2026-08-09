@@ -1,0 +1,766 @@
+/* =========================================================
+   FORM OVERVIEW
+   ========================================================= */
+
+.form-overview-page {
+    padding: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* Breadcrumb */
+
+.overview-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 24px;
+
+    font-size: 13px;
+    color: #64748b;
+}
+
+.overview-breadcrumb button {
+    border: none;
+    background: transparent;
+
+    padding: 0;
+
+    color: #2563eb;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.overview-breadcrumb strong {
+    color: #334155;
+}
+
+
+/* Header */
+
+.overview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+}
+
+.overview-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.overview-form-icon {
+    width: 54px;
+    height: 54px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.overview-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.overview-title-row h1 {
+    margin: 0;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.overview-header-left p {
+    margin: 6px 0;
+
+    color: #64748b;
+    font-size: 14px;
+}
+
+.overview-form-id {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+
+/* Status */
+
+.overview-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: capitalize;
+}
+
+.overview-status.published {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.overview-status.draft {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.overview-status.archived {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+
+/* Edit */
+
+.overview-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 16px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.overview-edit-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+
+/* Stats */
+
+.overview-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.overview-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.overview-stat-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overview-stat-icon.blue {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.overview-stat-icon.purple {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+.overview-stat-icon.green {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.overview-stat-card span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.overview-stat-card strong {
+    color: #111827;
+
+    font-size: 14px;
+}
+
+
+/* Sections */
+
+.overview-section {
+    margin-bottom: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.overview-section-header {
+    margin-bottom: 20px;
+}
+
+.overview-section-header h2 {
+    margin: 0 0 5px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.overview-section-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* Quick Actions */
+
+.overview-actions-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.overview-action-card {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #2563eb;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.overview-action-card:hover {
+    border-color: #bfdbfe;
+
+    background: #f8fbff;
+
+    transform: translateY(-1px);
+}
+
+.overview-action-card strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #111827;
+
+    font-size: 14px;
+}
+
+.overview-action-card span {
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* Form Information */
+
+.overview-info-card {
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.overview-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid #eef2f7;
+}
+
+.overview-info-row:last-child {
+    border-bottom: none;
+}
+
+.overview-info-row > span:first-child {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.overview-info-row strong {
+    color: #111827;
+
+    font-size: 13px;
+
+    text-align: right;
+}
+
+
+/* Bottom Actions */
+
+.overview-bottom-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+.overview-bottom-actions button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #bfdbfe;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.overview-bottom-actions button:hover {
+    background: #eff6ff;
+}
+
+
+/* Loading / Error */
+
+.overview-loading,
+.overview-error {
+    padding: 80px 20px;
+
+    text-align: center;
+
+    color: #64748b;
+}
+
+.overview-error h2 {
+    margin-bottom: 8px;
+
+    color: #111827;
+}
+
+.overview-primary-btn {
+    margin-top: 18px;
+
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+    .overview-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .overview-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .overview-actions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .form-overview-page {
+        padding: 20px;
+    }
+
+    .overview-title-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .overview-title-row h1 {
+        font-size: 24px;
+    }
+
+    .overview-info-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .overview-info-row strong {
+        text-align: left;
+    }
+
+    .overview-bottom-actions {
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+    }
+}
+.overview-stat-card {
+  border: 1px solid #e5e7eb;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.overview-stat-card:hover {
+  border-color: #bfdbfe;
+  background: #f8fbff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.overview-stat-card:active {
+  transform: translateY(0);
+}
+
+.overview-stat-card:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+/* =====================================================
+   FORM INFORMATION - LONG DESCRIPTION
+   ===================================================== */
+
+.overview-info-row:last-child strong {
+  max-width: 70%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* =====================================================
+   FORM OVERVIEW - BOTTOM ACTIONS
+   ===================================================== */
+
+.overview-bottom-actions button:first-child {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.overview-bottom-actions button:first-child:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+/* =========================================================
+   DARK THEME - FORM OVERVIEW
+   ========================================================= */
+
+html[data-theme="dark"] .form-overview-page {
+  color: #e2e8f0;
+}
+
+/* =========================
+   Breadcrumb
+========================= */
+
+html[data-theme="dark"] .overview-breadcrumb {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .overview-breadcrumb button {
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .overview-breadcrumb strong {
+  color: #f8fafc;
+}
+
+
+/* =========================
+   Header
+========================= */
+
+html[data-theme="dark"] .overview-title-row h1 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .overview-header-left p {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .overview-form-id {
+  color: #64748b;
+}
+
+html[data-theme="dark"] .overview-form-icon {
+  background: #172554;
+  color: #60a5fa;
+}
+
+
+/* =========================
+   Quick Stats
+========================= */
+
+html[data-theme="dark"] .overview-stat-card {
+  background: #111827;
+  border-color: #334155;
+  color: #e2e8f0;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .overview-stat-card:hover {
+  background: #172033;
+  border-color: #475569;
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .overview-stat-card span {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .overview-stat-card strong {
+  color: #f8fafc;
+}
+
+
+/* =========================
+   Stat Icons
+========================= */
+
+html[data-theme="dark"] .overview-stat-icon.blue {
+  background: #172554;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .overview-stat-icon.purple {
+  background: #2e1065;
+  color: #c4b5fd;
+}
+
+html[data-theme="dark"] .overview-stat-icon.green {
+  background: #052e2b;
+  color: #34d399;
+}
+
+
+/* =========================
+   Form Information Section
+========================= */
+
+html[data-theme="dark"] .overview-section {
+  background: #111827;
+  border-color: #334155;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .overview-section-header h2 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .overview-section-header p {
+  color: #94a3b8;
+}
+
+
+/* =========================
+   Information Card
+========================= */
+
+html[data-theme="dark"] .overview-info-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .overview-info-row {
+  border-bottom-color: #334155;
+}
+
+html[data-theme="dark"] .overview-info-row > span:first-child {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .overview-info-row strong {
+  color: #f8fafc;
+}
+
+
+/* =========================
+   Quick Actions
+========================= */
+
+html[data-theme="dark"] .overview-action-card {
+  background: #111827;
+  border-color: #334155;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .overview-action-card:hover {
+  background: #172033;
+  border-color: #475569;
+}
+
+html[data-theme="dark"] .overview-action-card strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .overview-action-card span {
+  color: #94a3b8;
+}
+
+
+/* =========================
+   Bottom Actions
+========================= */
+
+html[data-theme="dark"] .overview-bottom-actions button {
+  background: #111827;
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .overview-bottom-actions button:hover {
+  background: #172554;
+  border-color: #60a5fa;
+}
+
+
+/* Keep primary Open Builder button blue */
+
+html[data-theme="dark"] .overview-bottom-actions button:first-child {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .overview-bottom-actions button:first-child:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+
+/* =========================
+   Loading / Error
+========================= */
+
+html[data-theme="dark"] .overview-loading,
+html[data-theme="dark"] .overview-error {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .overview-error h2 {
+  color: #f8fafc;
+}

@@ -12,8 +12,12 @@ import {
   Plus,
   MessageSquare,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+
 
 function Dashboard() {
+  const { t: lt } = useTranslation();
   const [forms, setForms] = useState([]);
   const [stats, setStats] = useState({
   total_forms: 0,
@@ -41,7 +45,7 @@ function Dashboard() {
       })
       .catch((err) => {
         console.error("Failed to load forms", err);
-        if (!cancelled) setError("Could not load your forms.");
+        if (!cancelled) setError(lt("errors.loadForms"));
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -69,7 +73,7 @@ function Dashboard() {
     const cleanTitle = title.trim();
 
     if (!cleanTitle) {
-      setError("Enter a form title.");
+      setError(lt("errors.enterTitle"));
       return;
     }
 
@@ -83,7 +87,7 @@ function Dashboard() {
 
       navigate(`/builder/${res.data.id}`);
     } catch (err) {
-      setError("Could not create form.");
+      setError(lt("errors.createForm"));
     } finally {
       setCreating(false);
     }
@@ -92,14 +96,35 @@ function Dashboard() {
   const deleteForm = async (form, e) => {
     e.stopPropagation();
 
-    if (!window.confirm(`Delete "${form.title}"?`)) return;
+    if (!window.confirmlt(lt("errors.deleteConfirm", { title: form.title }) 
+    )
+    )
+  
+      return;
 
     try {
       await api.delete(`/forms/${form.id}`);
 
       setForms((prev) => prev.filter((item) => item.id !== form.id));
     } catch (err) {
-      alert("Failed to delete.");
+      alert(lt("errors.deleteFailed"));
+    }
+  };
+
+  const duplicateForm = async (form, e) => {
+    e.stopPropagation();
+
+    try {
+      const res = await api.post(`/forms/${form.id}/duplicate`);
+
+      alert("Form duplicated successfully!");
+
+      const formsRes = await api.get("/forms/");
+      setForms(formsRes.data);
+
+    } catch (err) {
+      console.error(err);
+      alert("Failed to duplicate form.");
     }
   };
 
@@ -125,10 +150,10 @@ function Dashboard() {
 
         <div>
 
-            <h1>Forms</h1>
+            <h1>{lt("title")}</h1>
 
             <p>
-                Build, manage and publish all your forms from one workspace.
+                {lt("subtitle")}
             </p>
 
         </div>
@@ -141,7 +166,7 @@ function Dashboard() {
             }}
             >
             <Plus size={18} />
-            New Form
+            {lt("createForm")}
         </button>
 
     </section>
@@ -156,7 +181,7 @@ function Dashboard() {
 
             <input
                 type="text"
-                placeholder="Search forms..."
+                placeholder={lt("search.placeholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -170,22 +195,23 @@ function Dashboard() {
     <section className="metrics-grid">
 
         <div className="metric-card">
-
+          <div className="metric-header">
             <div className="metric-icon orange">
-                <FileText size={22} />
+                <FileText size={18} />
             </div>
 
             <div>
 
-                <span>Total Forms</span>
+                <span>{lt("stats.totalForms")}</span>
 
                 <h2>{stats.total_forms}</h2>
 
             </div>
-
+           </div>
         </div>
 
         <div className="metric-card">
+          <div className="metric-header">
 
             <div className="metric-icon green">
                 <CheckCircle size={22} />
@@ -193,44 +219,44 @@ function Dashboard() {
 
             <div>
 
-                <span>Published</span>
+                <span>{lt("stats.publishedForms")}</span>
 
                 <h2>{stats.published_forms}</h2>
 
             </div>
-
+          </div>
         </div>
 
         <div className="metric-card">
-
-            <div className="metric-icon blue">
+          <div className="metric-header">
+             <div className="metric-icon blue">
                 <ClipboardList size={22} />
             </div>
 
             <div>
 
-                <span>Responses</span>
+                <span>{lt("stats.responses")}</span>
 
                 <h2>{stats.total_responses}</h2>
 
             </div>
-
+          </div>
         </div>
 
         <div className="metric-card">
-
+          <div className="metric-header">
             <div className="metric-icon purple">
                 <BarChart3 size={22} />
             </div>
 
             <div>
 
-                <span>Completion</span>
+                <span>{lt("stats.completion")}</span>
 
                 <h2>{stats.completion_rate}%</h2>
 
             </div>
-
+          </div>
         </div>
 
     </section>
@@ -243,22 +269,29 @@ function Dashboard() {
 
     <div className="section-header">
       <div>
-        <h2>Your Forms</h2>
-        <p>Open, edit or manage your existing forms.</p>
+        <h2>{lt("yourForms")}</h2>
+        <p>{lt("yourFormsSubtitle")}</p>
       </div>
     </div>
 
     {loading ? (
 
       <div className="empty-state">
-        Loading forms...
+        {lt("message.loading")}
+      </div>
+
+    ) : forms.length === 0 ? (
+
+      <div className="empty-state">
+        <h3>{lt("messages.empty")}</h3>
+        <p>{lt("messages.emptySubtitle")}</p>
       </div>
 
     ) : filteredForms.length === 0 ? (
 
       <div className="empty-state">
-        <h3>No matching forms</h3>
-        <p>Try searching with a different keyword.</p>
+        <h3>{lt("messages.noMatch")}</h3>
+        <p>{lt("messages.noMatchSubtitle")}</p>
       </div>
 
     ) : (
@@ -267,13 +300,14 @@ function Dashboard() {
 
         <div className="forms-table-header">
 
-           <div>Form</div>
+           <div>{lt("table.form")}</div>
 
-          <div>Status</div>
+          <div>{lt("table.status")}</div>
 
-          <div>Description</div>
+          <div>{lt("table.description")}</div>
 
-          <div className="actions-column">Actions</div>
+          <div className="table-actions-header">
+          {lt("table.actions")}</div>
 
         </div>
 
@@ -284,57 +318,78 @@ function Dashboard() {
              className="forms-table-row clickable-row"
              onClick={(e) =>{
               e.stopPropagation();
-              navigate(`/builder/${form.id}`);
+              navigate(`/forms/${form.id}/overview`);
              }}
           >
             <div className="form-name">
+              <div className="form-name-icon">
+                <FileText size={17}/>
+              </div>
+
+              <div className="form-name-content">
                <h3>{form.title}</h3>
+
+               <span className="form-id">
+                  Form #{form.id}
+               </span>
+            </div>
             </div>
 
             <div>
               <span className={`status ${form.status}`}>
-                {form.status}
+                {lt(`status.${form.status}`, form.status)}
               </span>
             </div>
 
             <div className="form-description">
-              {form.description || "No description"}
+              {form.description || lt("messages.noDescription")}
             </div>
 
             <div className="table-actions">
 
               <button
-                   className="table-btn edit"
-                   onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/builder/${form.id}`);
-                   }}
+                className="table-btn edit"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/forms/${form.id}/overview`);
+                }}
               >
-                  Open
+                {lt("buttons.open")}
               </button>
 
               <button
-                    className="table-btn responses"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/responses/${form.id}`);
-                   }}
+                className="table-btn responses"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/responses/${form.id}`);
+                }}
               >
-                   <MessageSquare size={15} />
-                   Responses
+                <MessageSquare size={15} />
+                {lt("buttons.responses")}
+              </button>
+
+  
+              <button
+                className="table-btn duplicate"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  duplicateForm(form, e);
+                }}
+              >
+                {lt("buttons.duplicate")}
               </button>
 
               <button
-                    className="table-btn delete"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteForm(form, e);
-                   }}
+                className="table-btn delete"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteForm(form, e);
+                }}
               >
-                   Delete
+                {lt("buttons.delete")}
               </button>
- 
-           </div>
+
+            </div>
           </div> 
        ))}
 </div>
@@ -361,7 +416,7 @@ function Dashboard() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-header">
-              <h2>Create New Form</h2>
+              <h2>{lt("modal.title")}</h2>
 
               <button
                 className="close-btn"
@@ -378,23 +433,23 @@ function Dashboard() {
               className="create-form"
             >
               <div className="form-group">
-                <label>Form Title</label>
+                <label>{lt("modal.formTitle")}</label>
 
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="Enter form title"
+                  placeholder={lt("modal.formTitlePlaceholder")}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
 
               <div className="form-group">
-                <label>Description</label>
+                <label>{lt("modal.description")}</label>
 
                 <textarea
                   className="form-textarea"
-                  placeholder="Describe your form..."
+                  placeholder={lt("modal.descriptionPlaceholder")}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -412,7 +467,7 @@ function Dashboard() {
                   className="secondary-btn"
                   onClick={() => setShowCreateModal(false)}
                 >
-                  Cancel
+                  {lt("buttons.cancel")}
                 </button>
 
                 <button
@@ -420,7 +475,7 @@ function Dashboard() {
                   className="primary-btn"
                   disabled={creating}
                 >
-                  {creating ? "Creating..." : "Start Building"}
+                  {creating ? lt("buttons.creating") : lt("buttons.startBuilding")}
                 </button>
               </div>
             </form>

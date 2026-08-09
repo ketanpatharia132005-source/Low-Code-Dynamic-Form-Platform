@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAuthTranslation } from "../hooks/useTranslations";
 import api from "../api/api";
 import {
   FiLock,
@@ -18,6 +20,9 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const { t } = useTranslation();
+  const { at } = useAuthTranslation();
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -35,16 +40,16 @@ function Login() {
 
       localStorage.setItem("token", response.data.access_token);
 
-      setMessage("Login Successful!");
+      setMessage(at("messages.loginSuccess"));
 
       navigate("/dashboard");
     } catch (error) {
-      setMessage(error.response?.data?.detail || "Login failed");
+      setMessage(error.response?.data?.detail || at("messages.loginFailed"));
     }
   };
 
   return (
-    <div className="login-page">
+    <div className="login-container">
 
       <div className="login-card">
 
@@ -54,10 +59,10 @@ function Login() {
             <FiLayers size={28} />
           </div>
 
-          <h1>Dynamic Form Platform</h1>
+          <h1>{t("appName")}</h1>
 
           <p>
-            Low-Code Dynamic Form Builder
+            {at("platformSubtitle")}
           </p>
 
         </div>
@@ -66,10 +71,10 @@ function Login() {
 
           <div className="welcome">
 
-            <h2>Welcome Back</h2>
+            <h2>{at("login.title")}</h2>
 
             <p>
-              Sign in to continue to your workspace.
+              {at("login.subtitle")}
             </p>
 
           </div>
@@ -78,7 +83,7 @@ function Login() {
 
             <div className="input-group">
 
-              <label>Email Address</label>
+              <label>{at("login.emailLabel")}</label>
 
               <div className="input-box">
 
@@ -86,7 +91,7 @@ function Login() {
 
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={at("login.emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -97,7 +102,7 @@ function Login() {
 
             <div className="input-group">
 
-              <label>Password</label>
+              <label>{at("login.passwordLabel")}</label>
 
               <div className="input-box">
 
@@ -105,7 +110,7 @@ function Login() {
 
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={at("login.passwordPlaceholder")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -117,7 +122,7 @@ function Login() {
             {message && (
               <div
                 className={`login-message ${
-                  message === "Login Successful!"
+                  message === at("messages.loginSuccess")
                     ? "success"
                     : "error"
                 }`}
@@ -127,8 +132,18 @@ function Login() {
             )}
 
             <button type="submit" className="login-btn">
-              Sign In
+              {at("login.signIn")}
             </button>
+
+            <p className="register-text">
+
+              {at("login.noAccount")}{" "}
+
+              <Link to="/register" className="register-link">
+                {at("login.createAccount")}
+              </Link>
+
+            </p>
 
           </form>
 
@@ -137,27 +152,18 @@ function Login() {
         <div className="login-footer">
 
           <div className="feature">
-
             <FiCheckCircle />
-
-            Drag & Drop Builder
-
+            {at("features.dragDrop")}
           </div>
 
           <div className="feature">
-
             <FiGitBranch />
-
-            Conditional Logic
-
+            {at("features.conditionalLogic")}
           </div>
 
           <div className="feature">
-
             <FiBarChart2 />
-
-            Analytics Dashboard
-
+            {at("features.analytics")}
           </div>
 
         </div>
