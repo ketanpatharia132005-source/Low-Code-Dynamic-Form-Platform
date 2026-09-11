@@ -2,5 +2,486 @@
   "appName": "FormCraft",
   "language": "Language",
   "english": "English",
-  "hindi": "Hindi"
+  "hindi": "Hindi",
+
+  "sidebar": {
+    "workspace": "WORKSPACE",
+    "tagline": "Build. Manage. Publish.",
+    "mainMenu": "MAIN MENU",
+    "dashboard": "Dashboard",
+    "submissions": "Submissions",
+    "analytics": "Analytics",
+    "responses": "Responses",
+    "exports": "Exports",
+    "auditLogs": "Audit Logs",
+    "account": "ACCOUNT",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+  ,
+    "submissionSuccess": {
+      "noSubmission": "No submission found.",
+      "goHome": "Go Home",
+      "responseIdCopied": "Response ID copied!",
+      "thankYou": "Thank You!",
+      "submittedSuccessfully": "Your response has been submitted successfully.",
+      "responseId": "Response ID",
+      "submittedAt": "Submitted At",
+      "copyResponseId": "Copy Response ID",
+      "submitAnother": "Submit Another",
+      "home": "Home"
+    }
+    ,
+      "publicForm": {
+        "loading": "Loading form...",
+        "notFound": "Form not found or invalid link.",
+        "submit": "Submit Form",
+        "submitting": "Submitting...",
+        "submitFailed": "Failed to submit form.",
+      "validation": {
+        "validEmail": "Please enter a valid email address.",
+        "minLength": "{{label}} must be at least {{minLength}} characters.",
+        "maxLength": "{{label}} must not exceed {{maxLength}} characters.",
+        "validNumber": "{{label}} must be a valid number.",
+        "minNumber": "{{label}} must be at least {{min}}.",
+        "maxNumber": "{{label}} must not exceed {{max}}.",
+        "wholeNumber": "{{label}} must be a whole number.",
+        "validDate": "Please select a valid date.",
+        "minDate": "{{label}} cannot be before {{date}}.",
+        "maxDate": "{{label}} cannot be after {{date}}.",
+        "validOption": "Please select a valid {{label}}.",
+        "validOptions": "Please select valid {{label}} option(s).",
+        "validRating": "{{label}} must be a valid rating.",
+        "ratingRange": "{{label}} must be between 1 and {{maxRating}}."
+      }
+    }
+    ,
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your account, appearance, language and workspace preferences.",
+
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your personal information and account details."
+    },
+
+    "appearance": {
+      "title": "Appearance",
+      "description": "Choose how the application looks.",
+      "theme": "Theme",
+      "themeDescription": "Select your preferred appearance.",
+      "light": "Light",
+      "dark": "Dark"
+    },
+
+    "language": {
+      "title": "Language",
+      "description": "Choose the language used throughout the application.",
+      "applicationLanguage": "Application Language",
+      "savedAutomatically": "Your selected language is saved automatically."
+    },
+
+    "workspace": {
+      "title": "Workspace",
+      "description": "Manage your Form Craft workspace information.",
+      "name": "Workspace Name",
+      "type": "Workspace Type",
+      "tagline": "Build. Manage. Publish.",
+      "details": "Create dynamic forms, collect responses and manage your form workflows from one workspace."
+    },
+
+    "security": {
+      "title": "Security",
+      "description": "Manage your account security.",
+      "password": "Password",
+      "passwordDescription": "Your account is protected using secure authentication.",
+      "protected": "Protected"
+    },
+
+    "dataManagement": {
+      "title": "Data Management",
+      "description": "Manage data retention and deletion policies for your forms.",
+      "retentionPolicies": "Retention Policies",
+      "retentionDescription": "Configure retention settings for individual forms.",
+      "formSpecific": "Form specific"
+    },
+
+    "about": {
+      "title": "About Form Craft",
+      "description": "Information about your form management platform.",
+      "product": "Product",
+      "platform": "Platform",
+      "details": "Form Craft helps you build, manage, publish and analyze dynamic forms from one centralized workspace."
+    }
+  }
+  ,
+  "submissions": {
+    "title": "Submissions",
+    "totalSubmissions": "Total Submissions",
+    "search": "Search",
+    "searchPlaceholder": "Search responses...",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "reset": "Reset",
+    "loading": "Loading responses...",
+    "loadingDescription": "Please wait while I fetch the submissions.",
+    "noResponses": "No Responses Found",
+    "noResponsesDescription": "There are no responses matching your filters.",
+    "form": "Form",
+    "responseId": "Response ID",
+    "submittedAt": "Submitted At",
+    "summary": "Summary",
+    "action": "Action",
+    "viewForm": "View Form",
+    "previous": "Previous",
+    "page": "Page",
+    "of": "of",
+    "next": "Next",
+    "subtitle": "View individual submissions received across all your forms.",
+    "deleteSelected": "Delete Selected",
+    "exporting": "Exporting...",
+    "exportCSV": "Export CSV",
+    "exportJSON": "Export JSON",
+    "field": "Field",
+    "allFields": "All Fields",
+    "fieldValue": "Field value...",
+    "value": "Value",
+    "noResponsesYet": "No Responses Yet",
+    "noResponsesYetDescription": "This form hasn't received any submissions yet.",
+    "viewResponse": "View Response",
+    "responseDetails": "Response Details",
+    "deleteResponses": "Delete Responses",
+    "deleteConfirmation": "You are about to permanently delete",
+    "responsesCount": "response(s).",
+    "cannotBeUndone": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "deleting": "Deleting...",
+    "deletePermanently": "Delete Permanently",
+    "selectResponse": "Please select at least one response.",
+    "deleteSuccess": "Responses deleted successfully.",
+    "deleteFailed": "Failed to delete responses.",
+    "exportFailedCSV": "Failed to export CSV.",
+    "exportFailedJSON": "Failed to export JSON.",
+    "loadResponseFailed": "Unable to load response.",
+    "formResponses": "Form Responses",
+    "formResponsesSubtitle": "View response counts and detailed responses for each form.",
+    "searchForms": "Search forms...",
+    "loadingForms": "Loading forms...",
+    "loadingFormsDescription": "Please wait while I fetch your forms.",
+    "noFormsFound": "No Forms Found",
+    "noFormsFoundDescription": "No forms match your search.",
+    "responses": "Responses",
+    "status": "Status",
+    "formNumber": "Form #{{id}}",
+    "viewResponses": "View Responses"
+   }
+  ,
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "View insights and statistics for your forms.",
+    "loading": "Loading analytics...",
+    "totalSubmissions": "Total Submissions",
+    "completedForms": "Completed Forms",
+    "incompleteForms": "Incomplete Forms",
+    "completionRate": "Completion Rate",
+    "publishedForms": "Published Forms",
+    "totalForms": "Total Forms",
+    "formAnalytics": "Form Analytics",
+    "formAnalyticsSubtitle": "View responses and analytics for each form.",
+    "form": "Form",
+    "status": "Status",
+    "responses": "Responses",
+    "formsCount": "{{count}} Forms",
+    "actions": "Actions",
+    "viewAnalytics": "View Analytics",
+    "responsesByForm": "Responses by Form",
+    "responsesByFormSubtitle": "Overview of total responses collected for each form.",
+    "responsesByFormNote": "This chart shows the total number of responses received for each form.",
+    "allForms": "All Forms",
+    "responseSummary": "Response Summary",
+    "completionDetails": "Completion Details",
+    "searchForms": "Search forms...",
+    "titleHeader": "Title",
+    "action": "Action",
+    "analytics": "Analytics",
+    "averageCompletionTime": "Average Completion Time",
+    "totalResponses": "Total Responses",
+    "published": "Published",
+    "draft": "Draft",
+    "archived": "Archived",
+    "seconds": "seconds",
+    "perFieldDistribution": "Per-Field Distribution",
+    "perFieldDistributionSubtitle": "See how respondents answered each field in this form.",
+    "noFieldDistribution": "No field distribution data available.",
+    "noResponsesForField": "No responses yet for this field."
+  }
+  ,
+  "formOverview": {
+    "loading": "Loading form...",
+    "unableToLoad": "Unable to load form",
+    "notFound": "Form not found.",
+    "backToForms": "Back to Forms",
+    "forms": "Forms",
+    "overview": "Overview",
+    "manageMonitor": "Manage and monitor this form.",
+    "formId": "Form #{{id}}",
+    "editForm": "Edit Form",
+    "responses": "Responses",
+    "viewResponses": "View Responses",
+    "analytics": "Analytics",
+    "viewAnalytics": "View Analytics",
+    "conditionalLogic": "Conditional Logic",
+    "manageRules": "Manage Rules",
+    "formInformation": "Form Information",
+    "basicInformation": "Basic information about this form.",
+    "formName": "Form Name",
+    "status": "Status",
+    "formIdLabel": "Form ID",
+    "description": "Description",
+    "noDescription": "No description",
+    "openBuilder": "Open Builder",
+    "loadFailed": "Failed to load form.",
+    "statusValues": {
+    "draft": "Draft",
+    "published": "Published",
+    "archived": "Archived"
+  }
+    
+  },
+  "exports": {
+    "title": "Exports",
+    "subtitle": "Export response data from your forms.",
+    "searchForms": "Search forms...",
+    "loadingForms": "Loading forms...",
+    "loadingFormsDescription": "Please wait while I fetch your forms.",
+    "noFormsFound": "No Forms Found",
+    "noFormsFoundDescription": "No forms match your search.",
+    "form": "Form",
+    "status": "Status",
+    "responses": "Responses",
+    "export": "Export",
+    "formNumber": "Form #{{id}}",
+    "exporting": "Exporting...",
+    "csv": "CSV", 
+    "json": "JSON",
+    "exportFailedCSV": "Failed to export CSV.",
+    "exportFailedJSON": "Failed to export JSON."
+  }
+  ,
+  "auditLogs": {
+    "title": "Audit Logs",
+    "subtitle": "Track system activities and administrative actions.",
+    "loading": "Loading audit logs...",
+    "loadFailed": "Failed to load audit logs.",
+    "empty": "No audit logs found.",
+    "id": "ID",
+    "action": "Action",
+    "entity": "Entity",
+    "records": "Records",
+    "createdAt": "Created At",
+    "details": "Details",
+    "form": "Form",
+    "responses": "Responses",
+    "automaticRetentionJob": "Automatic Retention Job",
+    "actions": {
+      "bulk_delete": "Bulk Delete",
+      "archive": "Archive"
+    },
+    "entities": {
+      "submission": "Submission"
+    }
+  },
+  "builder": {
+    "formDesigner": "Form Designer",
+    "conditionalLogic": "Conditional Logic",
+    "backToEditor": "Back to Editor",
+    "preview": "Preview",
+    "retentionPolicy": "Retention Policy",
+    "publish": "Publish",
+    "archive": "Archive",
+    "editDraft": "Edit Draft",
+    "untitledForm": "Untitled Form",
+    "version": "Version",
+    "versionHistory": "Version History",
+    "versions": "Versions",
+    "noPublishedVersions": "No published versions yet.",
+    "published": "Published",
+    "components": "Components",
+    "componentsDescription": "Drag or click to build your form",
+    "formCanvas": "Form Canvas",
+    "formCanvasDescription": "Arrange and customize your form fields",
+    "fieldProperties": "Field Properties",
+    "fieldPropertiesDescription": "Configure the selected field",
+    "loadingForm": "Loading form...",
+    "loadFormFailed": "Could not load this form.",
+    "addFieldFailed": "Could not add that field. Check your connection and try again.",
+    "saveFieldFailed": "Could not save changes. Check your connection and try again.",
+    "deleteFieldFailed": "Could not delete that field.",
+    "saveOrderFailed": "Could not save the new field order.",
+    "publishFailed": "Could not publish this form.",
+    "archiveFailed": "Could not archive this form.",
+    "dragOrClickToAdd": "Drag or click to add",
+    "loadingComponents": "Loading Components...",
+    "fieldTypesLoadFailed": "Could not load field types. Is the backend running?",
+    "publishedArchivedCannotEdit": "Published or archived forms cannot be edited.",
+    
+    "publishConfirmation": {
+      "title": "Publish Form",
+      "message": "Are you sure you want to publish this form? Published forms cannot be edited directly.",
+      "confirm": "Publish"
+    },
+    "archiveConfirmation": {
+      "title": "Archive Form",
+      "message": "Are you sure you want to archive this form? Archived forms cannot be edited or filled.",
+      "confirm": "Archive"
+    },
+    
+    "shareForm": {
+      "title": "Share Form",
+      "publishedSuccessfully": "Your form has been published successfully.",
+      "copied": "✅ Copied!",
+      "copyLink": "📋 Copy Link",
+      "close": "Close",
+      "cancel": "Cancel"
+    },
+  
+    "ruleBuilder": {
+      "title": "Conditional Logic Builder",
+      "subtitle": "Create dynamic rules to show, hide or require fields automatically.",
+
+      "loadFailed": "Failed to load conditional rules.",
+      "selectFields": "Please select both a trigger field and a target field.",
+      "sameField": "Trigger field and target field cannot be the same.",
+      "requestFailed": "Request failed. Check Console.",
+      "deleteConfirmation": "Are you sure you want to delete this rule?",
+      "deleteFailed": "Failed to delete rule.",
+
+      "ifField": "If Field",
+      "selectTriggerField": "-- Select Trigger Field --",
+      "condition": "Condition",
+      "value": "Value",
+      "valuePlaceholder": "Value...",
+      "thenAction": "Then Action",
+      "targetField": "Target Field",
+      "selectTargetField": "-- Select Target Field --",
+      "unnamedField": "Unnamed Field",
+      "fieldFallback": "Field ({{id}})",
+
+      "savingRule": "Saving Rule...",
+      "saveRule": "Save Rule",
+
+      "activeLogic": "Active Form Logic",
+      "noRules": "No conditional rules created yet.",
+
+      "triggerField": "Trigger Field",
+      "action": "Action",
+      "deleteRule": "Delete Rule",
+
+      "operators": {
+        "equals": "Equals",
+        "notEquals": "Not Equals",
+        "greaterThan": "Greater Than",
+        "lessThan": "Less Than",
+        "greaterThanOrEqual": "Greater Than or Equal",
+        "lessThanOrEqual": "Less Than or Equal",
+        "contains": "Contains",
+        "startsWith": "Starts With",
+        "endsWith": "Ends With",
+        "isEmpty": "Is Empty",
+        "isNotEmpty": "Is Not Empty"
+      },
+
+      "actions": {
+        "show": "Show",
+        "hide": "Hide",
+        "require": "Require"
+      }
+    },
+    "fieldRenderer": {
+      "enterText": "Enter text...",
+      "enterNumber": "Enter number...",
+      "enterEmail": "Enter email address...",
+      "select": "Select...",
+      "invalidFileType": "Invalid file type. Allowed: {{allowed}}",
+      "fileSizeExceeded": "File size must not exceed {{maxSizeMB}} MB.",
+      "fileUploadFailed": "File upload failed. Please try again.",
+      "enterResponse": "Enter your response...",
+      "untitledQuestion": "Untitled Question"
+    },
+    "shareLink": {
+      "generating": "Generating...",
+      "getShareableLink": "Get Shareable Link",
+      "generateFailed": "Failed to generate link."
+    },
+    "draft": "Draft",
+    "fieldTypes": {
+      "text": "Text",
+      "email": "Email",
+      "number": "Number",
+      "dropdown": "Dropdown",
+      "checkbox": "Checkbox",
+      "date": "Date",
+      "file": "File Upload",
+      "rating": "Rating" 
+    },
+    "field": "Field",
+    "fields": "Fields",
+    "canvasEmpty": "Your Canvas is Empty",
+    "canvasEmptyDescription": "Drag components from the left panel or click one to instantly add it here.",
+    "properties": {
+      "option": "Option",
+      "options": "Options",
+      "addOption": "Add Option",
+      "noFieldSelected": "No Field Selected",
+      "noFieldSelectedDescription": "Click any field on the canvas to edit its properties and validation settings.",
+      "deleteConfirmation": "Delete \"{{label}}\"?",
+      "basic": "Basic",
+      "fieldType": "Field Type",
+      "label": "Label",
+      "configuration": "Configuration",
+      "placeholder": "Placeholder",
+      "minLength": "Min Length",
+      "maxLength": "Max Length",
+      "min": "Min",
+      "max": "Max",
+      "validation": "Validation",
+      "integerOnly": "Integer only",
+      "minDate": "Min Date",
+      "maxDate": "Max Date",
+      "allowedTypes": "Allowed Types (comma-separated, e.g. .pdf,.png)",
+      "maxSize": "Max Size (MB)",
+      "scale": "Scale (1-10)",
+      "required": "Required",
+      "actions": "Actions",
+      "unsavedChanges": "You have unsaved changes",
+      "saveChanges": "Save Changes",
+      "saved": "Saved",
+      "deleteField": "Delete Field",
+      "dragToReorder": "Drag to reorder"
+      
+    }
+  },
+  "retentionPolicy": {
+    "title": "Retention Policy",
+    "loading": "Loading...",
+    "automaticCleanup": "Automatic Cleanup",
+    "retentionDays": "Retention Days",
+    "action": "Action",
+    "archive": "Archive",
+    "delete": "Delete",
+    "saving": "Saving...",
+    "savePolicy": "Save Policy",
+    "updateSuccess": "Retention policy updated successfully.",
+    "updateFailed": "Failed to update retention policy."
+  },
+  "formNavigation": {
+    "overview": "Overview",
+    "builder": "Builder",
+    "responses": "Responses",
+    "analytics": "Analytics",
+    "rules": "Rules",
+    "settings": "Settings"
+  }
+  
+
 }

@@ -97,20 +97,23 @@
     min-width: 0;
 }
 .builder-header-info h1{
-    margin:0;
+    margin:0 0 6px 0;
     font-size:28px;
     font-weight:700;
     color:#111827;
 }
 .builder-description{
-    margin-top:6px;
+    margin: 15px 0 0;
+    max-width: 650px;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
     color:#6b7280;
 }
 .builder-meta-row{
     display:flex;
     gap:12px;
     align-items:center;
-    margin-top:10px;
+    margin-top:12px;
 }
 .builder-version{
     font-size:13px;
@@ -151,7 +154,7 @@
 .builder-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 
     width: 100%;
     flex-wrap: wrap;

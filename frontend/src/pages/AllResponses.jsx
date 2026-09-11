@@ -5,8 +5,10 @@ import { Eye, Search, ArrowLeft } from "lucide-react";
 import Layout from "../components/layout/Layout";
 import { browseAllResponses } from "../api/api";
 import "./AllResponses.css";
+import { useTranslation } from "react-i18next";
 
 function AllResponses() {
+  const { t: lt } = useTranslation();
   const navigate = useNavigate();
 
   const [responses, setResponses] = useState([]);
@@ -74,15 +76,15 @@ function AllResponses() {
         <div className="all-responses-header">
 
           <div>
-            <h1>Submissions</h1>
+            <h1>{lt("submissions.title")}</h1>
 
 <p>
-  View individual submissions received across all your forms.
+ <p>{lt("submissions.subtitle")}</p>
 </p>
           </div>
 
           <div className="all-responses-count">
-            <span>Total Submissions</span>
+            <span>{lt("submissions.totalSubmissions")}</span>
             <strong>{totalResponses}</strong>
           </div>
 
@@ -94,14 +96,14 @@ function AllResponses() {
         <div className="all-responses-filters">
 
           <div className="all-response-filter">
-            <label>Search</label>
+            <label>{lt("submissions.search")}</label>
 
             <div className="all-response-search">
               <Search size={16} />
 
               <input
                 type="text"
-                placeholder="Search responses..."
+                placeholder={lt("submissions.searchPlaceholder")}
                 value={search}
                 onChange={(e) => {
                   setOffset(0);
@@ -113,7 +115,7 @@ function AllResponses() {
 
 
           <div className="all-response-filter">
-            <label>From Date</label>
+            <label>{lt("submissions.fromDate")}</label>
 
             <input
               type="date"
@@ -127,7 +129,7 @@ function AllResponses() {
 
 
           <div className="all-response-filter">
-            <label>To Date</label>
+            <label>{lt("submissions.toDate")}</label>
 
             <input
               type="date"
@@ -144,7 +146,7 @@ function AllResponses() {
             className="all-response-reset"
             onClick={resetFilters}
           >
-            Reset
+            {lt("submissions.reset")}
           </button>
 
         </div>
@@ -155,18 +157,18 @@ function AllResponses() {
         {loading ? (
 
           <div className="all-responses-empty">
-            <h3>Loading responses...</h3>
+            <h3>{lt("submissions.loading")}</h3>
             <p>
-              Please wait while I fetch the submissions.
+              {lt("submissions.loadingDescription")}
             </p>
           </div>
 
         ) : responses.length === 0 ? (
 
           <div className="all-responses-empty">
-            <h3>No Responses Found</h3>
+            <h3>{lt("submissions.noResponses")}</h3>
             <p>
-              There are no responses matching your filters.
+              {lt("submissions.noResponsesDescription")}
             </p>
           </div>
 
@@ -179,11 +181,11 @@ function AllResponses() {
               <thead>
 
                 <tr>
-                  <th>Form</th>
-                  <th>Response ID</th>
-                  <th>Submitted At</th>
-                  <th>Summary</th>
-                  <th>Action</th>
+                  <th>{lt("submissions.form")}</th>
+                  <th>{lt("submissions.responseId")}</th>
+                  <th>{lt("submissions.submittedAt")}</th>
+                  <th>{lt("submissions.summary")}</th>
+                  <th>{lt("submissions.action")}</th>
                 </tr>
 
               </thead>
@@ -253,7 +255,7 @@ function AllResponses() {
                         }
                       >
                         <Eye size={15} />
-                        View Form
+                        {lt("submissions.viewForm")}
                       </button>
 
                     </td>
@@ -282,14 +284,14 @@ function AllResponses() {
               disabled={offset === 0}
             >
               <ArrowLeft size={15} />
-              Previous
+              {lt("submissions.previous")}
             </button>
 
 
             <span>
-              Page{" "}
+               {lt("submissions.page")}{" "}
               {Math.floor(offset / limit) + 1}
-              {" "}of{" "}
+              {" "}{lt("submissions.of")}{" "}
               {Math.max(
                 1,
                 Math.ceil(totalResponses / limit)
@@ -303,7 +305,7 @@ function AllResponses() {
                 offset + limit >= totalResponses
               }
             >
-              Next
+             {lt("submissions.next")}
             </button>
 
           </div>

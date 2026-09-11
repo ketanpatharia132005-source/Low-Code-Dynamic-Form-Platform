@@ -18,6 +18,7 @@ import AllResponses from "./pages/AllResponses";
 import Responses from "./pages/Responses";
 import Exports from "./pages/Exports";
 import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -51,6 +52,10 @@ function App() {
          <Route
             path="/settings"
             element={<Settings />}
+         />
+         <Route
+            path="/profile"
+            element={<Profile />}
          />
          <Route
            path="/submissions"

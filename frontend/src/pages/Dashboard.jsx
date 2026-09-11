@@ -96,7 +96,7 @@ function Dashboard() {
   const deleteForm = async (form, e) => {
     e.stopPropagation();
 
-    if (!window.confirmlt(lt("errors.deleteConfirm", { title: form.title }) 
+    if (!window.confirm(lt("errors.deleteConfirm", { title: form.title }) 
     )
     )
   
@@ -311,7 +311,10 @@ function Dashboard() {
 
         </div>
 
-        {filteredForms.map((form) => (
+        {filteredForms.map((form) => {
+          console.log("FORM DATA:", form);
+
+          return(
 
           <div
              key={form.id}
@@ -391,7 +394,8 @@ function Dashboard() {
 
             </div>
           </div> 
-       ))}
+          );
+})}
 </div>
 
     )}

@@ -12,8 +12,10 @@ import {
 import Layout from "../components/layout/Layout";
 import api from "../api/api";
 import "./FormOverview.css";
+import { useTranslation } from "react-i18next";
 
 function FormOverview() {
+  const { t } = useTranslation();
   const { formId } = useParams();
   const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ function FormOverview() {
         );
 
         if (!foundForm) {
-          setError("Form not found.");
+          setError(t("formOverview.notFound"));
           return;
         }
 
@@ -44,7 +46,7 @@ function FormOverview() {
         console.error("Failed to load form", err);
 
         if (!cancelled) {
-          setError("Failed to load form.");
+          setError(t("formOverview.loadFailed"));
         }
       })
       .finally(() => {
@@ -63,7 +65,7 @@ function FormOverview() {
       <Layout>
         <div className="form-overview-page">
           <div className="overview-loading">
-            Loading form...
+            {t("formOverview.loading")}
           </div>
         </div>
       </Layout>
@@ -75,14 +77,14 @@ function FormOverview() {
       <Layout>
         <div className="form-overview-page">
           <div className="overview-error">
-            <h2>Unable to load form</h2>
-            <p>{error || "Form not found."}</p>
+            <h2>{t("formOverview.unableToLoad")}</h2>
+            <p>{error || t("formOverview.notFound")}</p>
 
             <button
               className="overview-primary-btn"
               onClick={() => navigate("/dashboard")}
             >
-              Back to Forms
+              {t("formOverview.backToForms")}
             </button>
           </div>
         </div>
@@ -102,7 +104,7 @@ function FormOverview() {
           <button
             onClick={() => navigate("/dashboard")}
           >
-            Forms
+            {t("formOverview.forms")}
           </button>
 
           <span>›</span>
@@ -111,7 +113,7 @@ function FormOverview() {
 
           <span>›</span>
 
-          <strong>Overview</strong>
+          <strong>{t("formOverview.overview")}</strong>
         </div>
 
 
@@ -135,18 +137,18 @@ function FormOverview() {
                 <span
                   className={`overview-status ${form.status}`}
                 >
-                  {form.status}
+                  {t(`formOverview.statusValues.${form.status}`, form.status)}
                 </span>
 
               </div>
 
               <p>
                 {form.description ||
-                  "Manage and monitor this form."}
+                  t("formOverview.manageMonitor")}
               </p>
 
               <span className="overview-form-id">
-                Form #{form.id}
+                {t("formOverview.formId", { id: form.id })}
               </span>
             </div>
 
@@ -160,7 +162,7 @@ function FormOverview() {
             }
           >
             <Edit3 size={16} />
-            Edit Form
+           {t("formOverview.editForm")}
           </button>
 
         </section>
@@ -186,8 +188,8 @@ function FormOverview() {
     </div>
 
     <div>
-      <span>Responses</span>
-      <strong>View Responses</strong>
+      <span>{t("formOverview.responses")}</span>
+      <strong>{t("formOverview.viewResponses")}</strong>
     </div>
 
   </button>
@@ -207,8 +209,8 @@ function FormOverview() {
     </div>
 
     <div>
-      <span>Analytics</span>
-      <strong>View Analytics</strong>
+      <span>{t("formOverview.analytics")}</span>
+      <strong>{t("formOverview.viewAnalytics")}</strong>
     </div>
 
   </button>
@@ -228,8 +230,8 @@ function FormOverview() {
     </div>
 
     <div>
-      <span>Conditional Logic</span>
-      <strong>Manage Rules</strong>
+      <span>{t("formOverview.conditionalLogic")}</span>
+      <strong>{t("formOverview.manageRules")}</strong>
     </div>
 
   </button>
@@ -244,9 +246,10 @@ function FormOverview() {
 
           <div className="overview-section-header">
             <div>
-              <h2>Form Information</h2>
+              <h2>{t("formOverview.formInformation")}</h2>
               <p>
-                Basic information about this form.
+                {t("formOverview.basicInformation")}
+
               </p>
             </div>
           </div>
@@ -255,29 +258,29 @@ function FormOverview() {
           <div className="overview-info-card">
 
             <div className="overview-info-row">
-              <span>Form Name</span>
+              <span>{t("formOverview.formName")}</span>
               <strong>{form.title}</strong>
             </div>
 
             <div className="overview-info-row">
-              <span>Status</span>
+              <span>{t("formOverview.status")}</span>
 
               <span
                 className={`overview-status ${form.status}`}
               >
-                {form.status}
+                {t(`formOverview.statusValues.${form.status}`, form.status)}
               </span>
             </div>
 
             <div className="overview-info-row">
-              <span>Form ID</span>
+              <span>{t("formOverview.formIdLabel")}</span>
               <strong>#{form.id}</strong>
             </div>
 
             <div className="overview-info-row">
-              <span>Description</span>
+              <span>{t("formOverview.description")}</span>
               <strong>
-                {form.description || "No description"}
+                {form.description || t("formOverview.noDescription")}
               </strong>
             </div>
 
@@ -298,7 +301,7 @@ function FormOverview() {
             }
           >
             <Edit3 size={16} />
-            Open Builder
+            {t("formOverview.openBuilder")}
           </button>
 
           <button
@@ -307,7 +310,7 @@ function FormOverview() {
             }
           >
             <MessageSquare size={16} />
-            View Responses
+            {t("formOverview.viewResponses")}
           </button>
 
           <button
@@ -316,7 +319,7 @@ function FormOverview() {
             }
           >
             <ExternalLink size={16} />
-            Analytics
+            {t("formOverview.analytics")}
           </button>
 
         </div>

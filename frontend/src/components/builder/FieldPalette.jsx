@@ -1,6 +1,9 @@
 import { useDraggable } from "@dnd-kit/core";
+import { useTranslation } from "react-i18next";
 
 function DraggablePaletteItem({ fieldType, addField, disabled }) {
+  const { t } = useTranslation();
+
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: `palette-${fieldType.type}`,
     data: {
@@ -15,33 +18,31 @@ function DraggablePaletteItem({ fieldType, addField, disabled }) {
 
   return (
     <div
-  ref={setNodeRef}
-  style={style}
-  className={disabled ? "field-item disabled" : "field-item"}
-  onClick={() => {
-    if (!disabled) addField(fieldType.type);
-  }}
-  {...listeners}
-  {...attributes}
->
+      ref={setNodeRef}
+      style={style}
+      className={disabled ? "field-item disabled" : "field-item"}
+      onClick={() => {
+        if (!disabled) addField(fieldType.type);
+      }}
+      {...listeners}
+      {...attributes}
+    >
+      <div className="field-item-icon">
+        {getFieldIcon(fieldType.type)}
+      </div>
 
-  <div className="field-item-icon">
-    {getFieldIcon(fieldType.type)}
-  </div>
+      <div className="field-item-content">
+        <div className="field-item-title">
+          {t(`builder.fieldTypes.${fieldType.type}`, {
+            defaultValue: fieldType.label,
+          })}
+        </div>
 
-  <div className="field-item-content">
-
-    <div className="field-item-title">
-      {fieldType.label}
+        <div className="field-item-subtitle">
+          {t("builder.dragOrClickToAdd")}
+        </div>
+      </div>
     </div>
-
-    <div className="field-item-subtitle">
-      Drag or click to add
-    </div>
-
-  </div>
-
-</div>
   );
 }
 
@@ -77,25 +78,24 @@ function getFieldIcon(type) {
 }
 
 function FieldPalette({ fieldTypes, loading, addField, disabled }) {
+  const { t } = useTranslation();
+
   return (
     <div className="field-palette">
-
-      
-
       {loading && (
-        <p> className= "Loading Components...</p>
+        <p>{t("builder.loadingComponents")}</p>
       )}
 
       {!loading && fieldTypes.length === 0 && (
         <p className="field-hint">
-          Could not load field types. Is the backend running?
+          {t("builder.fieldTypesLoadFailed")}
         </p>
       )}
 
       {disabled && (
-         <p className="field-hint">
-            Published or archived forms cannot be edited.
-         </p>
+        <p className="field-hint">
+          {t("builder.publishedArchivedCannotEdit")}
+        </p>
       )}
 
       <div className="field-list">

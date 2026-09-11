@@ -1,53 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export default function ShareLinkWidget({ formId, isPublished, versionNumber, onLinkGenerated, }) {
+export default function ShareLinkWidget({
+  formId,
+  isPublished,
+  versionNumber,
+  onLinkGenerated,
+}) {
+  const { t } = useTranslation();
+
   const [linkData, setLinkData] = useState(null);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleGenerateLink = async () => {
     setLoading(true);
-    setError('');
+    setError("");
+
     try {
-      
-      const response = await fetch(`http://localhost:8001/api/v1/forms/${formId}/generate-link`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Adjust if you store tokens differently
+      const response = await fetch(
+        `http://localhost:8001/api/v1/forms/${formId}/generate-link`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
+          },
         }
-      });
-      
+      );
+
       if (!response.ok) {
         const errData = await response.json();
-        throw new Error(errData.detail || 'Failed to generate link');
+
+        throw new Error(
+          errData.detail ||
+            t("builder.shareLink.generateFailed")
+        );
       }
-      
+
       const data = await response.json();
+
       console.log(data);
+      console.log(
+        "Generate Link Response:",
+        data
+      );
 
-      console.log("Generate Link Response:", data);
-
-// Backend may return token or url.
-// Always build the correct frontend URL.
+      // Backend may return token or url.
+      // Always build the correct frontend URL.
 
       const token =
-          data.token ||
-          data.share_token ||
-          data.public_token ||
-          data.url?.split("/").pop();
+        data.token ||
+        data.share_token ||
+        data.public_token ||
+        data.url?.split("/").pop();
 
       setLinkData({
         ...data,
         url: `${window.location.origin}/f/${token}`,
-       });
-       onLinkGenerated?.({
+      });
+
+      onLinkGenerated?.({
         ...data,
         url: `${window.location.origin}/f/${token}`,
-});
+      });
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.message ||
+          t("builder.shareLink.generateFailed")
+      );
     } finally {
       setLoading(false);
     }
@@ -55,9 +79,16 @@ export default function ShareLinkWidget({ formId, isPublished, versionNumber, on
 
   const handleCopy = () => {
     if (linkData?.url) {
-      navigator.clipboard.writeText(linkData.url);
+      navigator.clipboard.writeText(
+        linkData.url
+      );
+
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+
+      setTimeout(
+        () => setCopied(false),
+        2000
+      );
     }
   };
 
@@ -68,12 +99,16 @@ export default function ShareLinkWidget({ formId, isPublished, versionNumber, on
         onClick={handleGenerateLink}
         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium text-sm disabled:bg-gray-400 transition-colors"
       >
-        {loading ? 'Generating...' : 'Get Shareable Link'}
+        {loading
+          ? t("builder.shareLink.generating")
+          : t("builder.shareLink.getShareableLink")}
       </button>
 
-      {error && <p className="text-red-500 text-xs mt-1 absolute">{error}</p>}
-
-      
+      {error && (
+        <p className="text-red-500 text-xs mt-1 absolute">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

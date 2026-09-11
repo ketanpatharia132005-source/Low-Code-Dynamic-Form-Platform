@@ -3,7 +3,531 @@
 
   "language": "भाषा",
   "english": "अंग्रेज़ी",
-  "hindi": "हिन्दी"
+  "hindi": "हिन्दी",
 
+  "sidebar": {
+    "workspace": "कार्यस्थान",
+    "tagline": "बनाएँ। प्रबंधित करें। प्रकाशित करें।",
+    "mainMenu": "मुख्य मेनू",
+    "dashboard": "डैशबोर्ड",
+    "submissions": "प्रस्तुतियाँ",
+    "analytics": "विश्लेषण",
+    "responses": "प्रतिक्रियाएँ",
+    "exports": "निर्यात",
+    "auditLogs": "ऑडिट लॉग",
+    "account": "खाता",
+    "settings": "सेटिंग्स",
+    "logout": "लॉग आउट"
+  }
+  ,
+
+   "submissionSuccess": {
+      "noSubmission": "कोई सबमिशन नहीं मिला।",
+      "goHome": "होम पर जाएँ",
+      "responseIdCopied": "रिस्पॉन्स आईडी कॉपी हो गई!",
+      "thankYou": "धन्यवाद!",
+      "submittedSuccessfully": "आपकी प्रतिक्रिया सफलतापूर्वक सबमिट हो गई है।",
+      "responseId": "रिस्पॉन्स आईडी",
+      "submittedAt": "सबमिट किया गया",
+      "copyResponseId": "रिस्पॉन्स आईडी कॉपी करें",
+      "submitAnother": "एक और सबमिट करें",
+      "home": "होम"
+    }
+    ,
+    "publicForm": {
+      "loading": "फ़ॉर्म लोड हो रहा है...",
+      "notFound": "फ़ॉर्म नहीं मिला या लिंक अमान्य है।",
+      "submit": "फ़ॉर्म सबमिट करें",
+      "submitting": "सबमिट हो रहा है...",
+      "submitFailed": "फ़ॉर्म सबमिट करने में विफल।",
+    "validation": {
+      "validEmail": "कृपया एक मान्य ईमेल पता दर्ज करें।",
+      "minLength": "{{label}} में कम से कम {{minLength}} अक्षर होने चाहिए।",
+      "maxLength": "{{label}} में {{maxLength}} से अधिक अक्षर नहीं होने चाहिए।",
+      "validNumber": "{{label}} एक मान्य संख्या होनी चाहिए।",
+      "minNumber": "{{label}} कम से कम {{min}} होना चाहिए।",
+      "maxNumber": "{{label}} {{max}} से अधिक नहीं होना चाहिए।",
+      "wholeNumber": "{{label}} एक पूर्ण संख्या होनी चाहिए।",
+      "validDate": "कृपया एक मान्य तारीख चुनें।",
+      "minDate": "{{label}} {{date}} से पहले नहीं हो सकता।",
+      "maxDate": "{{label}} {{date}} के बाद नहीं हो सकता।",
+      "validOption": "कृपया एक मान्य {{label}} चुनें।",
+      "validOptions": "कृपया मान्य {{label}} विकल्प चुनें।",
+      "validRating": "{{label}} एक मान्य रेटिंग होनी चाहिए।",
+      "ratingRange": "{{label}} 1 और {{maxRating}} के बीच होना चाहिए।"
+    }
+  }
+  ,
+
+  "settings": {
+    "title": "सेटिंग्स",
+    "subtitle": "अपने खाते, रूप-रंग, भाषा और कार्यस्थान की प्राथमिकताओं को प्रबंधित करें।",
+
+    "profile": {
+      "title": "प्रोफ़ाइल",
+      "description": "अपनी व्यक्तिगत जानकारी और खाते का विवरण प्रबंधित करें।"
+    },
+
+    "appearance": {
+      "title": "रूप-रंग",
+      "description": "एप्लिकेशन का रूप-रंग चुनें।",
+      "theme": "थीम",
+      "themeDescription": "अपना पसंदीदा रूप-रंग चुनें।",
+      "light": "लाइट",
+      "dark": "डार्क"
+    },
+
+    "language": {
+      "title": "भाषा",
+      "description": "पूरे एप्लिकेशन में उपयोग की जाने वाली भाषा चुनें।",
+      "applicationLanguage": "एप्लिकेशन भाषा",
+      "savedAutomatically": "आपकी चुनी हुई भाषा स्वचालित रूप से सेव हो जाती है।"
+    },
+
+    "workspace": {
+      "title": "कार्यस्थान",
+      "description": "अपने Form Craft कार्यस्थान की जानकारी प्रबंधित करें।",
+      "name": "कार्यस्थान का नाम",
+      "type": "कार्यस्थान का प्रकार",
+      "tagline": "बनाएँ। प्रबंधित करें। प्रकाशित करें।",
+      "details": "डायनेमिक फ़ॉर्म बनाएँ, प्रतिक्रियाएँ एकत्र करें और अपने फ़ॉर्म वर्कफ़्लो को एक ही कार्यस्थान से प्रबंधित करें।"
+    },
+
+    "security": {
+      "title": "सुरक्षा",
+      "description": "अपने खाते की सुरक्षा प्रबंधित करें।",
+      "password": "पासवर्ड",
+      "passwordDescription": "आपका खाता सुरक्षित प्रमाणीकरण द्वारा सुरक्षित है।",
+      "protected": "सुरक्षित"
+    },
+
+    "dataManagement": {
+      "title": "डेटा प्रबंधन",
+      "description": "अपने फ़ॉर्म की डेटा रिटेंशन और डिलीशन नीतियों को प्रबंधित करें।",
+      "retentionPolicies": "रिटेंशन नीतियाँ",
+      "retentionDescription": "अलग-अलग फ़ॉर्म के लिए रिटेंशन सेटिंग्स कॉन्फ़िगर करें।",
+      "formSpecific": "फ़ॉर्म विशिष्ट"
+    },
+
+    "about": {
+      "title": "Form Craft के बारे में",
+      "description": "आपके फ़ॉर्म प्रबंधन प्लेटफ़ॉर्म की जानकारी।",
+      "product": "उत्पाद",
+      "platform": "प्लेटफ़ॉर्म",
+      "details": "Form Craft आपको एक केंद्रीकृत कार्यस्थान से डायनेमिक फ़ॉर्म बनाने, प्रबंधित करने, प्रकाशित करने और उनका विश्लेषण करने में मदद करता है।"
+    }
+  }
+  ,
+  "submissions": {
+    "title": "प्रस्तुतियाँ",
+    "subtitle": "अपने सभी फ़ॉर्म से प्राप्त व्यक्तिगत प्रस्तुतियाँ देखें।",
+    "totalSubmissions": "कुल प्रस्तुतियाँ",
+    "search": "खोजें",
+    "searchPlaceholder": "प्रतिक्रियाएँ खोजें...",
+    "fromDate": "प्रारंभ तिथि",
+    "toDate": "अंतिम तिथि",
+    "reset": "रीसेट",
+    "loading": "प्रतिक्रियाएँ लोड हो रही हैं...",
+    "loadingDescription": "कृपया प्रतीक्षा करें, प्रस्तुतियाँ प्राप्त की जा रही हैं।",
+    "noResponses": "कोई प्रतिक्रिया नहीं मिली",
+    "noResponsesDescription": "आपके फ़िल्टर से मेल खाने वाली कोई प्रतिक्रिया नहीं है।",
+    "form": "फ़ॉर्म",
+    "responseId": "प्रतिक्रिया आईडी",
+    "submittedAt": "सबमिट किया गया",
+    "summary": "सारांश",
+    "action": "कार्रवाई",
+    "viewForm": "फ़ॉर्म देखें",
+    "previous": "पिछला",
+    "page": "पृष्ठ",
+    "of": "में से",
+    "next": "अगला",
+    "deleteSelected": "चयनित हटाएँ",
+    "exporting": "निर्यात हो रहा है...",
+    "exportCSV": "CSV निर्यात करें",
+    "exportJSON": "JSON निर्यात करें",
+    "field": "फ़ील्ड",
+    "allFields": "सभी फ़ील्ड",
+    "value": "मान",
+    "fieldValue": "फ़ील्ड का मान...",
+    "noResponsesYet": "अभी तक कोई प्रतिक्रिया नहीं",
+    "noResponsesYetDescription": "इस फ़ॉर्म को अभी तक कोई सबमिशन प्राप्त नहीं हुआ है।",
+    "viewResponse": "प्रतिक्रिया देखें",
+    "responseDetails": "प्रतिक्रिया विवरण",
+    "deleteResponses": "प्रतिक्रियाएँ हटाएँ",
+    "deleteConfirmation": "आप स्थायी रूप से हटाने वाले हैं",
+    "responsesCount": "प्रतिक्रिया।",
+    "cannotBeUndone": "यह कार्रवाई पूर्ववत नहीं की जा सकती।",
+    "cancel": "रद्द करें",
+    "deleting": "हटाया जा रहा है...",
+    "deletePermanently": "स्थायी रूप से हटाएँ",
+    "selectResponse": "कृपया कम से कम एक प्रतिक्रिया चुनें।",
+    "deleteSuccess": "प्रतिक्रियाएँ सफलतापूर्वक हटा दी गईं।",
+    "deleteFailed": "प्रतिक्रियाएँ हटाने में विफल।",
+    "exportFailedCSV": "CSV निर्यात करने में विफल।",
+    "exportFailedJSON": "JSON निर्यात करने में विफल।",
+    "loadResponseFailed": "प्रतिक्रिया लोड करने में असमर्थ।",
+    "formResponses": "फ़ॉर्म प्रतिक्रियाएँ",
+    "formResponsesSubtitle": "प्रत्येक फ़ॉर्म के लिए प्रतिक्रिया संख्या और विस्तृत प्रतिक्रियाएँ देखें।",
+    "searchForms": "फ़ॉर्म खोजें...",
+    "loadingForms": "फ़ॉर्म लोड हो रहे हैं...",
+    "loadingFormsDescription": "कृपया प्रतीक्षा करें, मैं आपके फ़ॉर्म ला रहा हूँ।",
+    "noFormsFound": "कोई फ़ॉर्म नहीं मिला",
+    "noFormsFoundDescription": "आपकी खोज से कोई फ़ॉर्म मेल नहीं खाता।",
+    "responses": "प्रतिक्रियाएँ",
+    "status": "स्थिति",
+    "formNumber": "फ़ॉर्म #{{id}}",
+    "viewResponses": "प्रतिक्रियाएँ देखें"
+  }
+  ,
+
+  "analytics": {
+    "title": "विश्लेषण",
+    "subtitle": "अपने फ़ॉर्म के आँकड़े और जानकारी देखें।",
+    "loading": "विश्लेषण लोड हो रहा है...",
+    "formOnlySubtitle": "केवल इस फ़ॉर्म के विश्लेषण और प्रदर्शन को देखें।",
+    "allAnalytics": "सभी विश्लेषण",
+    "totalSubmissions": "कुल सबमिशन",
+    "completedForms": "पूर्ण फ़ॉर्म",
+    "incompleteForms": "अपूर्ण फ़ॉर्म",
+    "completionRate": "पूर्णता दर",
+    "publishedForms": "प्रकाशित फ़ॉर्म",
+    "totalForms": "कुल फ़ॉर्म",
+    "formAnalytics": "फ़ॉर्म विश्लेषण",
+    "formAnalyticsSubtitle": "प्रत्येक फ़ॉर्म की प्रतिक्रियाएँ और विश्लेषण देखें।",
+    "form": "फ़ॉर्म",
+    "status": "स्थिति",
+    "responses": "प्रतिक्रियाएँ",
+    "formsCount": "{{count}} फ़ॉर्म",
+    "actions": "कार्रवाई",
+    "viewAnalytics": "विश्लेषण देखें",
+    "responsesByForm": "फ़ॉर्म के अनुसार प्रतिक्रियाएँ",
+    "responsesByFormSubtitle": "प्रत्येक फ़ॉर्म के लिए एकत्र की गई कुल प्रतिक्रियाओं का अवलोकन।",
+    "responsesByFormNote": "यह चार्ट प्रत्येक फ़ॉर्म के लिए प्राप्त कुल प्रतिक्रियाओं को दिखाता है।",
+    "allForms": "सभी फ़ॉर्म",
+    "responseSummary": "प्रतिक्रिया सारांश",
+    "completionDetails": "पूर्णता विवरण",
+    "searchForms": "फ़ॉर्म खोजें...",
+    "titleHeader": "शीर्षक",
+    "action": "कार्रवाई",
+    "analytics": "विश्लेषण",
+    "averageCompletionTime": "औसत पूर्णता समय",
+    "totalResponses": "कुल प्रतिक्रियाएँ",
+    "published": "प्रकाशित",
+    "draft": "ड्राफ्ट", 
+    "archived": "संग्रहीत",
+    "seconds": "सेकंड",
+    "perFieldDistribution": "फ़ील्ड के अनुसार वितरण",
+    "perFieldDistributionSubtitle": "देखें कि इस फ़ॉर्म में उत्तरदाताओं ने प्रत्येक फ़ील्ड का उत्तर कैसे दिया।",
+    "noFieldDistribution": "फ़ील्ड वितरण का कोई डेटा उपलब्ध नहीं है।",
+    "noResponsesForField": "इस फ़ील्ड के लिए अभी तक कोई प्रतिक्रिया नहीं है।"
+  }
+  ,
+  "formOverview": {
+    "loading": "फ़ॉर्म लोड हो रहा है...",
+    "unableToLoad": "फ़ॉर्म लोड नहीं हो सका",
+    "notFound": "फ़ॉर्म नहीं मिला।",
+    "backToForms": "फ़ॉर्म पर वापस जाएँ",
+    "forms": "फ़ॉर्म",
+    "overview": "अवलोकन",
+    "manageMonitor": "इस फ़ॉर्म को प्रबंधित और मॉनिटर करें।",
+    "formId": "फ़ॉर्म #{{id}}",
+    "editForm": "फ़ॉर्म संपादित करें",
+    "responses": "प्रतिक्रियाएँ",
+    "viewResponses": "प्रतिक्रियाएँ देखें",
+    "analytics": "विश्लेषण",
+    "viewAnalytics": "विश्लेषण देखें",
+    "conditionalLogic": "सशर्त तर्क",
+    "manageRules": "नियम प्रबंधित करें",
+    "formInformation": "फ़ॉर्म की जानकारी",
+    "basicInformation": "इस फ़ॉर्म के बारे में मूलभूत जानकारी।",
+    "formName": "फ़ॉर्म का नाम",
+    "status": "स्थिति",
+    "formIdLabel": "फ़ॉर्म आईडी",
+    "description": "विवरण",
+    "noDescription": "कोई विवरण नहीं",
+    "openBuilder": "बिल्डर खोलें",
+    "loadFailed": "फ़ॉर्म लोड करने में विफल।",
+  "statusValues": {
+    "draft": "ड्राफ्ट",
+    "published": "प्रकाशित",
+    "archived": "संग्रहीत"
+  }
+  },
+  "exports": {
+    "title": "निर्यात",
+    "subtitle": "अपने फ़ॉर्म से प्रतिक्रिया डेटा निर्यात करें।",
+    "searchForms": "फ़ॉर्म खोजें...",
+    "loadingForms": "फ़ॉर्म लोड हो रहे हैं...",
+    "loadingFormsDescription": "कृपया प्रतीक्षा करें, मैं आपके फ़ॉर्म ला रहा हूँ।",
+    "noFormsFound": "कोई फ़ॉर्म नहीं मिला",
+    "noFormsFoundDescription": "आपकी खोज से कोई फ़ॉर्म मेल नहीं खाता।",
+    "form": "फ़ॉर्म",
+    "status": "स्थिति",
+    "responses": "प्रतिक्रियाएँ",
+    "export": "निर्यात",
+    "formNumber": "फ़ॉर्म #{{id}}",
+    "exporting": "निर्यात हो रहा है...",
+    "csv": "CSV",
+    "json": "JSON",
+    "exportFailedCSV": "CSV निर्यात करने में विफल।",
+    "exportFailedJSON": "JSON निर्यात करने में विफल।"
+    
+  }
+  ,
+  "auditLogs": {
+    "title": "ऑडिट लॉग",
+    "subtitle": "सिस्टम गतिविधियों और प्रशासनिक कार्रवाइयों को ट्रैक करें।",
+    "loading": "ऑडिट लॉग लोड हो रहे हैं...",
+    "loadFailed": "ऑडिट लॉग लोड करने में विफल।",
+    "empty": "कोई ऑडिट लॉग नहीं मिला।",
+    "id": "आईडी",
+    "action": "कार्रवाई",
+    "entity": "इकाई",
+    "records": "रिकॉर्ड",
+    "createdAt": "बनाया गया",
+    "details": "विवरण",
+    "form": "फ़ॉर्म",
+    "responses": "प्रतिक्रियाएँ",
+    "automaticRetentionJob": "स्वचालित डेटा प्रतिधारण कार्य",
+    "actions": {
+      "bulk_delete": "सामूहिक हटाना",
+      "archive": "संग्रहित करना"
+    },
+    "entities": {
+      "submission": "सबमिशन"
+    }
+  },
+  "builder": {
+    "formDesigner": "फ़ॉर्म डिज़ाइनर",
+    "conditionalLogic": "कंडीशनल लॉजिक",
+    "backToEditor": "एडिटर पर वापस जाएँ",
+    "preview": "प्रीव्यू",
+    "retentionPolicy": "डेटा प्रतिधारण नीति",
+    "publish": "प्रकाशित करें",
+    "archive": "संग्रहित करें",
+    "editDraft": "ड्राफ़्ट संपादित करें",
+    "untitledForm": "बिना नाम का फ़ॉर्म",
+    "version": "संस्करण",
+    "versionHistory": "संस्करण इतिहास",
+    "versions": "संस्करण",
+    "noPublishedVersions": "अभी तक कोई प्रकाशित संस्करण नहीं है।",
+    "published": "प्रकाशित",
+    "components": "घटक",
+    "componentsDescription": "अपना फ़ॉर्म बनाने के लिए खींचें या क्लिक करें",
+    "formCanvas": "फ़ॉर्म कैनवास",
+    "formCanvasDescription": "अपने फ़ॉर्म फ़ील्ड को व्यवस्थित और अनुकूलित करें",
+    "fieldProperties": "फ़ील्ड गुण",
+    "fieldPropertiesDescription": "चयनित फ़ील्ड को कॉन्फ़िगर करें",
+    "loadingForm": "फ़ॉर्म लोड हो रहा है...",
+    "loadFormFailed": "यह फ़ॉर्म लोड नहीं किया जा सका।",
+    "addFieldFailed": "फ़ील्ड नहीं जोड़ा जा सका। अपना कनेक्शन जाँचें और पुनः प्रयास करें।",
+    "saveFieldFailed": "परिवर्तन सहेजे नहीं जा सके। अपना कनेक्शन जाँचें और पुनः प्रयास करें।",
+    "deleteFieldFailed": "फ़ील्ड हटाया नहीं जा सका।",
+    "saveOrderFailed": "फ़ील्ड का नया क्रम सहेजा नहीं जा सका।",
+    "publishFailed": "यह फ़ॉर्म प्रकाशित नहीं किया जा सका।",
+    "archiveFailed": "यह फ़ॉर्म संग्रहित नहीं किया जा सका।",
+    "dragOrClickToAdd": "जोड़ने के लिए खींचें या क्लिक करें",
+    "loadingComponents": "घटक लोड हो रहे हैं...",
+    "fieldTypesLoadFailed": "फ़ील्ड प्रकार लोड नहीं किए जा सके। क्या बैकएंड चल रहा है?",
+    "publishedArchivedCannotEdit": "प्रकाशित या संग्रहित फ़ॉर्म संपादित नहीं किए जा सकते।",
+    
+    "publishConfirmation": {
+      "title": "फ़ॉर्म प्रकाशित करें",
+      "message": "क्या आप वाकई इस फ़ॉर्म को प्रकाशित करना चाहते हैं? प्रकाशित फ़ॉर्म को सीधे संपादित नहीं किया जा सकता।",
+      "confirm": "प्रकाशित करें"
+    },
+    "archiveConfirmation": {
+      "title": "फ़ॉर्म संग्रहित करें",
+      "message": "क्या आप वाकई इस फ़ॉर्म को संग्रहित करना चाहते हैं? संग्रहित फ़ॉर्म को संपादित या भरा नहीं जा सकता।",
+      "confirm": "संग्रहित करें"
+    },
+
+    "shareForm": {
+      "title": "फ़ॉर्म साझा करें",
+      "publishedSuccessfully": "आपका फ़ॉर्म सफलतापूर्वक प्रकाशित हो गया है।",
+      "copied": "✅ कॉपी किया गया!",
+      "copyLink": "📋 लिंक कॉपी करें",
+      "close": "बंद करें",
+      "cancel": "रद्द करें"
+    },
+    "ruleBuilder": {
+        "title": "कंडीशनल लॉजिक बिल्डर",
+        "subtitle": "फ़ील्ड को स्वचालित रूप से दिखाने, छिपाने या अनिवार्य करने के लिए डायनेमिक नियम बनाएँ।",
+
+        "loadFailed": "कंडीशनल लॉजिक नियम लोड नहीं किए जा सके।",
+        "selectFields": "कृपया ट्रिगर फ़ील्ड और टार्गेट फ़ील्ड दोनों चुनें।",
+        "sameField": "ट्रिगर फ़ील्ड और टार्गेट फ़ील्ड समान नहीं हो सकते।",
+        "requestFailed": "अनुरोध विफल हुआ। कंसोल देखें।",
+        "deleteConfirmation": "क्या आप वाकई इस नियम को हटाना चाहते हैं?",
+        "deleteFailed": "नियम हटाया नहीं जा सका।",
+
+        "ifField": "यदि फ़ील्ड",
+        "selectTriggerField": "-- ट्रिगर फ़ील्ड चुनें --",
+        "condition": "शर्त",
+        "value": "मान",
+        "valuePlaceholder": "मान...",
+        "thenAction": "तो कार्रवाई",
+        "targetField": "टार्गेट फ़ील्ड",
+        "selectTargetField": "-- टार्गेट फ़ील्ड चुनें --",
+        "unnamedField": "बिना नाम का फ़ील्ड",
+        "fieldFallback": "फ़ील्ड ({{id}})",
+
+        "savingRule": "नियम सहेजा जा रहा है...",
+        "saveRule": "नियम सहेजें",
+
+        "activeLogic": "सक्रिय फ़ॉर्म लॉजिक",
+        "noRules": "अभी तक कोई कंडीशनल लॉजिक नियम नहीं बनाया गया है।",
+
+        "triggerField": "ट्रिगर फ़ील्ड",
+        "action": "कार्रवाई",
+        "deleteRule": "नियम हटाएँ",
+
+        "operators": {
+          "equals": "बराबर है",
+          "notEquals": "बराबर नहीं है",
+          "greaterThan": "से अधिक है",
+          "lessThan": "से कम है",
+          "greaterThanOrEqual": "से अधिक या बराबर है",
+          "lessThanOrEqual": "से कम या बराबर है",
+          "contains": "इसमें शामिल है",
+          "startsWith": "इससे शुरू होता है",
+          "endsWith": "इस पर समाप्त होता है",
+          "isEmpty": "खाली है",
+          "isNotEmpty": "खाली नहीं है"
+        },
+        
+        
+
+        "actions": {
+          "show": "दिखाएँ",
+          "hide": "छिपाएँ",
+          "require": "अनिवार्य करें"
+        }
+      },
+
+    "fieldRenderer": {
+      "enterText": "टेक्स्ट दर्ज करें...",
+      "enterNumber": "संख्या दर्ज करें...",
+      "enterEmail": "ईमेल पता दर्ज करें...",
+      "select": "चुनें...",
+      "invalidFileType": "अमान्य फ़ाइल प्रकार। अनुमत प्रकार: {{allowed}}",
+      "fileSizeExceeded": "फ़ाइल का आकार {{maxSizeMB}} MB से अधिक नहीं होना चाहिए।",
+      "fileUploadFailed": "फ़ाइल अपलोड विफल हुआ। कृपया पुनः प्रयास करें।",
+      "enterResponse": "अपना उत्तर दर्ज करें...",
+      "untitledQuestion": "बिना नाम का प्रश्न"
+    },
+    "shareLink": {
+      "generating": "लिंक बनाया जा रहा है...",
+      "getShareableLink": "शेयर करने योग्य लिंक प्राप्त करें",
+      "generateFailed": "लिंक बनाया नहीं जा सका।"
+    },
+    "draft": "ड्राफ़्ट",
+    "fieldTypes": {
+      "text": "टेक्स्ट",
+      "email": "ईमेल",
+      "number": "संख्या",
+      "dropdown": "ड्रॉपडाउन",
+      "checkbox": "चेकबॉक्स",
+      "date": "तारीख",
+      "file": "फ़ाइल अपलोड",
+      "rating": "रेटिंग"
+    },
+    "field": "फ़ील्ड",
+    "fields": "फ़ील्ड",
+    "canvasEmpty": "आपका कैनवास खाली है",
+    "canvasEmptyDescription": "बाएँ पैनल से घटकों को खींचें या उसे तुरंत यहाँ जोड़ने के लिए क्लिक करें।",
+    "properties": {
+      "option": "विकल्प",
+      "options": "विकल्प",
+      "addOption": "विकल्प जोड़ें",
+      "noFieldSelected": "कोई फ़ील्ड चयनित नहीं है",
+      "noFieldSelectedDescription": "इसके गुण और सत्यापन सेटिंग संपादित करने के लिए कैनवास पर किसी भी फ़ील्ड पर क्लिक करें।",
+      "deleteConfirmation": "\"{{label}}\" को हटाना है?",
+      "basic": "मूल जानकारी",
+      "fieldType": "फ़ील्ड प्रकार",
+      "label": "लेबल",
+      "configuration": "कॉन्फ़िगरेशन",
+      "placeholder": "प्लेसहोल्डर",
+      "minLength": "न्यूनतम लंबाई",
+      "maxLength": "अधिकतम लंबाई",
+      "min": "न्यूनतम",
+      "max": "अधिकतम",
+      "validation": "सत्यापन",
+      "integerOnly": "केवल पूर्ण संख्या",
+      "minDate": "न्यूनतम तारीख",
+      "maxDate": "अधिकतम तारीख",
+      "allowedTypes": "अनुमत प्रकार (कॉमा से अलग करें, जैसे .pdf,.png)",
+      "maxSize": "अधिकतम आकार (MB)",
+      "scale": "स्केल (1-10)",
+      "required": "अनिवार्य",
+      "actions": "कार्रवाइयाँ",
+      "unsavedChanges": "आपके परिवर्तन अभी सहेजे नहीं गए हैं",
+      "saveChanges": "परिवर्तन सहेजें",
+      "saved": "सहेजा गया",
+      "deleteField": "फ़ील्ड हटाएँ",
+      "dragToReorder": "क्रम बदलने के लिए खींचें"
+    }
+  },
+      "formSettings": {
+        "loading": "सेटिंग्स लोड हो रही हैं...",
+        "unableToLoad": "फ़ॉर्म लोड नहीं किया जा सका",
+        "backToOverview": "ओवरव्यू पर वापस जाएँ",
+
+        "forms": "फ़ॉर्म",
+        "settings": "सेटिंग्स",
+
+        "title": "फ़ॉर्म सेटिंग्स",
+        "manageSettings": "इसके लिए सेटिंग्स प्रबंधित करें",
+
+        "formDetails": "फ़ॉर्म विवरण",
+        "formDetailsDescription": "इस फ़ॉर्म की मूल जानकारी।",
+
+        "formName": "फ़ॉर्म का नाम",
+        "formId": "फ़ॉर्म आईडी",
+        "status": "स्थिति",
+        "version": "संस्करण",
+
+        "dataRetention": "डेटा रिटेंशन",
+        "dataRetentionDescription": "जमा किए गए उत्तर कितने समय तक रखे जाएँ, इसे प्रबंधित करें।",
+
+        "retentionPolicy": "रिटेंशन नीति",
+        "retentionPolicyDescription": "इस फ़ॉर्म के लिए रिटेंशन और डिलीट सेटिंग्स कॉन्फ़िगर करें।",
+        "managePolicy": "नीति प्रबंधित करें",
+
+        "dangerZone": "खतरनाक क्षेत्र",
+        "dangerZoneDescription": "ऐसी कार्रवाइयाँ जो इस फ़ॉर्म की उपलब्धता को प्रभावित कर सकती हैं।",
+
+        "archiveForm": "फ़ॉर्म संग्रहित करें",
+        "archiveFormDescription": "संग्रहित फ़ॉर्म को संपादित या भरा नहीं जा सकता।",
+        "openBuilder": "बिल्डर खोलें",
+
+        "statusValues": {
+          "draft": "ड्राफ़्ट",
+          "published": "प्रकाशित",
+          "archived": "संग्रहित"
+        }
+      },
+      "retentionPolicy": {
+        "title": "रिटेंशन नीति",
+        "loading": "लोड हो रहा है...",
+        "automaticCleanup": "स्वचालित सफ़ाई",
+        "retentionDays": "रिटेंशन दिन",
+        "action": "कार्रवाई",
+        "archive": "संग्रहित करें",
+        "delete": "डिलीट करें",
+        "saving": "सेव किया जा रहा है...",
+        "savePolicy": "नीति सेव करें",
+        "updateSuccess": "रिटेंशन नीति सफलतापूर्वक अपडेट की गई।",
+        "updateFailed": "रिटेंशन नीति अपडेट नहीं की जा सकी।"
+      },
+      "formNavigation": {
+        "overview": "ओवरव्यू",
+        "builder": "बिल्डर",
+        "responses": "प्रतिक्रियाएँ",
+        "analytics": "विश्लेषण",
+        "rules": "नियम",
+        "settings": "सेटिंग्स"
+      }
   
+
 }

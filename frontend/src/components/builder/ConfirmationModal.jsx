@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./Builder.css";
 
 function ConfirmationModal({
@@ -10,36 +11,50 @@ function ConfirmationModal({
   onCancel,
   shareLink,
 }) {
+  const { t } = useTranslation();
 
   const [copied, setCopied] = useState(false);
+
   if (!isOpen) return null;
 
   const handleCopy = async () => {
-  if (!shareLink) return;
+    if (!shareLink) return;
 
-  try {
-    await navigator.clipboard.writeText(shareLink);
-    setCopied(true);
+    try {
+      await navigator.clipboard.writeText(shareLink);
 
-    setTimeout(() => {
-      setCopied(false);
-      onCancel();
-    }, 1500);
-  } catch (err) {
-    console.error("Failed to copy link:", err);
-  }
-};
+      setCopied(true);
+
+      setTimeout(() => {
+        setCopied(false);
+        onCancel();
+      }, 1500);
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+    }
+  };
 
   return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-overlay"
+      onClick={onCancel}
+    >
+      <div
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h3>{title}</h3>
 
         {message && <p>{message}</p>}
 
         {shareLink && (
           <div className="share-link-box">
-            <p>Your form has been published successfully.</p>
+
+            <p>
+              {t(
+                "builder.shareForm.publishedSuccessfully"
+              )}
+            </p>
 
             <input
               type="text"
@@ -49,22 +64,28 @@ function ConfirmationModal({
             />
 
             <button
-               type="button"
-               className="copy-btn"
-               onClick={handleCopy}
+              type="button"
+              className="copy-btn"
+              onClick={handleCopy}
             >
-               {copied ? "✅ Copied!" : "📋 Copy Link"}
+              {copied
+                ? t("builder.shareForm.copied")
+                : t("builder.shareForm.copyLink")}
             </button>
+
           </div>
         )}
 
         <div className="modal-actions">
+
           <button
             type="button"
             className="modal-btn-cancel"
             onClick={onCancel}
           >
-            {shareLink ? "Close" : "Cancel"}
+            {shareLink
+              ? t("builder.shareForm.close")
+              : t("builder.shareForm.cancel")}
           </button>
 
           {!shareLink && confirmLabel && (
@@ -76,6 +97,7 @@ function ConfirmationModal({
               {confirmLabel}
             </button>
           )}
+
         </div>
       </div>
     </div>

@@ -181,7 +181,7 @@ function Register() {
           >
             {at("register.alreadyHaveAccount")}{" "}
 
-            <Link to="/" className="register-link">
+            <Link to="/login" className="register-link">
               {at("login.signIn")}
             </Link>
 

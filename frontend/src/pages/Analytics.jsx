@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import api, { getFormAnalytics } from "../api/api";
@@ -35,6 +36,7 @@ import {
 } from "lucide-react";
 
 function CustomXAxisTick({ x, y, payload }) {
+  
   const text = String(payload.value || "");
 
   const words = text.split(" ");
@@ -82,10 +84,83 @@ function CustomXAxisTick({ x, y, payload }) {
     </g>
   );
 }
+function CustomFieldTooltip({ active, payload, label, t }) {
+  if (!active || !payload || !payload.length) {
+    return null;
+  }
 
+  return (
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        border: "1px solid #d1d5db",
+        padding: "12px 16px",
+        borderRadius: "6px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+      }}
+    >
+      <p
+        style={{
+          margin: 0,
+          color: "#94a3b8",
+          fontSize: "16px",
+        }}
+      >
+        {label}
+      </p>
+
+      <p
+        style={{
+          margin: "4px 0 0",
+          color: "#3b82f6",
+          fontSize: "18px",
+        }}
+      >
+        {t("analytics.responses")}: {payload[0].value}
+      </p>
+    </div>
+  );
+}
+function CustomTooltip({ active, payload, label, t }) {
+  if (!active || !payload || !payload.length) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        border: "1px solid #d1d5db",
+        padding: "12px 16px",
+        borderRadius: "6px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+      }}
+    >
+      <p
+        style={{
+          margin: 0,
+          color: "#94a3b8",
+          fontSize: "16px",
+        }}
+      >
+        {label}
+      </p>
+
+      <p
+        style={{
+          margin: "4px 0 0",
+          color: "#3b82f6",
+          fontSize: "18px",
+        }}
+      >
+        {t("analytics.responses")}: {payload[0].value}
+      </p>
+    </div>
+  );
+}
 
 function Analytics() {
-
+  const { t, i18n } = useTranslation();
   const { formId } = useParams();
 
   
@@ -284,21 +359,25 @@ function Analytics() {
 
   return Array.from(fieldMap.values());
 })();
-
+console.log("Language:", i18n.language);
+console.log("Total Submissions:", t("analytics.totalSubmissions"));
+console.log("Completed Forms:", t("analytics.completedForms"));
+console.log("Incomplete Forms:", t("analytics.incompleteForms"));
+console.log("Completion Rate:", t("analytics.completionRate"));
  return (
   <Layout>
     <div className="dashboard-container">
 
       <section className="dashboard-header">
         <div>
-          <h1>Analytics</h1>
-          <p>View insights and statistics for your forms.</p>
+          <h1>{t("analytics.title")}</h1>
+          <p>{t("analytics.subtitle")}</p>
         </div>
       </section>
 
       {loading ? (
         <div className="empty-state">
-          Loading analytics...
+          {t("analytics.loading")}
         </div>
       ) : formId ? (
         <>
@@ -314,7 +393,7 @@ function Analytics() {
                 <button
                   onClick={() => navigate("/analytics")}
                 >
-                  Analytics
+                  {t("analytics.title")}
                 </button>
 
                 <span>›</span>
@@ -330,7 +409,7 @@ function Analytics() {
               </h2>
 
               <p>
-                Analytics and performance for this form only.
+                {t("analytics.formOnlySubtitle")}
               </p>
             </div>
 
@@ -338,7 +417,7 @@ function Analytics() {
               className="analytics-back-btn"
               onClick={() => navigate("/analytics")}
             >
-              ← All Analytics
+              ← {t("analytics.allAnalytics")}
             </button>
 
           </section>
@@ -356,7 +435,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Total Submissions</span>
+                <span>{t("analytics.totalSubmissions")}</span>
 
                 <h2>
                   {formAnalytics.total_submissions}
@@ -372,7 +451,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Completed Forms</span>
+                <span>{t("analytics.completedForms")}</span>
 
                 <h2>
                   {formAnalytics.completed_forms}
@@ -388,7 +467,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Incomplete Forms</span>
+                <span>{t("analytics.incompleteForms")}</span>
 
                 <h2>
                   {formAnalytics.incomplete_forms}
@@ -404,7 +483,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Completion Rate</span>
+                <span>{t("analytics.completionRate")}</span>
 
                 <h2>
                   {formAnalytics.completion_rate}%
@@ -423,7 +502,7 @@ function Analytics() {
 
             <div className="chart-card">
 
-              <h2>Average Completion Time</h2>
+              <h2>{t("analytics.averageCompletionTime")}</h2>
 
               <div className="form-analytics-time">
 
@@ -431,7 +510,7 @@ function Analytics() {
                   {formAnalytics.average_completion_time}
                 </strong>
 
-                <span>seconds</span>
+                <span>{t("analytics.seconds")}</span>
 
               </div>
 
@@ -448,10 +527,10 @@ function Analytics() {
             <div className="form-field-analytics-header">
 
               <div>
-                <h2>Per-Field Distribution</h2>
+                <h2>{t("analytics.perFieldDistribution")}</h2>
 
                 <p>
-                  See how respondents answered each field in this form.
+                  {t("analytics.perFieldDistributionSubtitle")}
                 </p>
               </div>
 
@@ -518,7 +597,7 @@ function Analytics() {
 
                           </Pie>
 
-                          <Tooltip />
+                          <Tooltip content={<CustomFieldTooltip t={t} />} />
 
                           <Legend />
 
@@ -549,7 +628,7 @@ function Analytics() {
                             allowDecimals={false}
                           />
 
-                          <Tooltip />
+                          <Tooltip content={<CustomFieldTooltip t={t} />} />
 
                           <Bar
                             dataKey="count"
@@ -572,7 +651,7 @@ function Analytics() {
             ) : (
 
               <div className="empty-state">
-                No field distribution data available.
+                {t("analytics.noFieldDistribution")}
               </div>
 
             )}
@@ -600,7 +679,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Total Submissions</span>
+                <span>{t("analytics.totalSubmissions")}</span>
 
                 <h2>
                   {stats.total_responses}
@@ -619,7 +698,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Completion Rate</span>
+                <span>{t("analytics.completionRate")}</span>
 
                 <h2>
                   {stats.completion_rate}%
@@ -638,7 +717,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Published Forms</span>
+                <span>{t("analytics.publishedForms")}</span>
 
                 <h2>
                   {stats.published_forms}
@@ -657,7 +736,7 @@ function Analytics() {
               </div>
 
               <div>
-                <span>Total Forms</span>
+                <span>{t("analytics.totalForms")}</span>
 
                 <h2>
                   {stats.total_forms}
@@ -678,16 +757,16 @@ function Analytics() {
 
               <div>
 
-                <h2>Form Analytics</h2>
+                <h2>{t("analytics.formAnalytics")}</h2>
 
                 <p>
-                  View responses and analytics for each form.
+                  {t("analytics.formAnalyticsSubtitle")}
                 </p>
 
               </div>
 
               <span className="analytics-form-count">
-                {filteredForms.length} Forms
+                {t("analytics.formsCount", { count: filteredForms.length })}
               </span>
 
             </div>
@@ -699,10 +778,10 @@ function Analytics() {
                 <thead>
 
                   <tr>
-                    <th>Form</th>
-                    <th>Status</th>
-                    <th>Responses</th>
-                    <th>Actions</th>
+                     <th>{t("analytics.form")}</th>
+                     <th>{t("analytics.status")}</th>
+                     <th>{t("analytics.responses")}</th>
+                     <th>{t("analytics.actions")}</th>
                   </tr>
 
                 </thead>
@@ -730,7 +809,13 @@ function Analytics() {
                         <span
                           className={`status-badge ${form.status}`}
                         >
-                          {form.status}
+                          {form.status === "draft"
+                            ? t("formOverview.statusValues.draft")
+                            : form.status === "published"
+                            ? t("formOverview.statusValues.published")
+                            : form.status === "archived"
+                            ? t("formOverview.statusValues.archived")
+                            : form.status}
                         </span>
 
                       </td>
@@ -751,7 +836,7 @@ function Analytics() {
                               navigate(`/responses/${form.id}`)
                             }
                           >
-                            Responses
+                             {t("analytics.responses")}
                           </button>
 
                           <button
@@ -760,7 +845,7 @@ function Analytics() {
                               navigate(`/analytics/${form.id}`)
                             }
                           >
-                            View Analytics
+                            {t("analytics.viewAnalytics")}
                           </button>
 
                         </div>
@@ -791,10 +876,10 @@ function Analytics() {
 
                 <div>
 
-                  <h2>Responses by Form</h2>
+                  <h2>{t("analytics.responsesByForm")}</h2>
 
                   <p>
-                    Overview of total responses collected for each form.
+                    {t("analytics.responsesByFormSubtitle")}
                   </p>
 
                 </div>
@@ -845,7 +930,7 @@ function Analytics() {
                         tickLine={false}
                       />
 
-                      <Tooltip />
+                      <Tooltip content={<CustomTooltip t={t} />} />
 
                       <Bar
                         dataKey="responses"
@@ -869,8 +954,7 @@ function Analytics() {
               </div>
 
               <div className="responses-chart-note">
-                This chart shows the total number of responses received
-                for each form.
+                {t("analytics.responsesByFormNote")}
               </div>
 
             </div>
@@ -902,10 +986,10 @@ function Analytics() {
           <div className="analytics-modal-header">
 
             <h2>
-              {selectedCard === "forms" && "All Forms"}
-              {selectedCard === "published" && "Published Forms"}
-              {selectedCard === "responses" && "Response Summary"}
-              {selectedCard === "completion" && "Completion Details"}
+              {selectedCard === "forms" && t("analytics.allForms")}
+              {selectedCard === "published" && t("analytics.publishedForms")}
+              {selectedCard === "responses" && t("analytics.responseSummary")}
+              {selectedCard === "completion" && t("analytics.completionDetails")}
             </h2>
 
             <button
@@ -929,7 +1013,7 @@ function Analytics() {
 
                   <input
                     type="text"
-                    placeholder="🔍 Search forms.."
+                    placeholder={`🔍 ${t("analytics.searchForms")}`}
                     value={searchTerm}
                     onChange={(e) =>
                       setSearchTerm(e.target.value)
@@ -943,10 +1027,10 @@ function Analytics() {
                   <thead>
 
                     <tr>
-                      <th>Title</th>
-                      <th>Status</th>
-                      <th>Responses</th>
-                      <th>Action</th>
+                      <th>{t("analytics.titleHeader")}</th>
+                      <th>{t("analytics.status")}</th>
+                      <th>{t("analytics.responses")}</th>
+                      <th>{t("analytics.action")}</th>
                     </tr>
 
                   </thead>
@@ -985,7 +1069,7 @@ function Analytics() {
                                 navigate(`/responses/${form.id}`)
                               }
                             >
-                              Responses
+                              {t("analytics.responses")}
                             </button>
 
                             <button
@@ -994,7 +1078,7 @@ function Analytics() {
                                 loadFormAnalytics(form.id)
                               }
                             >
-                              Analytics
+                              {t("analytics.analytics")}
                             </button>
 
                           </div>
@@ -1014,14 +1098,14 @@ function Analytics() {
                   <div className="analytics-summary-card">
 
                     <h3>
-                      Form Analytics
+                      {t("analytics.formAnalytics")}
                     </h3>
 
                     <div className="analytics-summary-grid">
 
                       <div>
                         <strong>
-                          Total Submissions
+                          {t("analytics.totalSubmissions")}
                         </strong>
 
                         <p>
@@ -1031,7 +1115,7 @@ function Analytics() {
 
                       <div>
                         <strong>
-                          Completed Forms
+                          {t("analytics.completedForms")}
                         </strong>
 
                         <p>
@@ -1041,7 +1125,7 @@ function Analytics() {
 
                       <div>
                         <strong>
-                          Incomplete Forms
+                          {t("analytics.incompleteForms")}
                         </strong>
 
                         <p>
@@ -1051,7 +1135,7 @@ function Analytics() {
 
                       <div>
                         <strong>
-                          Completion Rate
+                          {t("analytics.completionRate")}
                         </strong>
 
                         <p>
@@ -1061,7 +1145,7 @@ function Analytics() {
 
                       <div>
                         <strong>
-                          Average Completion Time
+                          {t("analytics.averageCompletionTime")}
                         </strong>
 
                         <p>
@@ -1088,8 +1172,8 @@ function Analytics() {
                 <thead>
 
                   <tr>
-                    <th>Title</th>
-                    <th>Responses</th>
+                    <th>{t("analytics.titleHeader")}</th>
+                    <th>{t("analytics.responses")}</th>
                   </tr>
 
                 </thead>
@@ -1127,8 +1211,8 @@ function Analytics() {
                 <thead>
 
                   <tr>
-                    <th>Form</th>
-                    <th>Total Responses</th>
+                    <th>{t("analytics.form")}</th>
+                    <th>{t("analytics.totalResponses")}</th>
                   </tr>
 
                 </thead>
@@ -1166,7 +1250,7 @@ function Analytics() {
                 <div className="completion-item">
 
                   <span>
-                    Total Forms
+                    {t("analytics.totalForms")}
                   </span>
 
                   <strong>
@@ -1178,7 +1262,7 @@ function Analytics() {
                 <div className="completion-item">
 
                   <span>
-                    Published
+                    {t("analytics.published")}
                   </span>
 
                   <strong>
@@ -1190,7 +1274,7 @@ function Analytics() {
                 <div className="completion-item">
 
                   <span>
-                    Draft
+                    {t("analytics.draft")}
                   </span>
 
                   <strong>
@@ -1202,7 +1286,8 @@ function Analytics() {
                 <div className="completion-item">
 
                   <span>
-                    Archived
+                    {t("analytics.archived")}
+
                   </span>
 
                   <strong>
@@ -1322,7 +1407,7 @@ function Analytics() {
             <div className="metric-card">
 
               <span>
-                Average Complete Time
+                {t("analytics.averageCompletionTime")}
               </span>
 
               <h2>
@@ -1438,7 +1523,7 @@ function Analytics() {
           ) : (
 
             <div className="empty-state">
-              No responses yet for this field.
+              {t("analytics.noResponsesForField")}
             </div> 
 
           )}

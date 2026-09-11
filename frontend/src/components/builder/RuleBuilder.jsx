@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import {
   getFormRules,
   createFormRule,
   deleteFormRule,
 } from "../../api/api";
+
 import "./RuleBuilder.css";
 
 const RuleBuilder = ({ formId, fields = [] }) => {
+  const { t } = useTranslation();
+
   console.log("RuleBuilder formId:", formId);
+
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -30,7 +36,7 @@ const RuleBuilder = ({ formId, fields = [] }) => {
       setRules(res.data);
     } catch (err) {
       console.error("Failed to fetch logic rules:", err);
-      setError("Failed to load conditional rules.");
+      setError(t("builder.ruleBuilder.loadFailed"));
     }
   };
 
@@ -38,12 +44,12 @@ const RuleBuilder = ({ formId, fields = [] }) => {
     e.preventDefault();
 
     if (!triggerFieldId || !targetFieldId) {
-      setError("Please select both a trigger field and a target field.");
+      setError(t("builder.ruleBuilder.selectFields"));
       return;
     }
 
     if (triggerFieldId === targetFieldId) {
-      setError("Trigger field and target field cannot be the same.");
+      setError(t("builder.ruleBuilder.sameField"));
       return;
     }
 
@@ -54,9 +60,11 @@ const RuleBuilder = ({ formId, fields = [] }) => {
       const ruleData = {
         trigger_field_id: String(triggerFieldId),
         operator,
-        comparison_value: 
-           operator ==="is_empty" ||
-           operator ==="is_not_empty"? "":comparisonValue,
+        comparison_value:
+          operator === "is_empty" ||
+          operator === "is_not_empty"
+            ? ""
+            : comparisonValue,
         target_field_id: String(targetFieldId),
         action,
       };
@@ -71,20 +79,20 @@ const RuleBuilder = ({ formId, fields = [] }) => {
 
       await fetchRules();
     } catch (err) {
-  console.log("========== RULE CREATE ERROR ==========");
-  console.log("FULL ERROR:", err);
-  console.log("RESPONSE:", err.response);
-  console.log("DATA:", err.response?.data);
-  console.log("DETAIL:", err.response?.data?.detail);
+      console.log("========== RULE CREATE ERROR ==========");
+      console.log("FULL ERROR:", err);
+      console.log("RESPONSE:", err.response);
+      console.log("DATA:", err.response?.data);
+      console.log("DETAIL:", err.response?.data?.detail);
 
-  setError("Request failed. Check Console.");
-} finally {
-  setLoading(false);
-}
+      setError(t("builder.ruleBuilder.requestFailed"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDeleteRule = async (ruleId) => {
-    if (!window.confirm("Are you sure you want to delete this rule?")) {
+    if (!window.confirm(t("builder.ruleBuilder.deleteConfirmation"))) {
       return;
     }
 
@@ -93,7 +101,7 @@ const RuleBuilder = ({ formId, fields = [] }) => {
       await fetchRules();
     } catch (err) {
       console.error("Failed to delete rule:", err);
-      setError("Failed to delete rule.");
+      setError(t("builder.ruleBuilder.deleteFailed"));
     }
   };
 
@@ -102,7 +110,13 @@ const RuleBuilder = ({ formId, fields = [] }) => {
       (f) => String(f.id ?? f._id) === String(fieldId)
     );
 
-    return field?.label || field?.title || `Field (${fieldId})`;
+    return (
+      field?.label ||
+      field?.title ||
+      t("builder.ruleBuilder.fieldFallback", {
+        id: fieldId,
+      })
+    );
   };
 
   return (
@@ -111,18 +125,16 @@ const RuleBuilder = ({ formId, fields = [] }) => {
       style={{ minHeight: "auto", overflow: "visible" }}
     >
       <div className="rule-builder-header">
+        <div>
+          <h2 className="rule-page-title">
+            ⚡ {t("builder.ruleBuilder.title")}
+          </h2>
 
-  <div>
-    <h2 className="rule-page-title">
-      ⚡ Conditional Logic Builder
-    </h2>
-
-    <p className="subtitle">
-      Create dynamic rules to show, hide or require fields automatically.
-    </p>
-  </div>
-
-</div>
+          <p className="subtitle">
+            {t("builder.ruleBuilder.subtitle")}
+          </p>
+        </div>
+      </div>
 
       <form
         onSubmit={handleCreateRule}
@@ -134,7 +146,7 @@ const RuleBuilder = ({ formId, fields = [] }) => {
         }}
       >
         <div className="form-row-group">
-          <label>If Field</label>
+          <label>{t("builder.ruleBuilder.ifField")}</label>
 
           <select
             value={triggerFieldId}
@@ -142,11 +154,13 @@ const RuleBuilder = ({ formId, fields = [] }) => {
             required
             className="rule-select"
           >
-            <option value="">-- Select Trigger Field --</option>
+            <option value="">
+              {t("builder.ruleBuilder.selectTriggerField")}
+            </option>
 
             {fields.map((field) => (
               <option key={field.id} value={field.id}>
-                {field.label || field.title || "Unnamed Field"}
+                {field.label || field.title || t("builder.ruleBuilder.unnamedField")}
               </option>
             ))}
           </select>
@@ -161,35 +175,67 @@ const RuleBuilder = ({ formId, fields = [] }) => {
           }}
         >
           <div>
-            <label>Condition</label>
+            <label>{t("builder.ruleBuilder.condition")}</label>
 
             <select
-               value={operator}
-               onChange={(e) => setOperator(e.target.value)}
-               className="rule-select"
+              value={operator}
+              onChange={(e) => setOperator(e.target.value)}
+              className="rule-select"
             >
-               <option value="equals">Equals</option>
-               <option value="not_equals">Not Equals</option>
-               <option value="greater_than">Greater Than</option>
-               <option value="less_than">Less Than</option>
-               <option value="greater_than_or_equal">Greater Than or Equal</option>
-               <option value="less_than_or_equal">Less Than or Equal</option>
-               <option value="contains">Contains</option>
-               <option value="starts_with">Starts With</option>
-               <option value="ends_with">Ends With</option>
-               <option value="is_empty">Is Empty</option>
-               <option value="is_not_empty">Is Not Empty</option>
+              <option value="equals">
+                {t("builder.ruleBuilder.operators.equals")}
+              </option>
+
+              <option value="not_equals">
+                {t("builder.ruleBuilder.operators.notEquals")}
+              </option>
+
+              <option value="greater_than">
+                {t("builder.ruleBuilder.operators.greaterThan")}
+              </option>
+
+              <option value="less_than">
+                {t("builder.ruleBuilder.operators.lessThan")}
+              </option>
+
+              <option value="greater_than_or_equal">
+                {t("builder.ruleBuilder.operators.greaterThanOrEqual")}
+              </option>
+
+              <option value="less_than_or_equal">
+                {t("builder.ruleBuilder.operators.lessThanOrEqual")}
+              </option>
+
+              <option value="contains">
+                {t("builder.ruleBuilder.operators.contains")}
+              </option>
+
+              <option value="starts_with">
+                {t("builder.ruleBuilder.operators.startsWith")}
+              </option>
+
+              <option value="ends_with">
+                {t("builder.ruleBuilder.operators.endsWith")}
+              </option>
+
+              <option value="is_empty">
+                {t("builder.ruleBuilder.operators.isEmpty")}
+              </option>
+
+              <option value="is_not_empty">
+                {t("builder.ruleBuilder.operators.isNotEmpty")}
+              </option>
             </select>
           </div>
 
           <div>
-            <label>Value</label>
+            <label>{t("builder.ruleBuilder.value")}</label>
 
             <input
               type="text"
               value={comparisonValue}
               onChange={(e) => setComparisonValue(e.target.value)}
-              placeholder="Value..."
+              placeholder={t("builder.ruleBuilder.valuePlaceholder")}
               disabled={
                 operator === "is_empty" ||
                 operator === "is_not_empty"
@@ -216,21 +262,29 @@ const RuleBuilder = ({ formId, fields = [] }) => {
           }}
         >
           <div>
-            <label>Then Action</label>
+            <label>{t("builder.ruleBuilder.thenAction")}</label>
 
             <select
               value={action}
               onChange={(e) => setAction(e.target.value)}
               className="rule-select"
             >
-              <option value="show">Show</option>
-              <option value="hide">Hide</option>
-              <option value="require">Require</option>
+              <option value="show">
+                {t("builder.ruleBuilder.actions.show")}
+              </option>
+
+              <option value="hide">
+                {t("builder.ruleBuilder.actions.hide")}
+              </option>
+
+              <option value="require">
+                {t("builder.ruleBuilder.actions.require")}
+              </option>
             </select>
           </div>
 
           <div>
-            <label>Target Field</label>
+            <label>{t("builder.ruleBuilder.targetField")}</label>
 
             <select
               value={targetFieldId}
@@ -238,94 +292,160 @@ const RuleBuilder = ({ formId, fields = [] }) => {
               required
               className="rule-select"
             >
-              <option value="">-- Select Target Field --</option>
+              <option value="">
+                {t("builder.ruleBuilder.selectTargetField")}
+              </option>
 
               {fields.map((field) => (
                 <option key={field.id} value={field.id}>
-                  {field.label || field.title || "Unnamed Field"}
+                  {field.label ||
+                    field.title ||
+                    t("builder.ruleBuilder.unnamedField")}
                 </option>
               ))}
             </select>
           </div>
         </div>
 
-        {error && <p className="rule-error-text">{error}</p>}
+        {error && (
+          <p className="rule-error-text">
+            {error}
+          </p>
+        )}
 
-         <div className="rule-action-bar">
-
-  <button
-    type="submit"
-    disabled={loading}
-    className="save-rule-btn"
-  >
-    {loading ? "Saving Rule..." : "➕ Save Rule"}
-  </button>
-
-</div>
-    
+        <div className="rule-action-bar">
+          <button
+            type="submit"
+            disabled={loading}
+            className="save-rule-btn"
+          >
+            {loading
+              ? t("builder.ruleBuilder.savingRule")
+              : `➕ ${t("builder.ruleBuilder.saveRule")}`}
+          </button>
+        </div>
       </form>
 
       <div className="rules-list-section">
-        <h4>Active Form Logic ({rules.length})</h4>
+        <h4>
+          {t("builder.ruleBuilder.activeLogic")} ({rules.length})
+        </h4>
 
         {rules.length === 0 ? (
-  <div className="empty-rules">
-    <p>No conditional rules created yet.</p>
-  </div>
-) : (
-  <div className="rules-list">
-    {rules.map((rule) => (
-      <div key={rule.id} className="rule-flow-card">
+          <div className="empty-rules">
+            <p>
+              {t("builder.ruleBuilder.noRules")}
+            </p>
+          </div>
+        ) : (
+          <div className="rules-list">
+            {rules.map((rule) => (
+              <div
+                key={rule.id}
+                className="rule-flow-card"
+              >
+                <div className="flow-box trigger">
+                  <span className="flow-title">
+                    {t("builder.ruleBuilder.triggerField")}
+                  </span>
 
-        <div className="flow-box trigger">
-          <span className="flow-title">Trigger Field</span>
-          <strong>{getFieldLabel(rule.trigger_field_id)}</strong>
-        </div>
+                  <strong>
+                    {getFieldLabel(rule.trigger_field_id)}
+                  </strong>
+                </div>
 
-        <div className="flow-arrow">↓</div>
+                <div className="flow-arrow">
+                  ↓
+                </div>
 
-        <div className="flow-box condition">
-          <span className="flow-title">Condition</span>
-          <strong>{rule.operator.replaceAll("_", " ")}</strong>
-        </div>
+                <div className="flow-box condition">
+                  <span className="flow-title">
+                    {t("builder.ruleBuilder.condition")}
+                  </span>
 
-        {rule.comparison_value && (
-          <>
-            <div className="flow-arrow">↓</div>
+                  <strong>
+                    {t(
+                      `builder.ruleBuilder.operators.${rule.operator}`,
+                      {
+                        defaultValue: rule.operator.replaceAll(
+                          "_",
+                          " "
+                        ),
+                      }
+                    )}
+                  </strong>
+                </div>
 
-            <div className="flow-box value">
-              <span className="flow-title">Value</span>
-              <strong>{rule.comparison_value}</strong>
-            </div>
-          </>
+                {rule.comparison_value && (
+                  <>
+                    <div className="flow-arrow">
+                      ↓
+                    </div>
+
+                    <div className="flow-box value">
+                      <span className="flow-title">
+                        {t("builder.ruleBuilder.value")}
+                      </span>
+
+                      <strong>
+                        {rule.comparison_value}
+                      </strong>
+                    </div>
+                  </>
+                )}
+
+                <div className="flow-arrow">
+                  ↓
+                </div>
+
+                <div
+                  className={`flow-box action ${rule.action}`}
+                >
+                  <span className="flow-title">
+                    {t("builder.ruleBuilder.action")}
+                  </span>
+
+                  <strong>
+                    {t(
+                      `builder.ruleBuilder.actions.${rule.action}`,
+                      {
+                        defaultValue:
+                          rule.action.toUpperCase(),
+                      }
+                    )}
+                  </strong>
+                </div>
+
+                <div className="flow-arrow">
+                  ↓
+                </div>
+
+                <div className="flow-box target">
+                  <span className="flow-title">
+                    {t("builder.ruleBuilder.targetField")}
+                  </span>
+
+                  <strong>
+                    {getFieldLabel(rule.target_field_id)}
+                  </strong>
+                </div>
+
+                <button
+                  type="button"
+                  className="btn-delete-rule"
+                  onClick={() =>
+                    handleDeleteRule(rule.id)
+                  }
+                  title={t(
+                    "builder.ruleBuilder.deleteRule"
+                  )}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
         )}
-
-        <div className="flow-arrow">↓</div>
-
-        <div className={`flow-box action ${rule.action}`}>
-          <span className="flow-title">Action</span>
-          <strong>{rule.action.toUpperCase()}</strong>
-        </div>
-
-        <div className="flow-arrow">↓</div>
-
-        <div className="flow-box target">
-          <span className="flow-title">Target Field</span>
-          <strong>{getFieldLabel(rule.target_field_id)}</strong>
-        </div>
-
-        <button
-          type="button"
-          className="btn-delete-rule"
-          onClick={() => handleDeleteRule(rule.id)}
-        >
-          ×
-        </button>
-
-      </div>
-    ))}
-  </div>
-)}
       </div>
     </div>
   );

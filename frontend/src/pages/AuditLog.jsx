@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import api from "../api/api";
 import Layout from "../components/layout/Layout";
 import "./AuditLog.css";
 
 function AuditLog() {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +19,7 @@ function AuditLog() {
       setLogs(res.data);
     } catch (err) {
       console.error(err);
-      alert("Failed to load audit logs.");
+      alert(t("auditLogs.loadFailed"));
     } finally {
       setLoading(false);
     }
@@ -26,7 +28,7 @@ function AuditLog() {
   if (loading) {
     return (
       <div className="audit-loading">
-        Loading audit logs...
+        {t("auditLogs.loading")}
       </div>
     );
   }
@@ -36,24 +38,24 @@ function AuditLog() {
     <div className="audit-page">
       <div className="audit-card">
         <div className="audit-header">
-          <h2>Audit Logs</h2>
-          <p>Track system activities and administrative actions.</p>
+          <h2>{t("auditLogs.title")}</h2>
+          <p>{t("auditLogs.subtitle")}</p>
         </div>
 
         {logs.length === 0 ? (
           <div className="audit-empty">
-            No audit logs found.
+             {t("auditLogs.empty")}
           </div>
         ) : (
           <table className="audit-table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Action</th>
-                <th>Entity</th>
-                <th>Records</th>
-                <th>Created At</th>
-                <th>Details</th>
+                <th>{t("auditLogs.id")}</th>
+                <th>{t("auditLogs.action")}</th>
+                <th>{t("auditLogs.entity")}</th>
+                <th>{t("auditLogs.records")}</th>
+                <th>{t("auditLogs.createdAt")}</th>
+                <th>{t("auditLogs.details")}</th>
               </tr>
             </thead>
 
@@ -64,11 +66,17 @@ function AuditLog() {
 
                   <td>
                     <span className="audit-action">
-                      {log.action}
+                      {t(`auditLogs.actions.${log.action}`, {
+                        defaultValue: log.action,
+                      })}
                     </span>
                   </td>
 
-                  <td>{log.entity_type}</td>
+                  <td>
+                    {t(`auditLogs.entities.${log.entity_type}`, {
+                      defaultValue: log.entity_type,
+                    })}
+                  </td>
 
                   <td>{log.records_affected}</td>
 
@@ -79,17 +87,20 @@ function AuditLog() {
                   <td>
                     <div className="audit-details">
                       {log.details?.form_id && (
-                        <div><strong>Form:</strong> {log.details.form_id}</div>
+                        <div>
+                          <strong>{t("auditLogs.form")}:</strong> {log.details.form_id}
+                        </div>
                       )}
 
                       {log.details?.response_ids && (
                         <div>
-                          <strong>Responses:</strong> {log.details.response_ids.length}
+                          <strong>{t("auditLogs.responses")}:</strong>{" "}
+                          {log.details.response_ids.length}
                         </div>
                       )}
 
                       {log.details?.retention_job && (
-                        <div>Automatic Retention Job</div>
+                        <div>{t("auditLogs.automaticRetentionJob")}</div>
                       )}
                     </div>
                   </td>

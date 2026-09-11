@@ -5,7 +5,7 @@ from app.services.form_service import FormService
 from app.services.validation import validate_submission
 from app.models.form_version import FormVersion
 import uuid
-
+from app.models.retention_policy import RetentionPolicy
 from app.database import SessionLocal
 from app.dependencies import get_current_user
 from app.models.user import User
@@ -700,7 +700,19 @@ def delete_form(
             detail="Form not found"
         )
 
+    # Delete retention policy associated with the form
+    retention_policy = (
+        db.query(RetentionPolicy)
+        .filter(RetentionPolicy.form_id == form_id)
+        .first()
+    )
+
+    if retention_policy:
+        db.delete(retention_policy)
+
+    # Delete the form
     db.delete(form)
+
     db.commit()
 
 
@@ -853,8 +865,29 @@ def submit_public_form(
     for item in responses:
         submitted_data[str(item.get("field_id"))] = item.get("value")
 
+    rules = (
+        db.query(ConditionalRule)
+        .filter(
+            ConditionalRule.form_id == share_link.form_id
+        )
+        .all()
+   )
+
     # Run backend validation
-    errors = validate_submission(fields, submitted_data)
+    errors = validate_submission(
+        fields, 
+        submitted_data,
+        [
+           {
+               "trigger_field_id": rule.trigger_field_id,
+               "operator": rule.operator,
+               "comparison_value": rule.comparison_value,
+               "target_field_id": rule.target_field_id,
+               "action": rule.action,
+           } 
+           for rule in rules
+        ],
+    )
 
     if errors:
         raise HTTPException(

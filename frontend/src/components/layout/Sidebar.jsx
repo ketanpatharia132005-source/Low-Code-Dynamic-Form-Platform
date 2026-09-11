@@ -1,4 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import {
   LayoutDashboard,
   Inbox,
@@ -15,6 +17,7 @@ import "./Layout.css";
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t: lt } = useTranslation();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -27,16 +30,18 @@ function Sidebar() {
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-box">
-          LF
+          FC
         </div>
 
         <div>
-          <span className="workspace-label">WORKSPACE</span>
+          <span className="workspace-label">
+            {lt("sidebar.workspace")}
+          </span>
 
-          <h2>LowCode</h2>
+          <h2>Form Craft</h2>
 
           <span className="workspace-name">
-            Form Platform
+            {lt("sidebar.tagline")}
           </span>
         </div>
       </div>
@@ -44,7 +49,9 @@ function Sidebar() {
       {/* Navigation */}
       <nav className="sidebar-nav">
 
-        <p className="nav-heading">MAIN MENU</p>
+        <p className="nav-heading">
+          {lt("sidebar.mainMenu")}
+        </p>
 
         {/* Dashboard */}
         <Link
@@ -56,10 +63,9 @@ function Sidebar() {
           }
         >
           <LayoutDashboard size={20} />
-          <span>Dashboard</span>
+          <span>{lt("sidebar.dashboard")}</span>
         </Link>
 
-        
         {/* Submissions */}
         <Link
           to="/submissions"
@@ -70,7 +76,7 @@ function Sidebar() {
           }
         >
           <Inbox size={20} />
-          <span>Submissions</span>
+          <span>{lt("sidebar.submissions")}</span>
         </Link>
 
         {/* Analytics */}
@@ -83,7 +89,7 @@ function Sidebar() {
           }
         >
           <BarChart3 size={20} />
-          <span>Analytics</span>
+          <span>{lt("sidebar.analytics")}</span>
         </Link>
 
         {/* Responses */}
@@ -96,7 +102,7 @@ function Sidebar() {
           }
         >
           <MessageSquare size={20} />
-          <span>Responses</span>
+          <span>{lt("sidebar.responses")}</span>
         </Link>
 
         {/* Exports */}
@@ -109,7 +115,7 @@ function Sidebar() {
           }
         >
           <Download size={20} />
-          <span>Exports</span>
+          <span>{lt("sidebar.exports")}</span>
         </Link>
 
         {/* Audit Logs */}
@@ -122,7 +128,7 @@ function Sidebar() {
           }
         >
           <ShieldCheck size={20} />
-          <span>Audit Logs</span>
+          <span>{lt("sidebar.auditLogs")}</span>
         </Link>
 
       </nav>
@@ -130,7 +136,9 @@ function Sidebar() {
       {/* Bottom */}
       <div className="sidebar-bottom">
 
-        <p className="nav-heading">ACCOUNT</p>
+        <p className="nav-heading">
+          {lt("sidebar.account")}
+        </p>
 
         {/* Settings */}
         <button
@@ -138,7 +146,7 @@ function Sidebar() {
           onClick={() => navigate("/settings")}
         >
           <Settings size={18} />
-          <span>Settings</span>
+          <span>{lt("sidebar.settings")}</span>
         </button>
 
         {/* Logout */}
@@ -147,7 +155,7 @@ function Sidebar() {
           onClick={handleLogout}
         >
           <LogOut size={18} />
-          <span>Logout</span>
+          <span>{lt("sidebar.logout")}</span>
         </button>
 
       </div>

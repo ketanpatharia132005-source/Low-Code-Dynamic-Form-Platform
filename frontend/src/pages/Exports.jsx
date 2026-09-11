@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Download, FileText, Search } from "lucide-react";
 
 import Layout from "../components/layout/Layout";
@@ -11,6 +12,7 @@ import api, {
 import "./Exports.css";
 
 function Exports() {
+  const { t } = useTranslation();
   const [forms, setForms] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -100,7 +102,7 @@ function Exports() {
 
     } catch (err) {
       console.error("CSV export failed:", err);
-      alert("Failed to export CSV.");
+      alert(t("exports.exportFailedCSV"));
     } finally {
       setExporting(null);
     }
@@ -119,7 +121,7 @@ function Exports() {
 
     } catch (err) {
       console.error("JSON export failed:", err);
-      alert("Failed to export JSON.");
+      alert(t("exports.exportFailedJSON"));
     } finally {
       setExporting(null);
     }
@@ -140,10 +142,10 @@ function Exports() {
         <section className="exports-page-header">
 
           <div>
-            <h1>Exports</h1>
+            <h1>{t("exports.title")}</h1>
 
             <p>
-              Export response data from your forms.
+             {t("exports.subtitle")}
             </p>
           </div>
 
@@ -160,7 +162,7 @@ function Exports() {
 
             <input
               type="text"
-              placeholder="Search forms..."
+              placeholder={t("exports.searchForms")}
               value={searchTerm}
               onChange={(e) =>
                 setSearchTerm(e.target.value)
@@ -178,10 +180,10 @@ function Exports() {
 
           <div className="exports-empty-state">
 
-            <h3>Loading forms...</h3>
+            <h3>{t("exports.loadingForms")}</h3>
 
             <p>
-              Please wait while I fetch your forms.
+              {t("exports.loadingFormsDescription")}
             </p>
 
           </div>
@@ -190,10 +192,10 @@ function Exports() {
 
           <div className="exports-empty-state">
 
-            <h3>No Forms Found</h3>
+            <h3>{t("exports.noFormsFound")}</h3>
 
             <p>
-              No forms match your search.
+              {t("exports.noFormsFoundDescription")}
             </p>
 
           </div>
@@ -206,10 +208,10 @@ function Exports() {
 
               <div className="exports-table-header">
 
-                <div>Form</div>
-                <div>Status</div>
-                <div>Responses</div>
-                <div>Export</div>
+                <div>{t("exports.form")}</div>
+                <div>{t("exports.status")}</div>
+                <div>{t("exports.responses")}</div>
+                <div>{t("exports.export")}</div>
 
               </div>
 
@@ -236,7 +238,7 @@ function Exports() {
                       </strong>
 
                       <span>
-                        Form #{form.id}
+                        {t("exports.formNumber", { id: form.id })}
                       </span>
 
                     </div>
@@ -251,7 +253,13 @@ function Exports() {
                     <span
                       className={`exports-status ${form.status}`}
                     >
-                      {form.status}
+                      {form.status === "draft"
+                        ? t("formOverview.statusValues.draft")
+                        : form.status === "published"
+                        ? t("formOverview.statusValues.published")
+                        : form.status === "archived"
+                        ? t("formOverview.statusValues.archived")
+                        : form.status}
                     </span>
 
                   </div>
@@ -283,8 +291,8 @@ function Exports() {
                       <Download size={14} />
 
                       {exporting === `${form.id}-csv`
-                        ? "Exporting..."
-                        : "CSV"}
+                        ? t("exports.exporting")
+                        : t("exports.csv")}
 
                     </button>
 
@@ -302,8 +310,8 @@ function Exports() {
                       <Download size={14} />
 
                       {exporting === `${form.id}-json`
-                        ? "Exporting..."
-                        : "JSON"}
+                        ? t("exports.exporting")
+                        : t("exports.json")}
 
                     </button>
 

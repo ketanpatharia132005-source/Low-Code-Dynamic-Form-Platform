@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { MessageSquare, Search, Eye } from "lucide-react";
 
@@ -10,7 +11,7 @@ import "./Responses.css";
 
 function Responses() {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [forms, setForms] = useState([]);
   const [totalResponses, setTotalResponses] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -97,15 +98,15 @@ function Responses() {
         <section className="responses-page-header">
 
           <div>
-            <h1>Form Responses</h1>
+            <h1>{t("submissions.formResponses")}</h1>
 
             <p>
-               View response counts and detailed responses for each form.
+              {t("submissions.formResponsesSubtitle")}
             </p>
           </div>
 
             <div className="responses-page-count">
-                <span>Total Responses</span>
+                <span>{t("submissions.totalSubmissions")}</span>
 
                 <strong>
                   {totalResponses}
@@ -125,7 +126,7 @@ function Responses() {
 
             <input
               type="text"
-              placeholder="Search forms..."
+              placeholder={t("submissions.searchForms")}
               value={searchTerm}
               onChange={(e) =>
                 setSearchTerm(e.target.value)
@@ -142,19 +143,15 @@ function Responses() {
         {loading ? (
 
           <div className="responses-page-empty">
-            <h3>Loading forms...</h3>
-            <p>
-              Please wait while I fetch your forms.
-            </p>
+            <h3>{t("submissions.loadingForms")}</h3>
+            <p>{t("submissions.loadingFormsDescription")}</p>
           </div>
 
         ) : filteredForms.length === 0 ? (
 
           <div className="responses-page-empty">
-            <h3>No Forms Found</h3>
-            <p>
-              No forms match your search.
-            </p>
+            <h3>{t("submissions.noFormsFound")}</h3>
+            <p>{t("submissions.noFormsFoundDescription")}</p>
           </div>
 
         ) : (
@@ -165,10 +162,10 @@ function Responses() {
 
               <div className="responses-page-table-header">
 
-                <div>Form</div>
-                <div>Status</div>
-                <div>Responses</div>
-                <div>Action</div>
+                <div>{t("submissions.form")}</div>
+                <div>{t("analytics.status")}</div>
+                <div>{t("submissions.responses")}</div>
+                <div>{t("submissions.action")}</div>
 
               </div>
 
@@ -195,7 +192,7 @@ function Responses() {
                       </strong>
 
                       <span>
-                        Form #{form.id}
+                        {t("submissions.formNumber", { id: form.id })}
                       </span>
 
                     </div>
@@ -210,7 +207,13 @@ function Responses() {
                     <span
                       className={`responses-status ${form.status}`}
                     >
-                      {form.status}
+                      {form.status === "draft"
+                        ? t("formOverview.statusValues.draft")
+                        : form.status === "published"
+                        ? t("formOverview.statusValues.published")
+                        : form.status === "archived"
+                        ? t("formOverview.statusValues.archived")
+                        : form.status}
                     </span>
 
                   </div>
@@ -239,7 +242,7 @@ function Responses() {
                     >
                       <Eye size={15} />
 
-                      View Responses
+                      {t("submissions.viewResponses")}
                     </button>
 
                   </div>

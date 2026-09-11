@@ -11,6 +11,10 @@ class User(Base):
     username = Column(String(100), nullable=False)
     email = Column(String(150), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    full_name = Column(String(150), nullable=True)
+    date_of_birth = Column(String(20), nullable=True)
+    phone = Column(String(20), nullable=True)
+    bio = Column(String(500), nullable=True)
 
     forms = relationship(
         "Form",

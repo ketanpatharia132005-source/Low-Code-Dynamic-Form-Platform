@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import FieldRenderer from "../components/builder/FieldRenderer";
 import { submitPublicForm } from "../api/api";
+import { useTranslation } from "react-i18next";
 
 const PublicFormView = () => {
+    const { t: lt } = useTranslation();
     const { token } = useParams(); // Grabs the token from the URL
     const navigate = useNavigate();
     const [form, setForm] = useState(null);
@@ -44,10 +46,10 @@ const PublicFormView = () => {
         fetchForm();
     }, [token]);
 
-    if (loading) return <div>Loading form...</div>;
+    if (loading) return <div>{lt("publicForm.loading")}</div>;
     
     // If we finished loading, but still have no form, show the error
-    if (!form) return <div>Form not found or invalid link.</div>;
+    if (!form) return <div>{lt("publicForm.notFound")}</div>;
 
 
     const shouldDisplayField = (fieldId) => {
@@ -146,7 +148,7 @@ const validateField = (field, value) => {
         !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
     ) {
         return {
-            message: "Please enter a valid email address.",
+           message: lt("publicForm.validation.validEmail"),
         };
     }
 
@@ -164,13 +166,19 @@ const validateField = (field, value) => {
     ) {
         if (minLength && value.length < minLength) {
             return {
-               message: `${field.label} must be at least ${minLength} characters.`,
+               message: lt("publicForm.validation.minLength", {
+                  label: field.label,
+                  minLength,
+                }),
             };
         }
 
         if (maxLength && value.length > maxLength) {
             return {
-               message: `${field.label} must not exceed ${maxLength} characters.`,
+              message: lt("publicForm.validation.maxLength", {
+                label: field.label,
+                maxLength,
+              }),
             };
        }
     }
@@ -180,7 +188,9 @@ const validateField = (field, value) => {
 
         if (isNaN(numberValue)) {
             return {
-                message: `${field.label} must be a valid number.`,
+                message: lt("publicForm.validation.validNumber", {
+                  label: field.label,
+                }),
             };
         }
 
@@ -189,7 +199,10 @@ const validateField = (field, value) => {
            numberValue < Number(config.min)
         ) {
             return {
-                message: `${field.label} must be at least ${config.min}.`,
+                message: lt("publicForm.validation.minNumber", {
+                  label: field.label,
+                  min: config.min,
+                }),
             };
         }
 
@@ -198,7 +211,10 @@ const validateField = (field, value) => {
             numberValue > Number(config.max)
         ) {
             return {
-                message: `${field.label} must not exceed ${config.max}.`,
+                message: lt("publicForm.validation.maxNumber", {
+                  label: field.label,
+                  max: config.max,
+                }),
             };
         }
 
@@ -207,7 +223,9 @@ const validateField = (field, value) => {
             !Number.isInteger(numberValue)
         ) {
             return {
-               message: `${field.label} must be a whole number.`,
+               message: lt("publicForm.validation.wholeNumber", {
+                 label: field.label,
+                }),
             };
        }
     }
@@ -217,7 +235,7 @@ const validateField = (field, value) => {
 
         if (isNaN(selectedDate.getTime())) {
             return {
-                message: "Please select a valid date.",
+               message: lt("publicForm.validation.validDate"),
             };
         }
 
@@ -226,7 +244,10 @@ const validateField = (field, value) => {
 
             if (selectedDate < minDate) {
                 return {
-                   message: `${field.label} cannot be before ${config.min_date}.`,
+                   message: lt("publicForm.validation.minDate", {
+                      label: field.label,
+                      date: config.min_date,
+                    }),
                 };
             }
         }
@@ -236,7 +257,10 @@ const validateField = (field, value) => {
 
             if (selectedDate > maxDate) {
                 return {
-                   message: `${field.label} cannot be after ${config.max_date}.`,
+                   message: lt("publicForm.validation.maxDate", {
+                      label: field.label,
+                      date: config.max_date,
+                    }),
                 };
             }
         }
@@ -253,7 +277,9 @@ const validateField = (field, value) => {
 
         if (!allowedValues.includes(value)) {
             return {
-                message: `Please select a valid ${field.label}.`,
+                message: lt("publicForm.validation.validOption", {
+                  label: field.label,
+                 }),
             };
        }
     }
@@ -275,7 +301,9 @@ const validateField = (field, value) => {
 
         if (invalidOption) {
             return {
-               message: `Please select valid ${field.label} option(s).`,
+               message: lt("publicForm.validation.validOptions", {
+                  label: field.label,
+                }),
             };
         }
     }
@@ -286,13 +314,18 @@ const validateField = (field, value) => {
 
         if (isNaN(rating)) {
             return {
-               message: `${field.label} must be a valid rating.`,
+              message: lt("publicForm.validation.validRating", {
+                label: field.label,
+              }),
             };
         }
 
         if (rating < 1 || rating > maxRating) {
             return {
-               message: `${field.label} must be between 1 and ${maxRating}.`,
+               message: `${field.label} must be between 1 and ${maxRating}.`,message: lt("publicForm.validation.ratingRange", {
+                 label: field.label,
+                 maxRating,
+                }),
             };
        }
     } 
@@ -373,10 +406,10 @@ const handleSubmit = async (e) => {
         if (errors) {
            setFieldErrors(errors);
         } else {
-            alert(
-              error.response?.data?.detail?.message ||
-              "Failed to submit form."
-            );
+           alert(
+    error.response?.data?.detail?.message ||
+    lt("publicForm.submitFailed")
+);
         }
     }finally{
        setSubmitting(false);
@@ -442,7 +475,7 @@ const handleSubmit = async (e) => {
                       cursor: submitting ? "not-allowed" : "pointer",
                    }}
                 >
-                    {submitting ? "Submitting..." : "Submit Form"}
+                   {submitting ? lt("publicForm.submitting") : lt("publicForm.submit")}
                 </button>
             </form>
         </div>

@@ -1,10 +1,102 @@
 import re
 from datetime import datetime
 
-
 EMAIL_REGEX = re.compile(
     r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
 )
+
+
+def evaluate_rule(rule, responses):
+    """
+    Evaluate one conditional rule against submitted responses.
+
+    Returns:
+        True  -> condition matched
+        False -> condition did not match
+    """
+
+    trigger_field_id = str(rule.get("trigger_field_id"))
+    field_value = responses.get(trigger_field_id, "")
+    comparison_value = rule.get("comparison_value")
+
+    operator = rule.get("operator")
+
+    if operator == "equals":
+        return str(field_value) == str(comparison_value)
+
+    if operator == "not_equals":
+        return str(field_value) != str(comparison_value)
+
+    if operator == "greater_than":
+        try:
+            return float(field_value) > float(comparison_value)
+        except:
+            return False
+
+    if operator == "less_than":
+        try:
+            return float(field_value) < float(comparison_value)
+        except:
+            return False
+
+    if operator == "greater_than_or_equal":
+        try:
+            return float(field_value) >= float(comparison_value)
+        except:
+            return False
+
+    if operator == "less_than_or_equal":
+        try:
+            return float(field_value) <= float(comparison_value)
+        except:
+            return False
+
+    if operator == "contains":
+        return str(comparison_value) in str(field_value)
+
+    if operator == "starts_with":
+        return str(field_value).startswith(str(comparison_value))
+
+    if operator == "ends_with":
+        return str(field_value).endswith(str(comparison_value))
+
+    if operator == "is_empty":
+        return field_value is None or str(field_value).strip() == ""
+
+    if operator == "is_not_empty":
+        return field_value is not None and str(field_value).strip() != ""
+
+    return False
+
+
+def is_field_visible(field_id, rules, responses):
+    """
+    Determine whether a field is visible according to conditional rules.
+
+    This follows the same hide/show behavior used by the frontend.
+    """
+
+    field_rules = [
+        rule
+        for rule in rules
+        if str(rule.get("target_field_id")) == str(field_id)
+    ]
+
+    if not field_rules:
+        return True
+
+    for rule in field_rules:
+
+        result = evaluate_rule(rule, responses)
+        action = rule.get("action")
+
+        if action == "hide" and result:
+            return False
+
+        if action == "show" and not result:
+            return False
+
+    return True
 
 
 def validate_field(field, value):
@@ -19,7 +111,7 @@ def validate_field(field, value):
     config = field.get("config", {})
     field_type = field.get("field_type", "").lower()
 
-     # ===== DEBUG =====
+    # ===== DEBUG =====
     print("\n========== VALIDATION ==========")
     print("Label      :", field.get("label"))
     print("Type       :", field_type)
@@ -104,13 +196,19 @@ def validate_field(field, value):
         max_date = config.get("max_date")
 
         if min_date:
-            min_date = datetime.strptime(min_date, "%Y-%m-%d").date()
+            min_date = datetime.strptime(
+                min_date,
+                "%Y-%m-%d"
+            ).date()
 
             if date < min_date:
                 return "Date is before minimum allowed date."
 
         if max_date:
-            max_date = datetime.strptime(max_date, "%Y-%m-%d").date()
+            max_date = datetime.strptime(
+                max_date,
+                "%Y-%m-%d"
+            ).date()
 
             if date > max_date:
                 return "Date is after maximum allowed date."
@@ -133,9 +231,12 @@ def validate_field(field, value):
     return None
 
 
-def validate_submission(fields, responses):
+def validate_submission(fields, responses, rules=None):
     """
-    Validate all fields.
+    Validate all visible fields.
+
+    Hidden fields are completely skipped,
+    even if they are marked as required.
 
     Returns:
         {
@@ -148,14 +249,31 @@ def validate_submission(fields, responses):
 
     errors = {}
 
+    rules = rules or []
+
     for field in fields:
 
-        value = responses.get(str(field.get("id")))
+        field_id = str(field.get("id"))
 
-        error = validate_field(field, value)
+        # ---------------------------------
+        # Skip hidden fields
+        # ---------------------------------
+        if not is_field_visible(
+            field_id,
+            rules,
+            responses
+        ):
+            continue
+
+        value = responses.get(field_id)
+
+        error = validate_field(
+            field,
+            value
+        )
 
         if error:
-            errors[str(field.get("id"))] = {
+            errors[field_id] = {
                 "label": field.get("label", "Field"),
                 "message": error,
             }

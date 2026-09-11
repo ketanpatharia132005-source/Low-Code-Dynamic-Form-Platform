@@ -309,3 +309,150 @@ html[data-theme="dark"] .settings-disabled-btn {
     width: 100%;
   }
 }
+/* =========================================
+   Workspace Description
+   ========================================= */
+
+.settings-workspace-description {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin-top: 16px;
+  padding: 14px 16px;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.settings-workspace-description strong {
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.settings-workspace-description span {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   Clickable Settings Row
+   ========================================= */
+
+.settings-clickable-row {
+  width: 100%;
+
+  border: 1px solid transparent;
+  background: transparent;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  border-radius: 8px;
+
+  transition: 0.2s ease;
+}
+
+.settings-clickable-row:hover {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.settings-row-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.settings-row-action svg {
+  color: #64748b;
+}
+
+
+/* =========================================
+   Dark Theme
+   ========================================= */
+
+html[data-theme="dark"] .settings-workspace-description {
+  background: #111827;
+  border-color: #1e293b;
+}
+
+html[data-theme="dark"] .settings-workspace-description strong {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .settings-workspace-description span {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .settings-clickable-row:hover {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .settings-row-action svg {
+  color: #94a3b8;
+}
+/* =========================================
+   Profile Menu
+   ========================================= */
+
+.settings-profile-menu {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.settings-profile-menu:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.settings-profile-menu .settings-page-card-header {
+  margin-bottom: 0;
+}
+
+.settings-profile-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #64748b;
+
+  transition: 0.2s ease;
+}
+
+.settings-profile-menu:hover .settings-profile-arrow {
+  color: #2563eb;
+  transform: translateX(3px);
+}
+
+
+/* Dark theme */
+
+html[data-theme="dark"] .settings-profile-menu:hover {
+  background: #111827;
+  border-color: #334155;
+}
+
+html[data-theme="dark"] .settings-profile-arrow {
+  color: #94a3b8;
+}
+
+html[data-theme="dark"] .settings-profile-menu:hover .settings-profile-arrow {
+  color: #60a5fa;
+}

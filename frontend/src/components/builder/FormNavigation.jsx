@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import {
   LayoutDashboard,
   Wand2,
@@ -9,6 +11,8 @@ import {
 } from "lucide-react";
 
 function FormNavigation({ formId, onRulesClick }) {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,7 +41,7 @@ function FormNavigation({ formId, onRulesClick }) {
   };
 
   const handleOverview = () => {
-   navigate(`/forms/${formId}/overview`);
+    navigate(`/forms/${formId}/overview`);
   };
 
   return (
@@ -51,8 +55,11 @@ function FormNavigation({ formId, onRulesClick }) {
         onClick={handleOverview}
       >
         <LayoutDashboard size={16} />
-        <span>Overview</span>
+        <span>
+          {t("formNavigation.overview")}
+        </span>
       </button>
+
 
       <button
         type="button"
@@ -62,8 +69,11 @@ function FormNavigation({ formId, onRulesClick }) {
         onClick={handleBuilder}
       >
         <Wand2 size={16} />
-        <span>Builder</span>
+        <span>
+          {t("formNavigation.builder")}
+        </span>
       </button>
+
 
       <button
         type="button"
@@ -73,8 +83,11 @@ function FormNavigation({ formId, onRulesClick }) {
         onClick={handleResponses}
       >
         <MessageSquare size={16} />
-        <span>Responses</span>
+        <span>
+          {t("formNavigation.responses")}
+        </span>
       </button>
+
 
       <button
         type="button"
@@ -84,8 +97,11 @@ function FormNavigation({ formId, onRulesClick }) {
         onClick={handleAnalytics}
       >
         <BarChart3 size={16} />
-        <span>Analytics</span>
+        <span>
+          {t("formNavigation.analytics")}
+        </span>
       </button>
+
 
       <button
         type="button"
@@ -93,22 +109,30 @@ function FormNavigation({ formId, onRulesClick }) {
         onClick={onRulesClick}
       >
         <GitBranch size={16} />
-        <span>Rules</span>
+        <span>
+          {t("formNavigation.rules")}
+        </span>
       </button>
+
 
       <button
         type="button"
         className={`form-navigation-item ${
-          location.pathname === `/forms/${formId}/settings`
+          location.pathname ===
+          `/forms/${formId}/settings`
             ? "active"
             : ""
         }`}
         onClick={() =>
-          navigate(`/forms/${formId}/settings`)
+          navigate(
+            `/forms/${formId}/settings`
+          )
         }
       >
         <Settings size={16} />
-        <span>Settings</span>
+        <span>
+          {t("formNavigation.settings")}
+        </span>
       </button>
 
     </div>

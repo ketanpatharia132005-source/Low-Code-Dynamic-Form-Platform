@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import {
   Settings,
   FileText,
@@ -13,6 +15,8 @@ import api from "../api/api";
 import "./FormSettings.css";
 
 function FormSettings() {
+  const { t } = useTranslation();
+
   const { formId } = useParams();
   const navigate = useNavigate();
 
@@ -30,7 +34,10 @@ function FormSettings() {
         }
       })
       .catch((err) => {
-        console.error("Failed to load form settings", err);
+        console.error(
+          "Failed to load form settings",
+          err
+        );
       })
       .finally(() => {
         if (!cancelled) {
@@ -48,7 +55,7 @@ function FormSettings() {
       <Layout>
         <div className="form-settings-page">
           <div className="settings-loading">
-            Loading settings...
+            {t("formSettings.loading")}
           </div>
         </div>
       </Layout>
@@ -60,14 +67,18 @@ function FormSettings() {
       <Layout>
         <div className="form-settings-page">
           <div className="settings-error">
-            <h2>Unable to load form</h2>
+            <h2>
+              {t("formSettings.unableToLoad")}
+            </h2>
 
             <button
               onClick={() =>
-                navigate(`/forms/${formId}/overview`)
+                navigate(
+                  `/forms/${formId}/overview`
+                )
               }
             >
-              Back to Overview
+              {t("formSettings.backToOverview")}
             </button>
           </div>
         </div>
@@ -84,19 +95,24 @@ function FormSettings() {
         <div className="settings-breadcrumb">
           <button
             onClick={() =>
-              navigate(`/forms/${formId}/overview`)
+              navigate(
+                `/forms/${formId}/overview`
+              )
             }
           >
-            Forms
+            {t("formSettings.forms")}
           </button>
 
           <span>›</span>
 
+          {/* User-created form title — DO NOT translate */}
           <span>{form.title}</span>
 
           <span>›</span>
 
-          <strong>Settings</strong>
+          <strong>
+            {t("formSettings.settings")}
+          </strong>
         </div>
 
 
@@ -111,10 +127,12 @@ function FormSettings() {
             </div>
 
             <div>
-              <h1>Form Settings</h1>
+              <h1>
+                {t("formSettings.title")}
+              </h1>
 
               <p>
-                Manage settings for{" "}
+                {t("formSettings.manageSettings")}{" "}
                 <strong>{form.title}</strong>
               </p>
             </div>
@@ -125,11 +143,14 @@ function FormSettings() {
           <button
             className="settings-back-btn"
             onClick={() =>
-              navigate(`/forms/${formId}/overview`)
+              navigate(
+                `/forms/${formId}/overview`
+              )
             }
           >
             <ArrowLeft size={16} />
-            Back to Overview
+
+            {t("formSettings.backToOverview")}
           </button>
 
         </section>
@@ -146,10 +167,14 @@ function FormSettings() {
             </div>
 
             <div>
-              <h2>Form Details</h2>
+              <h2>
+                {t("formSettings.formDetails")}
+              </h2>
 
               <p>
-                Basic information about this form.
+                {t(
+                  "formSettings.formDetailsDescription"
+                )}
               </p>
             </div>
 
@@ -159,27 +184,48 @@ function FormSettings() {
           <div className="settings-info-grid">
 
             <div className="settings-info-item">
-              <span>Form Name</span>
+              <span>
+                {t("formSettings.formName")}
+              </span>
+
+              {/* User-created form title */}
               <strong>{form.title}</strong>
             </div>
 
+
             <div className="settings-info-item">
-              <span>Form ID</span>
+              <span>
+                {t("formSettings.formId")}
+              </span>
+
               <strong>#{form.id}</strong>
             </div>
 
+
             <div className="settings-info-item">
-              <span>Status</span>
+              <span>
+                {t("formSettings.status")}
+              </span>
 
               <span
                 className={`settings-status ${form.status}`}
               >
-                {form.status}
+                {t(
+                  `formSettings.statusValues.${form.status}`,
+                  {
+                    defaultValue:
+                      form.status,
+                  }
+                )}
               </span>
             </div>
 
+
             <div className="settings-info-item">
-              <span>Version</span>
+              <span>
+                {t("formSettings.version")}
+              </span>
+
               <strong>
                 {form.version || 1}
               </strong>
@@ -201,11 +247,14 @@ function FormSettings() {
             </div>
 
             <div>
-              <h2>Data Retention</h2>
+              <h2>
+                {t("formSettings.dataRetention")}
+              </h2>
 
               <p>
-                Manage how long submitted responses
-                are retained.
+                {t(
+                  "formSettings.dataRetentionDescription"
+                )}
               </p>
             </div>
 
@@ -216,12 +265,15 @@ function FormSettings() {
 
             <div>
               <strong>
-                Retention Policy
+                {t(
+                  "formSettings.retentionPolicy"
+                )}
               </strong>
 
               <span>
-                Configure retention and deletion
-                settings for this form.
+                {t(
+                  "formSettings.retentionPolicyDescription"
+                )}
               </span>
             </div>
 
@@ -232,7 +284,9 @@ function FormSettings() {
                 )
               }
             >
-              Manage Policy
+              {t(
+                "formSettings.managePolicy"
+              )}
             </button>
 
           </div>
@@ -251,11 +305,14 @@ function FormSettings() {
             </div>
 
             <div>
-              <h2>Danger Zone</h2>
+              <h2>
+                {t("formSettings.dangerZone")}
+              </h2>
 
               <p>
-                Actions that can affect the availability
-                of this form.
+                {t(
+                  "formSettings.dangerZoneDescription"
+                )}
               </p>
             </div>
 
@@ -266,22 +323,29 @@ function FormSettings() {
 
             <div>
               <strong>
-                Archive Form
+                {t(
+                  "formSettings.archiveForm"
+                )}
               </strong>
 
               <span>
-                Archived forms cannot be edited or
-                filled.
+                {t(
+                  "formSettings.archiveFormDescription"
+                )}
               </span>
             </div>
 
             <button
               className="danger-action"
               onClick={() =>
-                navigate(`/builder/${formId}`)
+                navigate(
+                  `/builder/${formId}`
+                )
               }
             >
-              Open Builder
+              {t(
+                "formSettings.openBuilder"
+              )}
             </button>
 
           </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import {
@@ -12,7 +13,7 @@ import "./FormResponses.css";
 
 function FormResponses() {
   const { formId } = useParams();
-
+  const { t } = useTranslation();
   const [responses, setResponses] = useState([]);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [totalResponses, setTotalResponses] = useState(0);
@@ -84,7 +85,7 @@ function FormResponses() {
 
   const handleBulkDelete = () => {
     if (selectedResponses.length === 0) {
-      alert("Please select at least one response.");
+      alert(t("submissions.selectResponse"));
       return;
     }
 
@@ -102,10 +103,10 @@ function FormResponses() {
 
       await loadResponses();
 
-      alert("Responses deleted successfully.");
+      alert(t("submissions.deleteSuccess"));
     } catch (err) {
       console.error(err);
-      alert("Failed to delete responses.");
+      alert(t("submissions.deleteFailed"));
     } finally {
       setDeleting(false);
     }
@@ -149,7 +150,7 @@ function FormResponses() {
       downloadFile(res.data, `form_${formId}_responses.csv`);
     } catch (err) {
       console.error(err);
-      alert("Failed to export CSV.");
+      alert(t("submissions.exportFailedCSV"));
     } finally {
       setExporting(false);
     }
@@ -164,7 +165,7 @@ function FormResponses() {
       downloadFile(res.data, `form_${formId}_responses.json`);
     } catch (err) {
       console.error(err);
-      alert("Failed to export JSON.");
+      alert(t("submissions.exportFailedJSON"));
     } finally {
       setExporting(false);
     }
@@ -201,13 +202,13 @@ function FormResponses() {
       <div className="dashboard-container">
         <div className="responses-header">
           <div>
-            <h1>Form Responses</h1>
-            <p>View every submission received for this form.</p>
+            <h1>{t("submissions.title")}</h1>
+            <p>{t("submissions.subtitle")}</p>
           </div>
 
           <div className="responses-header-actions">
             <div className="responses-count">
-              <span>Total Responses</span>
+              <span>{t("submissions.totalSubmissions")}</span>
               <h2>{totalResponses}</h2>
             </div>
 
@@ -216,7 +217,7 @@ function FormResponses() {
               onClick={handleBulkDelete}
               disabled={selectedResponses.length === 0}
             >
-              🗑 Delete Selected ({selectedResponses.length})
+              🗑 {t("submissions.deleteSelected")} ({selectedResponses.length})
             </button>
 
             <button
@@ -224,7 +225,9 @@ function FormResponses() {
                onClick={handleExportCSV}
                disabled ={exporting}
             >
-              {exporting ? "Exporting..." : "Export CSV"}
+              {exporting
+                ? t("submissions.exporting")
+                : t("submissions.exportCSV")}
             </button>
 
             <button
@@ -232,7 +235,9 @@ function FormResponses() {
               onClick={handleExportJSON}
               disabled={exporting}
             >
-              {exporting ? "Exporting..." : "Export JSON"}
+              {exporting
+                ? t("submissions.exporting")
+                : t("submissions.exportJSON")}
             </button>
           </div>
         </div>
@@ -240,11 +245,11 @@ function FormResponses() {
         <div className="responses-filters">
 
           <div className="filter-group search-filter">
-            <label>Search</label>
+            <label>{t("submissions.search")}</label>
 
             <input
               type="text"
-              placeholder="Search responses..."
+              placeholder={t("submissions.searchPlaceholder")}
               value={search}
               onChange={(e) => {
                 setOffset(0);
@@ -256,7 +261,7 @@ function FormResponses() {
 
 
           <div className="filter-group">
-            <label>Field</label>
+            <label>{t("submissions.field")}</label>
 
             <select
               value={fieldId}
@@ -266,7 +271,7 @@ function FormResponses() {
               }}
               className="filter-input"
             >
-              <option value="">All Fields</option>
+              <option value="">{t("submissions.allFields")}</option>
 
               {availableFields.map((field) => (
                 <option
@@ -281,11 +286,10 @@ function FormResponses() {
 
 
           <div className="filter-group">
-            <label>Value</label>
-
+            <label>{t("submissions.value")}</label>
             <input
               type="text"
-              placeholder="Field value..."
+              placeholder={t("submissions.fieldValue")}
               value={fieldValue}
               onChange={(e) => {
                 setOffset(0);
@@ -297,7 +301,7 @@ function FormResponses() {
 
 
           <div className="filter-group date-filter">
-            <label>From Date</label>
+            <label>{t("submissions.fromDate")}</label>
 
             <input
               type="date"
@@ -312,7 +316,7 @@ function FormResponses() {
 
 
           <div className="filter-group date-filter">
-            <label>To Date</label>
+            <label>{t("submissions.toDate")}</label>
 
             <input
               type="date"
@@ -338,7 +342,7 @@ function FormResponses() {
                 setOffset(0);
               }}
             >
-              Reset
+             {t("submissions.reset")}
             </button>
           </div>
 
@@ -346,13 +350,13 @@ function FormResponses() {
 
         {loading ? (
           <div className="responses-empty">
-            <h3>Loading responses...</h3>
-            <p>Please wait while I fetch the submissions.</p>
+            <h3>{t("submissions.loading")}</h3>
+            <p>{t("submissions.loadingDescription")}</p>
           </div>
         ) : responses.length === 0 ? (
           <div className="responses-empty">
-            <h3>No Responses Yet</h3>
-            <p>This form hasn't received any submissions yet.</p>
+            <h3>{t("submissions.noResponsesYet")}</h3>
+            <p>{t("submissions.noResponsesYetDescription")}</p>
           </div>
         ) : (
           <div className="responses-table">
@@ -370,10 +374,10 @@ function FormResponses() {
                     />
                   </th>
 
-                  <th>Response ID</th>
-                  <th>Submitted At</th>
-                  <th>Summary</th>
-                  <th>Actions</th>
+                  <th>{t("submissions.responseId")}</th>
+                  <th>{t("submissions.submittedAt")}</th>
+                  <th>{t("submissions.summary")}</th>
+                  <th>{t("submissions.action")}</th>
                 </tr>
               </thead>
 
@@ -426,11 +430,11 @@ function FormResponses() {
                             setShowModal(true);
                           } catch (err) {
                             console.error(err);
-                            alert("Unable to load response.");
+                            alert(t("submissions.loadResponseFailed"));
                           }
                         }}
                       >
-                        View
+                        {t("submissions.viewResponse")}
                       </button>
                     </td>
                   </tr>
@@ -447,11 +451,12 @@ function FormResponses() {
               onClick={previousPage}
               disabled={offset === 0}
             >
-              Previous
+              {t("submissions.previous")}
             </button>
 
             <span className="page-info">
-              Page {Math.floor(offset / limit) + 1} of{" "}
+              {t("submissions.page")} {Math.floor(offset / limit) + 1}{" "}
+              {t("submissions.of")}{" "}
               {Math.max(1, Math.ceil(totalResponses / limit))}
             </span>
 
@@ -460,7 +465,7 @@ function FormResponses() {
               onClick={nextPage}
               disabled={offset + limit >= totalResponses}
             >
-              Next
+              {t("submissions.next")}
           </button>
         </div>
       )}
@@ -475,7 +480,7 @@ function FormResponses() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-header">
-              <h2>Response Details</h2>
+              <h2>{t("submissions.responseDetails")}</h2>
 
               <button
                 className="close-btn"
@@ -487,12 +492,12 @@ function FormResponses() {
 
             <div className="response-meta">
               <p>
-                <strong>Response ID:</strong>{" "}
+                <strong>{t("submissions.responseId")}:</strong>{" "}
                 {selectedResponse.response_id}
               </p>
 
               <p>
-                <strong>Submitted At:</strong>{" "}
+                <strong>{t("submissions.submittedAt")}:</strong>{" "}
                 {new Date(
                   selectedResponse.created_at
                 ).toLocaleString()}
@@ -530,7 +535,7 @@ function FormResponses() {
             onClick={(e) => e.stopPropagation()}
           >
           <div className="modal-header">
-            <h2>Delete Responses</h2>
+            <h2>{t("submissions.deleteResponses")}</h2>
 
             <button
               className="close-btn"
@@ -546,9 +551,9 @@ function FormResponses() {
             }}
           >
             <p>
-              You are about to permanently delete
+              {t("submissions.deleteConfirmation")}
               <strong> {selectedResponses.length} </strong>
-              response(s).
+              {t("submissions.responsesCount")}
             </p>
 
             <p
@@ -558,7 +563,7 @@ function FormResponses() {
                 fontWeight: "600",
               }}
             >
-              This action cannot be undone.
+              {t("submissions.cannotBeUndone")}
             </p>
 
             <div
@@ -573,7 +578,7 @@ function FormResponses() {
                 className="page-btn"
                 onClick={() => setShowDeleteModal(false)}
               >
-                Cancel
+                {t("submissions.cancel")}
               </button>
 
               <button
@@ -582,8 +587,8 @@ function FormResponses() {
                 disabled={deleting}
               >
                 {deleting
-                  ? "Deleting..."
-                  : "Delete Permanently"}
+                  ? t("submissions.deleting")
+                  : t("submissions.deletePermanently")}
               </button>
             </div>
           </div>

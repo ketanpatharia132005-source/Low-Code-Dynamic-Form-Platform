@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useNavigate } from "react-router-dom";
 import {
@@ -36,6 +37,7 @@ import FormNavigation from "./FormNavigation";
 
 
 function BuilderLayout({ formId }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [form, setForm] = useState(null);
   const [fieldTypes, setFieldTypes] = useState([]);
@@ -112,7 +114,7 @@ function BuilderLayout({ formId }) {
       })
       .catch((err) => {
         console.error("Failed to load form", err);
-        if (!cancelled) setSaveError("Could not load this form.");
+        if (!cancelled) setSaveError(t("builder.loadFormFailed"));
       })
       .finally(() => {
         if (!cancelled) setLoadingForm(false);
@@ -141,7 +143,7 @@ function BuilderLayout({ formId }) {
       setSaveError(null);
     } catch (err) {
       console.error("Failed to add field", err);
-      setSaveError("Could not add that field. Check your connection and try again.");
+      setSaveError(t("builder.addFieldFailed"));
     }
   };
 
@@ -178,7 +180,7 @@ function BuilderLayout({ formId }) {
       setSaveError(null);
     } catch (err) {
       console.error("Failed to save field", err);
-      setSaveError("Could not save changes. Check your connection and try again.");
+      setSaveError(t("builder.saveFieldFailed"));
     }
   };
 
@@ -193,7 +195,7 @@ function BuilderLayout({ formId }) {
 
   setSaveError(
     err.response?.data?.detail ||
-      "Could not delete that field."
+       t("builder.deleteFieldFailed")
   );
 }
   };
@@ -209,7 +211,7 @@ function BuilderLayout({ formId }) {
       setSaveError(null);
     } catch (err) {
       console.error("Failed to save new order", err);
-      setSaveError("Could not save the new field order.");
+      setSaveError(t("builder.saveOrderFailed"));
     }
   };
 
@@ -230,7 +232,7 @@ function BuilderLayout({ formId }) {
     console.error("Failed to publish form", err);
 
     const message =
-      err.response?.data?.detail || "Could not publish this form.";
+      err.response?.data?.detail ||  t("builder.publishFailed");
 
     setSaveError(message);
     
@@ -247,7 +249,7 @@ function BuilderLayout({ formId }) {
       setSaveError(null);
     } catch (err) {
       console.error("Failed to archive form", err);
-      setSaveError(err.response?.data?.detail || "Could not archive this form.");
+      setSaveError(err.response?.data?.detail ||  t("builder.archiveFailed"));
     } finally {
       closeModal();
     }
@@ -290,26 +292,33 @@ function BuilderLayout({ formId }) {
   // MODAL TRIGGER HANDLERS
   // ==========================================
   const publishForm = () => {
-  setModalConfig({
-    isOpen: true,
-    title: "Publish Form",
-    message:
-      "Are you sure you want to publish this form? Published forms cannot be edited directly.",
-    confirmLabel: "Publish",
-    onConfirm: () => {
-      closeModal();
-      executePublish();
-    },
-  });
-};
+    setModalConfig({
+      isOpen: true,
+      title: t("builder.publishConfirmation.title"),
+      message: t(
+        "builder.publishConfirmation.message"
+      ),
+      confirmLabel: t(
+        "builder.publishConfirmation.confirm"
+      ),
+      onConfirm: () => {
+        closeModal();
+        executePublish();
+      },
+    });
+  };
 
   const archiveForm = () => {
     setModalConfig({
       isOpen: true,
-      title: "Archive Form",
-      message: "Are you sure you want to archive this form? Archived forms cannot be edited or filled.",
-      confirmLabel: "Archive",
-      onConfirm: () =>{
+      title: t("builder.archiveConfirmation.title"),
+      message: t(
+        "builder.archiveConfirmation.message"
+      ),
+      confirmLabel: t(
+        "builder.archiveConfirmation.confirm"
+      ),
+      onConfirm: () => {
         closeModal();
         executeArchive();
       },
@@ -357,7 +366,11 @@ function BuilderLayout({ formId }) {
   };
 
   if (loadingForm) {
-    return <p style={{ padding: 20 }}>Loading form...</p>;
+    return (
+      <p style={{ padding: 20 }}>
+        {t("builder.loadingForm")}
+      </p>
+    );
   }
 
   return (
@@ -378,7 +391,7 @@ function BuilderLayout({ formId }) {
 
     <h1 className="builder-title">
       <LayoutTemplate size={28} strokeWidth={2.2} />
-      {form?.title || "Untitled Form"}
+      {form?.title || t("builder.untitledForm")}
     </h1>
 
     {form?.description && (
@@ -394,7 +407,8 @@ function BuilderLayout({ formId }) {
       </span>
 
       <span className="builder-version">
-        Version {form?.version || 1}
+        
+        {t("builder.version")} {form?.version || 1}
       </span>
 
     </div>
@@ -414,7 +428,7 @@ function BuilderLayout({ formId }) {
         onClick={() => setActiveTab("design")}
       >
         <Wand2 size={18} />
-        Form Designer
+        {t("builder.formDesigner")}
       </button>
 
       <button
@@ -427,7 +441,7 @@ function BuilderLayout({ formId }) {
         onClick={() => setActiveTab("logic")}
       >
         <GitBranch size={18} />
-        Conditional Logic
+        {t("builder.conditionalLogic")}
       </button>
 
     </div>
@@ -443,8 +457,10 @@ function BuilderLayout({ formId }) {
   onClick={() => setPreviewMode(!previewMode)}
 >
   <Eye size={18} />
-  {previewMode ? "Back to Editor" : "Preview"}
-</button>
+    {previewMode
+      ? t("builder.backToEditor")
+      : t("builder.preview")}
+   </button>
 
 <button
   type="button"
@@ -452,7 +468,7 @@ function BuilderLayout({ formId }) {
   onClick={() => navigate(`/forms/${formId}/retention`)}
 >
   <Clock3 size={18} />
-  Retention Policy
+  {t("builder.retentionPolicy")}
 </button>
 
     <button
@@ -462,7 +478,7 @@ function BuilderLayout({ formId }) {
       disabled={!isDraft}
     >
       <Rocket size={18}/>
-       Publish
+       {t("builder.publish")}
     </button>
 
     <button
@@ -472,7 +488,7 @@ function BuilderLayout({ formId }) {
       disabled={form?.status === "archived"}
     >
       <Archive size={18}/>
-      Archive
+      {t("builder.archive")}
     </button>
 
     {form?.status === "published" && (
@@ -482,25 +498,25 @@ function BuilderLayout({ formId }) {
         onClick={editAsNewDraft}
       >
         <Pencil size={18}/>
-        Edit Draft
+        {t("builder.editDraft")}
       </button>
     )}
 
     <ShareLinkWidget
-  formId={form.id}
-  isPublished={true}
-  versionNumber={form.version}
-  onLinkGenerated={(data) => {
-    setModalConfig({
-      isOpen: true,
-      title: "Share Form",
-      message: "",
-      confirmLabel: "",
-      onConfirm: () => {},
-      shareLink: data.url,
-    });
-  }}
-/>
+      formId={form?.id}
+      isPublished={form?.status === "published"}
+      versionNumber={form.version}
+      onLinkGenerated={(data) => {
+        setModalConfig({
+          isOpen: true,
+          title: t("builder.shareForm.title"),
+          message: "",
+          confirmLabel: "",
+          onConfirm: () => {},
+          shareLink: data.url,
+        });
+      }}
+    />
 
   </div>
 
@@ -514,14 +530,14 @@ function BuilderLayout({ formId }) {
   <div className="version-history-header">
     <h2>
       <History size={24}/>
-      Version History</h2>
-    <span>{versions.length} Versions</span>
+      {t("builder.versionHistory")}</h2>
+    <span>{versions.length} {t("builder.versions")}</span>
   </div>
 
   {versions.length === 0 ? (
 
     <div className="version-empty">
-      No published versions yet.
+      {t("builder.noPublishedVersions")}
     </div>
 
   ) : (
@@ -538,21 +554,21 @@ function BuilderLayout({ formId }) {
           <div className="version-card-top">
 
             <h3>
-              Version {version.version_number}
+              {t("builder.version")} {version.version_number}
             </h3>
 
             <span className={`version-status ${version.status}`}>
-              {version.status}
+                {t(`builder.${version.status}`, {
+                  defaultValue: version.status,
+                })}
             </span>
 
           </div>
 
           <div className="version-date">
 
-            Published:
-
+            {t("builder.published")}:
             {" "}
-
             {version.published_at
               ? new Date(version.published_at).toLocaleString()
               : "-"}
@@ -600,8 +616,10 @@ function BuilderLayout({ formId }) {
       <div className="workspace-card-header">
         <h3>
           <LayoutTemplate size={20}/>
-           Components</h3>
-        <p>Drag or click to build your form</p>
+          {t("builder.components")}
+        </h3>
+
+        <p>{t("builder.componentsDescription")}</p>
       </div>
 
       <FieldPalette
@@ -622,8 +640,8 @@ function BuilderLayout({ formId }) {
       <div className="workspace-card-header">
         <h3>
           <LayoutTemplate size={20}/>
-           Form Canvas</h3>
-        <p>Arrange and customize your form fields</p>
+           {t("builder.formCanvas")}</h3>
+        <p>{t("builder.formCanvasDescription")}</p>
       </div>
 
       <Canvas
@@ -643,8 +661,8 @@ function BuilderLayout({ formId }) {
       <div className="workspace-card-header">
         <h3>
           <Pencil size={20}/>
-             Field Properties</h3>
-        <p>Configure the selected field</p>
+             {t("builder.fieldProperties")}</h3>
+        <p>{t("builder.fieldPropertiesDescription")}</p>
       </div>
 
       <PropertiesPanel
