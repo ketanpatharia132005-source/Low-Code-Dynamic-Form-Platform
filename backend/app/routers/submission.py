@@ -4,6 +4,8 @@ from datetime import date
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, func
+from app.dependencies import get_current_user
+from app.models.user import User
 
 from app.database import get_db
 from app.schemas.form import (
@@ -426,6 +428,7 @@ def bulk_delete_responses(
     form_id: int,
     request: BulkDeleteRequest,
     db: Session = Depends(get_db),
+    current_user: User= Depends(get_current_user),
 ):
     submissions = (
         db.query(Submission)
@@ -458,7 +461,7 @@ def bulk_delete_responses(
 
     create_audit_log(
         db=db,
-        actor_id=None,
+        actor_id=current_user.id,
         action="bulk_delete",
         entity_type="submission",
         entity_id=None,

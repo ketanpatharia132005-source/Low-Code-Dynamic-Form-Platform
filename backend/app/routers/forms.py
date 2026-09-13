@@ -603,11 +603,30 @@ def get_forms(
     current_user: User = Depends(get_current_user)
 ):
 
+    latest_published = (
+        db.query(
+            FormVersion.form_id,
+            func.max(FormVersion.published_at).label("latest_published_at")
+        )
+        .filter(FormVersion.status == "published")
+        .group_by(FormVersion.form_id)
+        .subquery()
+    )
+
     forms = (
         db.query(Form)
+        .outerjoin(
+            latest_published,
+            Form.id == latest_published.c.form_id
+        )
         .filter(Form.owner_id == current_user.id)
+        .order_by(
+            latest_published.c.latest_published_at.desc().nullslast(),
+            Form.created_at.desc()
+        )
         .all()
     )
+
     print("Logged in user:", current_user.id)
     print("Forms returned:", len(forms))
     print(forms)

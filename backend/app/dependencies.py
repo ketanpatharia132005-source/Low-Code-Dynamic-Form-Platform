@@ -48,13 +48,13 @@ def get_current_user(
         User.email == email
     ).first()
 
-    print("Current User ID:", user.id)
-    print("Current User Email:", user.email)
-
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found"
         )
+
+    print("Current User ID:", user.id)
+    print("Current User Email:", user.email)
 
     return user
